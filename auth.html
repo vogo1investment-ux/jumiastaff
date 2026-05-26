@@ -1,44 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+
+<meta charset="UTF-8">
 
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
+<title>
+
+JUMIASTAFF Login
+
+</title>
+
 <style>
 
-body{
-background:#f5f5f5;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:Arial;
-padding:30px;
 }
 
-.box{
-margin-top:120px;
+body{
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:
+
+linear-gradient(
+135deg,
+#ff9900,
+#ff5500
+);
+
+padding:20px;
+
+}
+
+.card{
+
+width:100%;
+
+max-width:430px;
+
+background:white;
+
+padding:30px;
+
+border-radius:25px;
+
+box-shadow:
+
+0 10px 30px rgba(0,0,0,.15);
+
+}
+
+.logo{
+
+text-align:center;
+
+font-size:28px;
+
+font-weight:bold;
+
+margin-bottom:25px;
+
+color:#ff7700;
+
+}
+
+.tabs{
+
+display:flex;
+
+background:#f2f2f2;
+
+border-radius:50px;
+
+overflow:hidden;
+
+margin-bottom:25px;
+
+}
+
+.tab{
+
+flex:1;
+
+padding:15px;
+
+border:none;
+
+background:none;
+
+font-size:16px;
+
+}
+
+.active{
+
+background:#ff8800;
+
+color:white;
+
+border-radius:50px;
+
 }
 
 input{
+
 width:100%;
-padding:18px;
-margin-top:15px;
-border-radius:40px;
-border:2px solid #eee;
+
+padding:16px;
+
+margin-bottom:15px;
+
+border-radius:15px;
+
+border:1px solid #ddd;
+
+font-size:15px;
+
 }
 
-button{
+.mainbtn{
+
 width:100%;
-padding:18px;
-margin-top:15px;
+
+padding:16px;
+
 border:none;
-border-radius:40px;
-background:
-linear-gradient(
-90deg,
-#ff7a55,
-red
-);
+
+border-radius:15px;
+
+background:#ff8800;
+
 color:white;
+
+font-size:18px;
+
+}
+
+.hide{
+
+display:none;
+
+}
+
+.msg{
+
+margin-top:15px;
+
+text-align:center;
+
+color:green;
+
 }
 
 </style>
@@ -47,65 +171,184 @@ color:white;
 
 <body>
 
-<div class="box">
+<div class="card">
 
-<input
-id="username"
-placeholder="Username">
+<div class="logo">
 
-<input
-id="email"
-placeholder="Email">
+JUMIASTAFF
 
-<input
-id="password"
-type="password"
-placeholder="Password">
+</div>
 
-<button onclick="signup()">
+<div class="tabs">
+
+<button
+id="loginTab"
+class="tab active">
+
+LOGIN
+
+</button>
+
+<button
+id="signupTab"
+class="tab">
 
 SIGN UP
 
 </button>
 
-<button onclick="login()">
+</div>
 
-LOGIN
+<div id="signupBox"
+class="hide">
+
+<input
+id="suUser"
+placeholder="Username">
+
+<input
+id="suEmail"
+placeholder="Email">
+
+<input
+id="suPass"
+type="password"
+placeholder="Password">
+
+<button
+class="mainbtn"
+onclick="signup()">
+
+Create Account
 
 </button>
+
+</div>
+
+<div id="loginBox">
+
+<input
+id="liEmail"
+placeholder="Email">
+
+<input
+id="liPass"
+type="password"
+placeholder="Password">
+
+<button
+class="mainbtn"
+onclick="login()">
+
+Login
+
+</button>
+
+</div>
+
+<div
+class="msg"
+id="msg">
+
+</div>
 
 </div>
 
 <script type="module">
 
 import {
-auth,
-db
+
+initializeApp
+
 }
-from "./firebase.js";
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
+
+getAuth,
 
 createUserWithEmailAndPassword,
 
 signInWithEmailAndPassword
 
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 import {
+
+getFirestore,
 
 doc,
 
 setDoc
 
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-window.signup=
-async()=>{
+const firebaseConfig={
+
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+
+authDomain:"jumiastaff-83757.firebaseapp.com",
+
+projectId:"jumiastaff-83757",
+
+storageBucket:"jumiastaff-83757.firebasestorage.app",
+
+messagingSenderId:"1018307795636",
+
+appId:"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
+
+};
+
+const app=
+
+initializeApp(firebaseConfig);
+
+const auth=
+
+getAuth(app);
+
+const db=
+
+getFirestore(app);
+
+loginTab.onclick=()=>{
+
+loginBox.classList.remove("hide");
+
+signupBox.classList.add("hide");
+
+loginTab.classList.add("active");
+
+signupTab.classList.remove("active");
+
+};
+
+signupTab.onclick=()=>{
+
+signupBox.classList.remove("hide");
+
+loginBox.classList.add("hide");
+
+signupTab.classList.add("active");
+
+loginTab.classList.remove("active");
+
+};
+
+window.signup=async()=>{
+
+try{
 
 let u=
 
@@ -113,27 +356,33 @@ await createUserWithEmailAndPassword(
 
 auth,
 
-email.value,
+suEmail.value,
 
-password.value
+suPass.value
 
 );
 
 await setDoc(
 
 doc(
+
 db,
+
 "users",
+
 u.user.uid
+
 ),
 
 {
 
 username:
-username.value,
+
+suUser.value,
 
 email:
-email.value,
+
+suEmail.value,
 
 availableBalance:2,
 
@@ -143,26 +392,53 @@ withdrawBalance:0
 
 );
 
+msg.innerHTML=
+
+"Account created";
+
 location=
+
 "dashboard.html";
+
+}
+
+catch(e){
+
+msg.innerHTML=
+
+e.message;
+
+}
 
 };
 
-window.login=
-async()=>{
+window.login=async()=>{
+
+try{
 
 await signInWithEmailAndPassword(
 
 auth,
 
-email.value,
+liEmail.value,
 
-password.value
+liPass.value
 
 );
 
 location=
+
 "dashboard.html";
+
+}
+
+catch(e){
+
+msg.innerHTML=
+
+e.message;
+
+}
 
 };
 
