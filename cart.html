@@ -1,339 +1,121 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
-<title>
-
-My Cart
-
-</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cart</title>
 
 <style>
-
 body{
-
 margin:0;
-
 background:#f3f3f3;
-
 font-family:Arial;
-
-padding:20px;
-
+padding:15px;
 }
 
-.top{
-
-background:white;
-
-padding:18px;
-
-border-radius:20px;
-
-font-size:24px;
-
+.title{
+font-size:28px;
 font-weight:bold;
-
-box-shadow:
-0 5px 10px rgba(
-0,0,0,.1
-);
-
 margin-bottom:20px;
-
 }
 
 .card{
-
 background:white;
-
-padding:15px;
-
-border-radius:20px;
-
+border-radius:15px;
+overflow:hidden;
 margin-bottom:20px;
-
-box-shadow:
-0 5px 10px rgba(
-0,0,0,.1
-);
-
+box-shadow:0 5px 10px rgba(0,0,0,.1);
 }
 
 .card img{
-
 width:100%;
-
 height:220px;
-
 object-fit:cover;
+}
 
-border-radius:15px;
-
+.info{
+padding:15px;
 }
 
 .name{
-
-font-size:22px;
-
+font-size:20px;
 font-weight:bold;
-
-margin-top:15px;
-
 }
 
-.id{
-
+.pid{
 margin-top:10px;
-
-font-size:18px;
-
+font-size:16px;
+color:red;
 font-weight:bold;
-
-color:#ff8800;
-
-}
-
-.empty{
-
-text-align:center;
-
-font-size:22px;
-
-margin-top:100px;
-
-font-weight:bold;
-
 }
 
 .copy{
-
 margin-top:15px;
-
-width:100%;
-
-padding:14px;
-
-background:#ff8800;
-
+background:#ff9900;
 border:none;
-
+width:100%;
+padding:12px;
 color:white;
-
-border-radius:12px;
-
 font-size:18px;
-
+border-radius:10px;
 }
 
+.empty{
+text-align:center;
+margin-top:100px;
+font-size:20px;
+font-weight:bold;
+}
 </style>
-
 </head>
 
 <body>
 
-<div class="top">
-
-🛒 MY CART
-
+<div class="title">
+🛒 My Cart
 </div>
 
-<div id="list">
-
-<div class="empty">
-
-No Product Yet
-
-</div>
-
-</div>
+<div id="cart"></div>
 
 <script type="module">
 
-import {
-
-initializeApp
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-
 getFirestore,
-
 collection,
-
-query,
-
-where,
-
 getDocs
-
 }
-
-from
-
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-import {
-
-getAuth,
-
-onAuthStateChanged
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig={
-
-apiKey:
-"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
-
-authDomain:
-"jumiastaff-83757.firebaseapp.com",
-
-projectId:
-"jumiastaff-83757"
-
+apiKey:"YOURKEY",
+authDomain:"YOURDOMAIN",
+projectId:"jumiastaff-83757"
 };
 
-const app=
-initializeApp(
-firebaseConfig
-);
+const app=initializeApp(firebaseConfig);
 
-const db=
-getFirestore(
-app
-);
+const db=getFirestore(app);
 
-const auth=
-getAuth(
-app
-);
+async function loadCart(){
 
-const products={
+let box=document.getElementById("cart");
 
-"samsungtv.jpg":{
+box.innerHTML="";
 
-name:
-"Samsung Smart TV"
-
-},
-
-"ecoflow.jpg":{
-
-name:
-"EcoFlow Power Station"
-
-},
-
-"HaierThermocoolChestFreezer.jpg":{
-
-name:
-"Haier Thermocool Freezer"
-
-},
-
-"AppleMacBookAirM4.jpg":{
-
-name:
-"Apple MacBook Air"
-
-},
-
-"RTXGamingLaptop.jpg":{
-
-name:
-"RTX Gaming Laptop"
-
-},
-
-"dsw.jpg":{
-
-name:
-"Designer Smart Watch"
-
-}
-
-};
-
-onAuthStateChanged(
-
-auth,
-
-async user=>{
-
-if(!user){
-
-location.href=
-
-"index.html";
-
-return;
-
-}
-
-let q=
-
-query(
-
+const snap=await getDocs(
 collection(
 db,
-"buyRequests"
-),
-
-where(
-"uid",
-"==",
-user.uid
-),
-
-where(
-"status",
-"==",
-"Approved"
+"cart"
 )
-
 );
 
-let snap=
+if(snap.empty){
 
-await getDocs(
-q
-);
-
-list.innerHTML="";
-
-if(
-
-snap.empty
-
-){
-
-list.innerHTML=
-
-`
-
-<div class="empty">
-
-No Product Yet
-
-</div>
-
-`;
+box.innerHTML=
+"<div class='empty'>No Products Yet</div>";
 
 return;
 
@@ -341,56 +123,42 @@ return;
 
 snap.forEach(doc=>{
 
-let d=
-doc.data();
+let d=doc.data();
 
-let img=
-
-d.productID;
-
-let pname=
-
-products[img]?
-
-products[img].name
-
-:
-
-img;
-
-list.innerHTML+=`
+box.innerHTML+=`
 
 <div class="card">
 
-<img src="${img}">
+<img src="${d.image}">
+
+<div class="info">
 
 <div class="name">
 
-${pname}
+${d.name}
 
 </div>
 
-<div class="id">
+<div class="pid">
 
 Product ID:
-
-${img}
+${d.productID}
 
 </div>
 
-<button
-
-class="copy"
-
-onclick=
-
-"copyID('${img}')"
-
->
+<button class="copy"
+onclick="
+navigator.clipboard.writeText(
+'${d.productID}'
+);
+alert('Copied');
+">
 
 Copy Product ID
 
 </button>
+
+</div>
 
 </div>
 
@@ -400,26 +168,9 @@ Copy Product ID
 
 }
 
-);
-
-window.copyID=
-
-function(x){
-
-navigator.clipboard.writeText(
-x
-);
-
-alert(
-
-"Copied: "+x
-
-);
-
-};
+loadCart();
 
 </script>
 
 </body>
-
 </html>
