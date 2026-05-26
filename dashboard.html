@@ -4,7 +4,6 @@
 <head>
 
 <meta name="viewport"
-
 content="width=device-width,initial-scale=1">
 
 <title>
@@ -24,7 +23,7 @@ font-family:Arial;
 
 body{
 background:#f3f3f3;
-padding-bottom:100px;
+padding-bottom:120px;
 }
 
 .top{
@@ -51,27 +50,27 @@ position:relative;
 
 position:absolute;
 
-right:20px;
+right:15px;
 
-top:20px;
-
-background:white;
+top:15px;
 
 border:none;
 
-padding:10px 18px;
+padding:10px 15px;
 
 border-radius:20px;
+
+background:white;
 
 }
 
 .user{
 
-font-size:25px;
+font-size:28px;
 
 font-weight:bold;
 
-margin-top:15px;
+margin-top:20px;
 
 }
 
@@ -79,15 +78,11 @@ margin-top:15px;
 
 background:white;
 
-margin:20px;
+margin:15px;
 
 padding:20px;
 
 border-radius:20px;
-
-box-shadow:
-
-0 5px 10px rgba(0,0,0,.1);
 
 }
 
@@ -109,9 +104,69 @@ grid-template-columns:
 
 repeat(2,1fr);
 
-gap:15px;
+gap:12px;
+
+padding:15px;
+
+}
+
+.btn{
+
+background:white;
 
 padding:20px;
+
+border-radius:18px;
+
+text-align:center;
+
+}
+
+.ref{
+
+background:white;
+
+margin:15px;
+
+padding:20px;
+
+border-radius:20px;
+
+}
+
+.task{
+
+background:#fff4d9;
+
+margin:15px;
+
+padding:20px;
+
+border-radius:20px;
+
+}
+
+.popup{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+right:0;
+
+bottom:0;
+
+background:
+
+rgba(0,0,0,.6);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
 
 }
 
@@ -119,29 +174,29 @@ padding:20px;
 
 background:white;
 
-padding:20px;
+padding:25px;
+
+width:90%;
 
 border-radius:20px;
 
-text-align:center;
-
 }
 
-.products{
+button{
 
-padding:20px;
+padding:12px;
 
-}
+border:none;
 
-.p{
+background:#ff8800;
 
-background:white;
+color:white;
 
-padding:15px;
+border-radius:10px;
 
-margin-bottom:12px;
+margin-top:10px;
 
-border-radius:15px;
+width:100%;
 
 }
 
@@ -155,22 +210,16 @@ border-radius:15px;
 
 <button
 class="logout"
-
 onclick="logout()">
 
 Logout
 
 </button>
 
-<div>
-
 Welcome
-
-</div>
 
 <div
 class="user"
-
 id="u">
 
 User
@@ -183,8 +232,7 @@ User
 
 Withdrawalble Balance
 
-<div
-class="big">
+<div class="big">
 
 $
 
@@ -202,8 +250,7 @@ $
 
 Available Balance
 
-<div
-class="big">
+<div class="big">
 
 $
 
@@ -217,35 +264,133 @@ $
 
 </div>
 
+<div class="card">
+
+Referral Commission
+
+<div class="big">
+
+$
+
+<span id="rc">
+
+0
+
+</span>
+
+</div>
+
+</div>
+
+<div class="task">
+
+<b>
+
+TASK REQUIRED
+
+</b>
+
+<br><br>
+
+Buy a product from market before your $2 signup bonus becomes withdrawalble.
+
+</div>
+
+<div class="ref">
+
+Referral Code:
+
+<b id="refcode">
+
+loading
+
+</b>
+
+<br><br>
+
+Users Under You:
+
+<span id="refusers">
+
+0
+
+</span>
+
+<br><br>
+
+Each person you invite that invests gives you 10% commission.
+
+</div>
+
 <div class="grid">
 
-<div class="box">
+<div
+class="btn"
+onclick="location='market.html'">
 
 🛒
+
+<br>
 
 Market
 
 </div>
 
-<div class="box">
+<div
+class="btn"
+onclick="location='deposit.html'">
 
 💳
+
+<br>
 
 Deposit
 
 </div>
 
-<div class="box">
+<div
+class="btn"
+onclick="location='withdraw.html'">
 
 💸
+
+<br>
 
 Withdraw
 
 </div>
 
-<div class="box">
+<div
+class="btn"
+onclick="location='depositHistory.html'">
+
+📄
+
+<br>
+
+Deposit History
+
+</div>
+
+<div
+class="btn"
+onclick="location='withdrawHistory.html'">
+
+📑
+
+<br>
+
+Withdraw History
+
+</div>
+
+<div
+class="btn"
+onclick="openRef()">
 
 👥
+
+<br>
 
 Referral
 
@@ -253,41 +398,37 @@ Referral
 
 </div>
 
-<div class="products">
+<div
+class="popup"
 
-<div class="p">
+id="pop">
 
-Samsung 75 Inch Smart TV
+<div class="box">
 
-</div>
+Referral Code:
 
-<div class="p">
+<br><br>
 
-Portable EcoFlow Station
+<b id="refx">
 
-</div>
+</b>
 
-<div class="p">
+<br><br>
 
-Haier Thermocool Freezer
+People Joined:
 
-</div>
+<span id="joined">
 
-<div class="p">
+0
 
-Apple MacBook Air M4
+</span>
 
-</div>
+<button
+onclick="closeRef()">
 
-<div class="p">
+Close
 
-RTX Gaming Laptop
-
-</div>
-
-<div class="p">
-
-Designer Smart Watch
+</button>
 
 </div>
 
@@ -337,28 +478,23 @@ const firebaseConfig={
 
 apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-authDomain:"jumiastaff-83757.firebaseapp.com",
+authDomain:
 
-projectId:"jumiastaff-83757",
+"jumiastaff-83757.firebaseapp.com",
 
-storageBucket:"jumiastaff-83757.firebasestorage.app",
+projectId:
 
-messagingSenderId:"1018307795636",
-
-appId:"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
+"jumiastaff-83757"
 
 };
 
 const app=
-
 initializeApp(firebaseConfig);
 
 const auth=
-
 getAuth(app);
 
 const db=
-
 getFirestore(app);
 
 onAuthStateChanged(
@@ -369,7 +505,8 @@ async(user)=>{
 
 if(!user){
 
-location="auth.html";
+location=
+"auth.html";
 
 return;
 
@@ -380,42 +517,64 @@ let s=
 await getDoc(
 
 doc(
-
 db,
-
 "users",
-
 user.uid
-
 )
 
 );
 
-let d=
-
-s.data();
+let d=s.data();
 
 u.innerHTML=
-
 d.username;
 
 a.innerHTML=
-
-d.availableBalance;
+d.availableBalance||2;
 
 w.innerHTML=
+d.withdrawBalance||0;
 
-d.withdrawBalance;
+rc.innerHTML=
+d.referralCommission||0;
+
+refcode.innerHTML=
+d.username;
+
+refx.innerHTML=
+d.username;
+
+refusers.innerHTML=
+d.refUsers||0;
+
+joined.innerHTML=
+d.refUsers||0;
 
 }
 
 );
 
-window.logout=async()=>{
+window.logout=
+async()=>{
 
 await signOut(auth);
 
-location="index.html";
+location=
+"index.html";
+
+};
+
+window.openRef=()=>{
+
+pop.style.display=
+"flex";
+
+};
+
+window.closeRef=()=>{
+
+pop.style.display=
+"none";
 
 };
 
