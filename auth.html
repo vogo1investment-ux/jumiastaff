@@ -29,10 +29,15 @@ min-height:100vh;
 }
 
 .wrap{
+
 max-width:500px;
+
 margin:auto;
+
 padding:25px;
+
 padding-top:60px;
+
 }
 
 .box{
@@ -117,16 +122,6 @@ display:none;
 
 }
 
-.note{
-
-text-align:center;
-
-margin-bottom:50px;
-
-color:#666;
-
-}
-
 </style>
 
 </head>
@@ -139,12 +134,6 @@ color:#666;
 
 <div id="loginPage">
 
-<div class="note">
-
-Genuine products are guaranteed at low prices
-
-</div>
-
 <div class="box">
 
 📧
@@ -153,7 +142,7 @@ Genuine products are guaranteed at low prices
 id="loginEmail"
 
 placeholder=
-"Please Enter Email">
+"Email">
 
 </div>
 
@@ -218,7 +207,7 @@ placeholder=
 id="email"
 
 placeholder=
-"Email Address">
+"Email">
 
 </div>
 
@@ -258,7 +247,7 @@ placeholder=
 id="referral"
 
 placeholder=
-"Invitation Code">
+"Referral Code">
 
 </div>
 
@@ -277,7 +266,7 @@ Existing Account?
 
 <span onclick="openLogin()">
 
-Log In Now
+Login Now
 
 </span>
 
@@ -296,36 +285,28 @@ from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import{
-
 getAuth,
-
 createUserWithEmailAndPassword,
-
 signInWithEmailAndPassword
-
 }
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 import{
-
 getFirestore,
-
 doc,
-
 setDoc
-
 }
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig={
 
-apiKey:"YOURKEY",
+apiKey:"YOUR_API",
 
-authDomain:"YOURDOMAIN",
+authDomain:"YOUR_DOMAIN",
 
-projectId:"YOURPROJECT"
+projectId:"YOUR_PROJECT"
 
 };
 
@@ -362,13 +343,14 @@ window.registerUser=
 async()=>{
 
 if(
-pass.value.trim()
-!=
-confirm.value.trim()
+pass.value
+!==
+
+confirm.value
 ){
 
 alert(
-"Passwords do not match"
+"Password mismatch"
 );
 
 return;
@@ -414,14 +396,16 @@ withdrawableBalance:0,
 
 referralCommission:0,
 
-joinedUsers:0
+refUsers:0,
+
+joinedUsers:0,
+
+cart:[],
+
+taskCompleted:false
 
 }
 
-);
-
-alert(
-"Signup Successful"
 );
 
 location=
