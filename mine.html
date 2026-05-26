@@ -1,75 +1,12 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-
-<meta name="viewport"
-
-content="width=device-width,initial-scale=1">
-
-<title>
-
-Mine
-
-</title>
-
-<style>
-
-body{
-
-margin:0;
-
-font-family:Arial;
-
-background:#f3f3f3;
-
-}
-
-.top{
-
-background:#ff9900;
-
-padding:25px;
-
-color:white;
-
-}
-
-.card{
-
-background:white;
-
-margin:15px;
-
-padding:20px;
-
-border-radius:12px;
-
-font-size:20px;
-
-}
-
-.row{
-
-background:white;
-
-padding:22px;
-
-margin-top:2px;
-
-font-size:22px;
-
-}
-
-</style>
-
-</head>
-
 <body>
 
-<div class="top">
-
-<h2>
+<div style="
+background:#ff9900;
+padding:25px;
+color:white">
 
 Welcome,
 
@@ -79,21 +16,26 @@ User
 
 </span>
 
-</h2>
+<br>
 
-<p id="mail">
+<span id="mail">
 
-email
+Email
 
-</p>
+</span>
 
 </div>
 
-<div class="card">
+<div style="
+background:white;
+margin:20px;
+padding:20px">
 
 Withdrawalble balance
 
-$<span id="w">
+$
+
+<span id="w">
 
 0
 
@@ -103,7 +45,9 @@ $<span id="w">
 
 Available balance
 
-$<span id="a">
+$
+
+<span id="a">
 
 2
 
@@ -111,72 +55,49 @@ $<span id="a">
 
 </div>
 
-<div class="row">
+<button
+onclick="location='dashboard.html'">
 
-📦 Orders
+OPEN DASHBOARD
 
-</div>
-
-<div class="row">
-
-💬 Inbox
-
-</div>
-
-<div class="row">
-
-❤️ Wishlist
-
-</div>
-
-<div class="row">
-
-⚙ Account Settings
-
-</div>
+</button>
 
 <script type="module">
 
 import {
-
 auth,
-
 db
-
 }
-
 from "./firebase.js";
 
 import {
-
 doc,
-
 getDoc
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 auth.onAuthStateChanged(
 
 async(u)=>{
 
-if(!u)return;
+if(!u){
+
+location=
+"auth.html";
+
+return;
+
+}
 
 let s=
 
 await getDoc(
 
 doc(
-
 db,
-
 "users",
-
 u.uid
-
 )
 
 );
@@ -184,19 +105,15 @@ u.uid
 let d=s.data();
 
 user.innerHTML=
-
 d.username;
 
 mail.innerHTML=
-
 d.email;
 
 a.innerHTML=
-
 d.availableBalance;
 
 w.innerHTML=
-
 d.withdrawBalance;
 
 }

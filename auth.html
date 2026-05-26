@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<style>
+
+body{
+background:#f5f5f5;
+font-family:Arial;
+padding:30px;
+}
+
+.box{
+margin-top:120px;
+}
+
+input{
+width:100%;
+padding:18px;
+margin-top:15px;
+border-radius:40px;
+border:2px solid #eee;
+}
+
+button{
+width:100%;
+padding:18px;
+margin-top:15px;
+border:none;
+border-radius:40px;
+background:
+linear-gradient(
+90deg,
+#ff7a55,
+red
+);
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<input
+id="username"
+placeholder="Username">
+
+<input
+id="email"
+placeholder="Email">
+
+<input
+id="password"
+type="password"
+placeholder="Password">
+
+<button onclick="signup()">
+
+SIGN UP
+
+</button>
+
+<button onclick="login()">
+
+LOGIN
+
+</button>
+
+</div>
+
+<script type="module">
+
+import {
+auth,
+db
+}
+from "./firebase.js";
+
+import {
+
+createUserWithEmailAndPassword,
+
+signInWithEmailAndPassword
+
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+
+doc,
+
+setDoc
+
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+window.signup=
+async()=>{
+
+let u=
+
+await createUserWithEmailAndPassword(
+
+auth,
+
+email.value,
+
+password.value
+
+);
+
+await setDoc(
+
+doc(
+db,
+"users",
+u.user.uid
+),
+
+{
+
+username:
+username.value,
+
+email:
+email.value,
+
+availableBalance:2,
+
+withdrawBalance:0
+
+}
+
+);
+
+location=
+"dashboard.html";
+
+};
+
+window.login=
+async()=>{
+
+await signInWithEmailAndPassword(
+
+auth,
+
+email.value,
+
+password.value
+
+);
+
+location=
+"dashboard.html";
+
+};
+
+</script>
+
+</body>
+
+</html>
