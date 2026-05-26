@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<style>
+
+body{
+font-family:Arial;
+background:#f3f3f3;
+padding:20px;
+}
+
+.item{
+
+background:white;
+
+padding:20px;
+
+margin-top:15px;
+
+border-radius:15px;
+
+}
+
+.pending{
+
+color:orange;
+
+}
+
+.approved{
+
+color:green;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>
+
+Withdrawal History
+
+</h2>
+
+<div id="list">
+
+</div>
+
+<script type="module">
+
+import {
+
+initializeApp
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getFirestore,
+
+collection,
+
+query,
+
+where,
+
+getDocs
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+import {
+
+getAuth
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+const app=
+initializeApp({
+
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+
+projectId:"jumiastaff-83757",
+
+authDomain:
+
+"jumiastaff-83757.firebaseapp.com"
+
+});
+
+const db=
+getFirestore(app);
+
+const auth=
+getAuth(app);
+
+setTimeout(
+load,
+1000
+);
+
+async function load(){
+
+let q=
+
+query(
+
+collection(
+db,
+"withdrawals"
+),
+
+where(
+
+"uid",
+
+"==",
+
+auth.currentUser.uid
+
+)
+
+);
+
+let s=
+
+await getDocs(q);
+
+s.forEach(
+d=>{
+
+let x=
+
+d.data();
+
+list.innerHTML+=`
+
+<div class="item">
+
+Method:
+${x.method}
+
+<br>
+
+Amount:
+$${x.amount}
+
+<br>
+
+Status:
+
+<span class="${x.status}">
+
+${x.status}
+
+</span>
+
+</div>
+
+`;
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>
