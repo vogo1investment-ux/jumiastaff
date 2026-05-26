@@ -406,7 +406,17 @@ getFirestore,
 
 doc,
 
-getDoc
+getDoc,
+
+collection,
+
+query,
+
+where,
+
+getDocs,
+
+updateDoc
 
 }
 
@@ -470,22 +480,64 @@ let d=
 s.data();
 
 u.innerHTML=
-d.username;
+d.username||
+"User";
 
 a.innerHTML=
-d.availableBalance||2;
+d.availableBalance||
+2;
 
 w.innerHTML=
-d.withdrawBalance||0;
+d.withdrawableBalance||
+0;
 
 rc.innerHTML=
-d.referralCommission||0;
+d.referralCommission||
+0;
 
 refcode.innerHTML=
 d.username;
 
+const q=
+
+query(
+
+collection(
+db,
+"users"
+),
+
+where(
+"usedReferral",
+"==",
+d.username
+)
+
+);
+
+const refs=
+
+await getDocs(q);
+
 refusers.innerHTML=
-d.refUsers||0;
+refs.size;
+
+await updateDoc(
+
+doc(
+db,
+"users",
+user.uid
+),
+
+{
+
+joinedUsers:
+refs.size
+
+}
+
+);
 
 }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 
@@ -10,108 +10,43 @@ content="width=device-width,initial-scale=1">
 
 <title>
 
-JUMIASTAFF Login
+JUMIASTAFF
 
 </title>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial;
-}
-
 body{
 
-min-height:100vh;
+margin:0;
 
-display:flex;
+font-family:Arial;
 
-justify-content:center;
-
-align-items:center;
-
-background:
-
-linear-gradient(
-135deg,
-#ff9900,
-#ff5500
-);
+background:#f3f3f3;
 
 padding:20px;
 
 }
 
-.card{
-
-width:100%;
-
-max-width:430px;
+.box{
 
 background:white;
 
-padding:30px;
+padding:25px;
 
-border-radius:25px;
+border-radius:20px;
 
-box-shadow:
-
-0 10px 30px rgba(0,0,0,.15);
+margin-top:40px;
 
 }
 
-.logo{
-
-text-align:center;
+.title{
 
 font-size:28px;
 
 font-weight:bold;
 
-margin-bottom:25px;
-
-color:#ff7700;
-
-}
-
-.tabs{
-
-display:flex;
-
-background:#f2f2f2;
-
-border-radius:50px;
-
-overflow:hidden;
-
-margin-bottom:25px;
-
-}
-
-.tab{
-
-flex:1;
-
-padding:15px;
-
-border:none;
-
-background:none;
-
-font-size:16px;
-
-}
-
-.active{
-
-background:#ff8800;
-
-color:white;
-
-border-radius:50px;
+margin-bottom:20px;
 
 }
 
@@ -119,49 +54,43 @@ input{
 
 width:100%;
 
-padding:16px;
+padding:15px;
 
-margin-bottom:15px;
-
-border-radius:15px;
+margin-top:12px;
 
 border:1px solid #ddd;
 
-font-size:15px;
+border-radius:12px;
+
+box-sizing:border-box;
 
 }
 
-.mainbtn{
+button{
 
 width:100%;
 
-padding:16px;
+padding:15px;
+
+margin-top:15px;
 
 border:none;
 
-border-radius:15px;
-
-background:#ff8800;
+background:#ff9900;
 
 color:white;
 
 font-size:18px;
 
-}
-
-.hide{
-
-display:none;
+border-radius:12px;
 
 }
 
-.msg{
-
-margin-top:15px;
+.link{
 
 text-align:center;
 
-color:green;
+margin-top:15px;
 
 }
 
@@ -171,86 +100,49 @@ color:green;
 
 <body>
 
-<div class="card">
+<div class="box">
 
-<div class="logo">
+<div class="title">
 
-JUMIASTAFF
+Login / Sign Up
 
 </div>
 
-<div class="tabs">
+<input
+id="username"
+
+placeholder="Username">
+
+<input
+id="phone"
+
+placeholder="Phone Number">
+
+<input
+id="password"
+
+type="password"
+
+placeholder="Password">
+
+<input
+id="ref"
+
+placeholder="Referral Code (Optional)">
 
 <button
-id="loginTab"
-class="tab active">
-
-LOGIN
-
-</button>
-
-<button
-id="signupTab"
-class="tab">
+onclick="signup()">
 
 SIGN UP
 
 </button>
 
-</div>
-
-<div id="signupBox"
-class="hide">
-
-<input
-id="suUser"
-placeholder="Username">
-
-<input
-id="suEmail"
-placeholder="Email">
-
-<input
-id="suPass"
-type="password"
-placeholder="Password">
-
 <button
-class="mainbtn"
-onclick="signup()">
-
-Create Account
-
-</button>
-
-</div>
-
-<div id="loginBox">
-
-<input
-id="liEmail"
-placeholder="Email">
-
-<input
-id="liPass"
-type="password"
-placeholder="Password">
-
-<button
-class="mainbtn"
 onclick="login()">
 
-Login
+LOGIN
 
 </button>
-
-</div>
-
-<div
-class="msg"
-id="msg">
-
-</div>
 
 </div>
 
@@ -284,9 +176,9 @@ import {
 
 getFirestore,
 
-doc,
+setDoc,
 
-setDoc
+doc
 
 }
 
@@ -296,149 +188,112 @@ from
 
 const firebaseConfig={
 
-apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+apiKey:
+"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-authDomain:"jumiastaff-83757.firebaseapp.com",
+authDomain:
+"jumiastaff-83757.firebaseapp.com",
 
-projectId:"jumiastaff-83757",
-
-storageBucket:"jumiastaff-83757.firebasestorage.app",
-
-messagingSenderId:"1018307795636",
-
-appId:"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
+projectId:
+"jumiastaff-83757"
 
 };
 
 const app=
-
 initializeApp(firebaseConfig);
 
 const auth=
-
 getAuth(app);
 
 const db=
-
 getFirestore(app);
 
-loginTab.onclick=()=>{
-
-loginBox.classList.remove("hide");
-
-signupBox.classList.add("hide");
-
-loginTab.classList.add("active");
-
-signupTab.classList.remove("active");
-
-};
-
-signupTab.onclick=()=>{
-
-signupBox.classList.remove("hide");
-
-loginBox.classList.add("hide");
-
-signupTab.classList.add("active");
-
-loginTab.classList.remove("active");
-
-};
-
-window.signup=async()=>{
-
-try{
+window.signup=
+async()=>{
 
 let u=
+username.value;
+
+let p=
+phone.value;
+
+let pass=
+password.value;
+
+let referral=
+ref.value;
+
+let email=
+p+"@jumiastaff.com";
+
+let user=
 
 await createUserWithEmailAndPassword(
 
 auth,
 
-suEmail.value,
+email,
 
-suPass.value
+pass
 
 );
 
 await setDoc(
 
 doc(
-
 db,
-
 "users",
-
-u.user.uid
-
+user.user.uid
 ),
 
 {
 
-username:
+username:u,
 
-suUser.value,
+phone:p,
 
-email:
+referralCode:u,
 
-suEmail.value,
+usedReferral:referral,
 
 availableBalance:2,
 
-withdrawBalance:0
+withdrawableBalance:0,
+
+referralCommission:0,
+
+joinedUsers:0
 
 }
 
 );
 
-msg.innerHTML=
-
-"Account created";
-
 location=
-
 "dashboard.html";
-
-}
-
-catch(e){
-
-msg.innerHTML=
-
-e.message;
-
-}
 
 };
 
-window.login=async()=>{
+window.login=
+async()=>{
 
-try{
+let email=
+
+phone.value+
+
+"@jumiastaff.com";
 
 await signInWithEmailAndPassword(
 
 auth,
 
-liEmail.value,
+email,
 
-liPass.value
+password.value
 
 );
 
 location=
-
 "dashboard.html";
-
-}
-
-catch(e){
-
-msg.innerHTML=
-
-e.message;
-
-}
 
 };
 
