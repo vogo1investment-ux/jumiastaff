@@ -1,41 +1,190 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+
+<meta name="viewport"
+
+content="width=device-width,initial-scale=1">
+
+<title>
+
+JUMIASTAFF Dashboard
+
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#f3f3f3;
+padding-bottom:100px;
+}
+
+.top{
+
+background:
+
+linear-gradient(
+90deg,
+#ff9900,
+#ff5500
+);
+
+padding:25px;
+
+color:white;
+
+border-radius:0 0 30px 30px;
+
+position:relative;
+
+}
+
+.logout{
+
+position:absolute;
+
+right:20px;
+
+top:20px;
+
+background:white;
+
+border:none;
+
+padding:10px 18px;
+
+border-radius:20px;
+
+}
+
+.user{
+
+font-size:25px;
+
+font-weight:bold;
+
+margin-top:15px;
+
+}
+
+.card{
+
+background:white;
+
+margin:20px;
+
+padding:20px;
+
+border-radius:20px;
+
+box-shadow:
+
+0 5px 10px rgba(0,0,0,.1);
+
+}
+
+.big{
+
+font-size:28px;
+
+font-weight:bold;
+
+margin-top:10px;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(2,1fr);
+
+gap:15px;
+
+padding:20px;
+
+}
+
+.box{
+
+background:white;
+
+padding:20px;
+
+border-radius:20px;
+
+text-align:center;
+
+}
+
+.products{
+
+padding:20px;
+
+}
+
+.p{
+
+background:white;
+
+padding:15px;
+
+margin-bottom:12px;
+
+border-radius:15px;
+
+}
+
+</style>
+
+</head>
+
 <body>
 
-<h2>
+<div class="top">
 
-USER DASHBOARD
+<button
+class="logout"
 
-</h2>
+onclick="logout()">
+
+Logout
+
+</button>
 
 <div>
 
-Username:
-
-<span id="u">
-
-</span>
+Welcome
 
 </div>
 
-<div>
+<div
+class="user"
 
-Available Balance:
+id="u">
 
-$
-
-<span id="a">
-
-2
-
-</span>
+User
 
 </div>
 
-<div>
+</div>
 
-Withdrawalble Balance:
+<div class="card">
+
+Withdrawalble Balance
+
+<div
+class="big">
 
 $
 
@@ -47,51 +196,228 @@ $
 
 </div>
 
+</div>
+
+<div class="card">
+
+Available Balance
+
+<div
+class="big">
+
+$
+
+<span id="a">
+
+2
+
+</span>
+
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="box">
+
+🛒
+
+Market
+
+</div>
+
+<div class="box">
+
+💳
+
+Deposit
+
+</div>
+
+<div class="box">
+
+💸
+
+Withdraw
+
+</div>
+
+<div class="box">
+
+👥
+
+Referral
+
+</div>
+
+</div>
+
+<div class="products">
+
+<div class="p">
+
+Samsung 75 Inch Smart TV
+
+</div>
+
+<div class="p">
+
+Portable EcoFlow Station
+
+</div>
+
+<div class="p">
+
+Haier Thermocool Freezer
+
+</div>
+
+<div class="p">
+
+Apple MacBook Air M4
+
+</div>
+
+<div class="p">
+
+RTX Gaming Laptop
+
+</div>
+
+<div class="p">
+
+Designer Smart Watch
+
+</div>
+
+</div>
+
 <script type="module">
 
 import {
-auth,
-db
+
+initializeApp
+
 }
-from "./firebase.js";
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-doc,
-getDoc
+
+getAuth,
+
+onAuthStateChanged,
+
+signOut
+
 }
+
 from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+
+getFirestore,
+
+doc,
+
+getDoc
+
+}
+
+from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-auth.onAuthStateChanged(
+const firebaseConfig={
+
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+
+authDomain:"jumiastaff-83757.firebaseapp.com",
+
+projectId:"jumiastaff-83757",
+
+storageBucket:"jumiastaff-83757.firebasestorage.app",
+
+messagingSenderId:"1018307795636",
+
+appId:"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
+
+};
+
+const app=
+
+initializeApp(firebaseConfig);
+
+const auth=
+
+getAuth(app);
+
+const db=
+
+getFirestore(app);
+
+onAuthStateChanged(
+
+auth,
 
 async(user)=>{
+
+if(!user){
+
+location="auth.html";
+
+return;
+
+}
 
 let s=
 
 await getDoc(
 
 doc(
+
 db,
+
 "users",
+
 user.uid
+
 )
 
 );
 
-let d=s.data();
+let d=
+
+s.data();
 
 u.innerHTML=
+
 d.username;
 
 a.innerHTML=
+
 d.availableBalance;
 
 w.innerHTML=
+
 d.withdrawBalance;
 
 }
 
 );
+
+window.logout=async()=>{
+
+await signOut(auth);
+
+location="index.html";
+
+};
 
 </script>
 
