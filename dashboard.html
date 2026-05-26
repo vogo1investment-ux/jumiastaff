@@ -480,19 +480,19 @@ let d=
 s.data();
 
 u.innerHTML=
-d.username||
+d.username ??
 "User";
 
 a.innerHTML=
-d.availableBalance||
+d.availableBalance ??
 2;
 
 w.innerHTML=
-d.withdrawableBalance||
+d.withdrawableBalance ??
 0;
 
 rc.innerHTML=
-d.referralCommission||
+d.referralCommission ??
 0;
 
 refcode.innerHTML=

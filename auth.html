@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 
 <meta charset="UTF-8">
@@ -8,89 +7,159 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
-<title>
-
-JUMIASTAFF
-
-</title>
+<title>JUMIASTAFF Login</title>
 
 <style>
 
-body{
-
+*{
 margin:0;
-
+padding:0;
+box-sizing:border-box;
 font-family:Arial;
+}
 
-background:#f3f3f3;
+body{
+background:#f5f5f5;
+min-height:100vh;
+}
 
-padding:20px;
+.top{
+
+height:80px;
+
+background:white;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 20px;
+
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+}
+
+.left{
+
+display:flex;
+
+gap:20px;
+
+font-size:35px;
+
+}
+
+.right{
+
+font-size:35px;
+
+}
+
+.wrap{
+
+padding:40px;
+
+max-width:650px;
+
+margin:auto;
+
+}
+
+.note{
+
+text-align:center;
+
+color:#666;
+
+margin:50px 0;
+
+font-size:18px;
 
 }
 
 .box{
 
-background:white;
+background:#f7f7f7;
 
-padding:25px;
+border:2px solid #e5e5e5;
 
-border-radius:20px;
+border-radius:50px;
 
-margin-top:40px;
+padding:18px;
 
-}
+display:flex;
 
-.title{
+align-items:center;
 
-font-size:28px;
-
-font-weight:bold;
-
-margin-bottom:20px;
+margin-bottom:25px;
 
 }
 
-input{
-
-width:100%;
-
-padding:15px;
-
-margin-top:12px;
-
-border:1px solid #ddd;
-
-border-radius:12px;
-
-box-sizing:border-box;
-
-}
-
-button{
-
-width:100%;
-
-padding:15px;
-
-margin-top:15px;
+.box input{
 
 border:none;
 
-background:#ff9900;
+outline:none;
 
-color:white;
+background:none;
 
-font-size:18px;
+width:100%;
 
-border-radius:12px;
+font-size:20px;
+
+padding-left:15px;
 
 }
 
-.link{
+.btn{
+
+width:100%;
+
+border:none;
+
+padding:22px;
+
+border-radius:50px;
+
+background:
+
+linear-gradient(
+90deg,
+#ff704d,
+#ff0040
+);
+
+color:white;
+
+font-size:24px;
+
+margin-top:20px;
+
+}
+
+.bottom{
+
+margin-top:60px;
 
 text-align:center;
 
-margin-top:15px;
+font-size:20px;
+
+}
+
+.bottom span{
+
+text-decoration:underline;
+
+font-weight:bold;
+
+}
+
+#register{
+
+display:none;
 
 }
 
@@ -100,102 +169,186 @@ margin-top:15px;
 
 <body>
 
-<div class="box">
+<div class="top">
 
-<div class="title">
+<div class="left">
 
-Login / Sign Up
+← 🌐
 
 </div>
 
+<div class="right">
+
+🎧
+
+</div>
+
+</div>
+
+<div class="wrap">
+
+<div id="login">
+
+<div class="note">
+
+Genuine products are guaranteed at low prices
+
+</div>
+
+<div class="box">
+
+📞
+
 <input
-id="username"
+id="loginPhone"
+placeholder="Please Enter Mobile Phone Number">
 
-placeholder="Username">
+</div>
+
+<div class="box">
+
+🔒
 
 <input
-id="phone"
-
-placeholder="Phone Number">
-
-<input
-id="password"
-
 type="password"
+id="loginPass"
+placeholder="Password Length 6~30">
 
-placeholder="Password">
+👁
+
+</div>
+
+<button
+class="btn"
+onclick="login()">
+
+Login
+
+</button>
+
+<div class="bottom">
+
+No Account?
+
+<span onclick="showRegister()">
+
+Register Now
+
+</span>
+
+</div>
+
+</div>
+
+<div id="register">
+
+<div class="box">
+
+📞
+
+<input
+id="regPhone"
+placeholder="Please Enter Mobile Phone Number">
+
+</div>
+
+<div class="box">
+
+🔒
+
+<input
+type="password"
+id="regPass"
+placeholder="Password Length 6~30">
+
+👁
+
+</div>
+
+<div class="box">
+
+🔒
+
+<input
+type="password"
+id="confirmPass"
+placeholder="Please Enter Confirm Password">
+
+👁
+
+</div>
+
+<div class="box">
+
+🔗
 
 <input
 id="ref"
+placeholder="Please Enter Invitation Code">
 
-placeholder="Referral Code (Optional)">
+</div>
 
 <button
-onclick="signup()">
+class="btn"
+onclick="register()">
 
-SIGN UP
+Register
 
 </button>
 
-<button
-onclick="login()">
+<div class="bottom">
 
-LOGIN
+Existing Account?
 
-</button>
+<span onclick="showLogin()">
+
+Log In Now
+
+</span>
+
+</div>
+
+</div>
 
 </div>
 
 <script type="module">
 
-import {
-
+import{
 initializeApp
-
 }
 
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
-import {
-
+import{
 getAuth,
-
 createUserWithEmailAndPassword,
-
 signInWithEmailAndPassword
-
 }
 
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-import {
-
+import{
 getFirestore,
-
-setDoc,
-
-doc
-
+doc,
+setDoc
 }
 
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig={
 
 apiKey:
-"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+"YOURKEY",
 
 authDomain:
-"jumiastaff-83757.firebaseapp.com",
+"YOURDOMAIN",
 
 projectId:
-"jumiastaff-83757"
+"YOURPROJECT"
 
 };
 
@@ -208,32 +361,42 @@ getAuth(app);
 const db=
 getFirestore(app);
 
-window.signup=
+window.showRegister=()=>{
+
+login.style.display="none";
+
+register.style.display="block";
+
+}
+
+window.showLogin=()=>{
+
+register.style.display="none";
+
+login.style.display="block";
+
+}
+
+window.register=
 async()=>{
 
-let u=
-username.value;
-
 let p=
-phone.value;
+regPhone.value;
 
 let pass=
-password.value;
+regPass.value;
 
-let referral=
+let r=
 ref.value;
 
-let email=
+let mail=
 p+"@jumiastaff.com";
 
-let user=
-
+let u=
 await createUserWithEmailAndPassword(
 
 auth,
-
-email,
-
+mail,
 pass
 
 );
@@ -243,26 +406,20 @@ await setDoc(
 doc(
 db,
 "users",
-user.user.uid
+u.user.uid
 ),
 
 {
 
-username:u,
+username:p,
 
-phone:p,
-
-referralCode:u,
-
-usedReferral:referral,
+usedReferral:r,
 
 availableBalance:2,
 
 withdrawableBalance:0,
 
-referralCommission:0,
-
-joinedUsers:0
+referralCommission:0
 
 }
 
@@ -271,14 +428,14 @@ joinedUsers:0
 location=
 "dashboard.html";
 
-};
+}
 
 window.login=
 async()=>{
 
-let email=
+let mail=
 
-phone.value+
+loginPhone.value+
 
 "@jumiastaff.com";
 
@@ -286,16 +443,16 @@ await signInWithEmailAndPassword(
 
 auth,
 
-email,
+mail,
 
-password.value
+loginPass.value
 
 );
 
 location=
 "dashboard.html";
 
-};
+}
 
 </script>
 
