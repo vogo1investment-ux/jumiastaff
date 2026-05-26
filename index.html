@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JUMIASTAFF</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#f5f5f5;
+overflow-x:hidden;
+}
+
+/* TOP */
+
+.top{
+
+background:white;
+
+padding:15px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+position:sticky;
+
+top:0;
+
+z-index:100;
+
+}
+
+.logo{
+
+font-size:40px;
+
+font-weight:bold;
+
+}
+
+.star{
+color:#ff9900;
+}
+
+/* SEARCH */
+
+.search{
+
+margin:15px;
+
+background:#eee;
+
+padding:15px;
+
+border-radius:20px;
+
+display:flex;
+
+gap:10px;
+
+align-items:center;
+
+}
+
+.search input{
+
+border:none;
+
+background:none;
+
+width:100%;
+
+font-size:18px;
+
+outline:none;
+
+}
+
+/* CALL */
+
+.call{
+
+background:#ff5a00;
+
+color:white;
+
+text-align:center;
+
+padding:12px;
+
+font-size:20px;
+
+font-weight:bold;
+
+}
+
+/* SLIDER */
+
+.slider{
+
+margin:15px;
+
+overflow:hidden;
+
+border-radius:15px;
+
+height:220px;
+
+}
+
+.slideTrack{
+
+display:flex;
+
+width:400%;
+
+animation:slide 15s infinite;
+
+}
+
+.slide{
+
+min-width:100%;
+
+height:220px;
+
+padding:30px;
+
+color:white;
+
+font-weight:bold;
+
+font-size:50px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.s1{background:#0033cc;}
+.s2{background:#ff9900;}
+.s3{background:#0099ff;}
+.s4{background:#cc0033;}
+
+@keyframes slide{
+
+0%{transform:translateX(0);}
+25%{transform:translateX(-100%);}
+50%{transform:translateX(-200%);}
+75%{transform:translateX(-300%);}
+100%{transform:translateX(0);}
+
+}
+
+/* MENU */
+
+.menu{
+
+display:flex;
+
+overflow:auto;
+
+gap:10px;
+
+padding:15px;
+
+}
+
+.card{
+
+min-width:120px;
+
+background:white;
+
+padding:10px;
+
+border-radius:12px;
+
+text-align:center;
+
+animation:float 3s infinite;
+
+}
+
+.card img{
+
+width:100%;
+
+height:80px;
+
+object-fit:cover;
+
+border-radius:10px;
+
+}
+
+@keyframes float{
+
+50%{
+
+transform:
+
+translateY(-5px);
+
+}
+
+}
+
+/* FLASH */
+
+.flash{
+
+background:#c70039;
+
+padding:15px;
+
+color:white;
+
+display:flex;
+
+justify-content:space-between;
+
+font-size:24px;
+
+font-weight:bold;
+
+}
+
+.timer{
+font-size:18px;
+}
+
+/* PRODUCTS */
+
+.products{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(
+auto-fit,
+minmax(170px,1fr)
+);
+
+gap:10px;
+
+padding:15px;
+
+}
+
+.product{
+
+background:white;
+
+padding:10px;
+
+border-radius:12px;
+
+transition:.3s;
+
+}
+
+.product:hover{
+
+transform:
+
+scale(1.03);
+
+}
+
+.product img{
+
+width:100%;
+
+height:150px;
+
+object-fit:cover;
+
+border-radius:10px;
+
+}
+
+.price{
+
+font-size:35px;
+
+margin-top:10px;
+
+}
+
+.stock{
+
+margin-top:10px;
+
+height:10px;
+
+background:#ddd;
+
+border-radius:20px;
+
+overflow:hidden;
+
+}
+
+.fill{
+
+height:100%;
+
+width:70%;
+
+background:#ff9900;
+
+animation:move 2s infinite;
+
+}
+
+@keyframes move{
+
+50%{
+
+width:90%;
+
+}
+
+}
+
+.bottom{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+right:0;
+
+background:white;
+
+display:flex;
+
+justify-content:space-around;
+
+padding:15px;
+
+box-shadow:0 0 10px rgba(0,0,0,.2);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+☰
+
+<div class="logo">
+
+JUMIA<span class="star">⭐</span>
+
+</div>
+
+👤 🛒
+
+</div>
+
+<div class="search">
+
+🔍
+
+<input placeholder="Search products, brands and categories">
+
+</div>
+
+<div class="call">
+
+CALL TO ORDER: 02018883300
+
+</div>
+
+<div class="slider">
+
+<div class="slideTrack">
+
+<div class="slide s1">
+
+BEAUTY MONDAY 40% OFF
+
+</div>
+
+<div class="slide s2">
+
+JUMIA FORCE JOIN NOW
+
+</div>
+
+<div class="slide s3">
+
+AWOOF DEALS
+
+</div>
+
+<div class="slide s4">
+
+FLASH SALES
+
+</div>
+
+</div>
+
+</div>
+
+<div class="menu">
+
+<div class="card">
+
+📦
+
+<br>
+
+Awoof Deals
+
+</div>
+
+<div class="card">
+
+🔥
+
+<br>
+
+80% OFF
+
+</div>
+
+<div class="card">
+
+🎧
+
+<br>
+
+Banger Deals
+
+</div>
+
+<div class="card">
+
+💰
+
+<br>
+
+Earn While Shop
+
+</div>
+
+<div class="card">
+
+⚡
+
+<br>
+
+Flash Sale
+
+</div>
+
+</div>
+
+<div class="flash">
+
+FLASH SALES
+
+<div class="timer"
+
+id="timer">
+
+08:17:45
+
+</div>
+
+</div>
+
+<div class="products">
+
+<div class="product">
+
+<img src="https://picsum.photos/200?1">
+
+Power Bank
+
+<div class="price">
+
+₦7,650
+
+</div>
+
+<div class="stock">
+
+<div class="fill"></div>
+
+</div>
+
+</div>
+
+<div class="product">
+
+<img src="https://picsum.photos/200?2">
+
+20000mAh
+
+<div class="price">
+
+₦7,994
+
+</div>
+
+<div class="stock">
+
+<div class="fill"></div>
+
+</div>
+
+</div>
+
+<div class="product">
+
+<img src="https://picsum.photos/200?3">
+
+Smart TV
+
+<div class="price">
+
+₦109,900
+
+</div>
+
+<div class="stock">
+
+<div class="fill"></div>
+
+</div>
+
+</div>
+
+<div class="product">
+
+<img src="https://picsum.photos/200?4">
+
+Headset
+
+<div class="price">
+
+₦20,500
+
+</div>
+
+<div class="stock">
+
+<div class="fill"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="bottom">
+
+🏠
+
+🔍
+
+🛒
+
+👤
+
+</div>
+
+<script>
+
+let sec=45;
+
+setInterval(()=>{
+
+sec--;
+
+document.getElementById(
+"timer"
+).innerHTML=
+
+"08:17:"+
+
+String(sec)
+
+.padStart(
+2,
+"0"
+);
+
+if(sec<0){
+
+sec=59;
+
+}
+
+},1000);
+
+</script>
+
+</body>
+
+</html>
