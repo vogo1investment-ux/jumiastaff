@@ -29,105 +29,59 @@ min-height:100vh;
 }
 
 .wrap{
-
 max-width:500px;
-
 margin:auto;
-
 padding:25px;
-
 padding-top:60px;
-
 }
 
 .box{
-
 background:#fafafa;
-
 border:2px solid #e5e5e5;
-
 border-radius:50px;
-
 padding:18px;
-
 margin-bottom:20px;
-
 display:flex;
-
 align-items:center;
-
 gap:15px;
-
 }
 
 .box input{
-
 border:none;
-
 background:none;
-
 outline:none;
-
 width:100%;
-
 font-size:18px;
-
 }
 
 .btn{
-
 width:100%;
-
 border:none;
-
 padding:20px;
-
 border-radius:50px;
-
 font-size:22px;
-
 color:white;
-
 background:
-
 linear-gradient(
 90deg,
 #ff7a7a,
 #ff0033
 );
-
 }
 
 .bottom{
-
 text-align:center;
-
 margin-top:35px;
-
 font-size:20px;
-
 }
 
 .bottom span{
-
 font-weight:bold;
-
 text-decoration:underline;
-
 }
 
 #register{
-
 display:none;
-
-}
-
-.note{
-
-text-align:center;
-
-margin-bottom:30px;
-
 }
 
 </style>
@@ -140,21 +94,13 @@ margin-bottom:30px;
 
 <div id="loginPage">
 
-<div class="note">
-
-Login To Continue
-
-</div>
-
 <div class="box">
 
 📧
 
 <input
 id="loginEmail"
-
-placeholder=
-"Email">
+placeholder="Email">
 
 </div>
 
@@ -164,17 +110,13 @@ placeholder=
 
 <input
 id="loginPass"
-
 type="password"
-
-placeholder=
-"Password">
+placeholder="Password">
 
 </div>
 
 <button
 class="btn"
-
 onclick="loginUser()">
 
 LOGIN
@@ -197,21 +139,13 @@ Register Now
 
 <div id="register">
 
-<div class="note">
-
-Create Account
-
-</div>
-
 <div class="box">
 
 👤
 
 <input
 id="username"
-
-placeholder=
-"Username">
+placeholder="Username">
 
 </div>
 
@@ -221,9 +155,7 @@ placeholder=
 
 <input
 id="email"
-
-placeholder=
-"Email">
+placeholder="Email">
 
 </div>
 
@@ -233,25 +165,8 @@ placeholder=
 
 <input
 id="pass"
-
 type="password"
-
-placeholder=
-"Password">
-
-</div>
-
-<div class="box">
-
-🔒
-
-<input
-id="confirm"
-
-type="password"
-
-placeholder=
-"Confirm Password">
+placeholder="Password">
 
 </div>
 
@@ -261,15 +176,12 @@ placeholder=
 
 <input
 id="referral"
-
-placeholder=
-"Referral Code">
+placeholder="Referral Code">
 
 </div>
 
 <button
 class="btn"
-
 onclick="registerUser()">
 
 REGISTER
@@ -278,11 +190,11 @@ REGISTER
 
 <div class="bottom">
 
-Existing Account?
+Already have account?
 
 <span onclick="openLogin()">
 
-Login Now
+Login
 
 </span>
 
@@ -294,13 +206,13 @@ Login Now
 
 <script type="module">
 
-import{
+import {
 initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
-import{
+import {
 getAuth,
 createUserWithEmailAndPassword,
 signInWithEmailAndPassword
@@ -308,7 +220,7 @@ signInWithEmailAndPassword
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-import{
+import {
 getFirestore,
 doc,
 setDoc
@@ -318,26 +230,17 @@ from
 
 const firebaseConfig={
 
-apiKey:
-"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-authDomain:
-"jumiastaff-83757.firebaseapp.com",
+authDomain:"jumiastaff-83757.firebaseapp.com",
 
-projectId:
-"jumiastaff-83757",
+projectId:"jumiastaff-83757",
 
-storageBucket:
-"jumiastaff-83757.firebasestorage.app",
+storageBucket:"jumiastaff-83757.firebasestorage.app",
 
-messagingSenderId:
-"1018307795636",
+messagingSenderId:"1018307795636",
 
-appId:
-"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1",
-
-measurementId:
-"G-KJM4KLH6ZJ"
+appId:"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
 
 };
 
@@ -352,46 +255,22 @@ getFirestore(app);
 
 window.openRegister=()=>{
 
-loginPage.style.display=
-"none";
+loginPage.style.display="none";
 
-register.style.display=
-"block";
+register.style.display="block";
 
 }
 
 window.openLogin=()=>{
 
-register.style.display=
-"none";
+register.style.display="none";
 
-loginPage.style.display=
-"block";
+loginPage.style.display="block";
 
 }
 
 window.registerUser=
 async()=>{
-
-if(
-
-pass.value
-
-!==
-
-confirm.value
-
-){
-
-alert(
-"Password mismatch"
-);
-
-return;
-
-}
-
-try{
 
 let user=
 
@@ -432,9 +311,7 @@ referralCommission:0,
 
 joinedUsers:0,
 
-cart:[],
-
-taskCompleted:false
+cart:[]
 
 }
 
@@ -445,20 +322,8 @@ location=
 
 }
 
-catch(e){
-
-alert(
-e.message
-);
-
-}
-
-}
-
 window.loginUser=
 async()=>{
-
-try{
 
 await signInWithEmailAndPassword(
 
@@ -472,16 +337,6 @@ loginPass.value
 
 location=
 "dashboard.html";
-
-}
-
-catch(e){
-
-alert(
-e.message
-);
-
-}
 
 }
 

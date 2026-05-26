@@ -165,7 +165,6 @@ Welcome
 
 <div
 class="user"
-
 id="u">
 
 User
@@ -272,7 +271,6 @@ Users Under You:
 
 <div
 class="btn"
-
 onclick="location='market.html'">
 
 🛒
@@ -285,7 +283,6 @@ Market
 
 <div
 class="btn"
-
 onclick="location='buy.html'">
 
 🛍
@@ -298,7 +295,6 @@ Buy Product
 
 <div
 class="btn"
-
 onclick="location='deposit.html'">
 
 💳
@@ -311,7 +307,6 @@ Deposit
 
 <div
 class="btn"
-
 onclick="location='withdraw.html'">
 
 💸
@@ -324,7 +319,6 @@ Withdraw
 
 <div
 class="btn"
-
 onclick="location='depositHistory.html'">
 
 📄
@@ -337,7 +331,6 @@ Deposit History
 
 <div
 class="btn"
-
 onclick="location='withdrawHistory.html'">
 
 📑
@@ -350,7 +343,6 @@ Withdraw History
 
 <div
 class="btn"
-
 onclick="location='cart.html'">
 
 🛒
@@ -377,66 +369,52 @@ Referral
 <script type="module">
 
 import {
-
 initializeApp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-
 getAuth,
-
 onAuthStateChanged,
-
 signOut
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 import {
-
 getFirestore,
-
 doc,
-
 getDoc,
-
+setDoc,
 collection,
-
 query,
-
 where,
-
 getDocs,
-
 updateDoc
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig={
 
 apiKey:
-
 "AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
 authDomain:
-
 "jumiastaff-83757.firebaseapp.com",
 
 projectId:
+"jumiastaff-83757",
 
-"jumiastaff-83757"
+storageBucket:
+"jumiastaff-83757.firebasestorage.app",
+
+messagingSenderId:
+"1018307795636",
+
+appId:
+"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
 
 };
 
@@ -458,45 +436,85 @@ async(user)=>{
 if(!user){
 
 location=
-"index.html";
+"auth.html";
 
 return;
 
 }
 
-let s=
-
-await getDoc(
+const ref=
 
 doc(
 db,
 "users",
 user.uid
-)
+);
+
+let snap=
+
+await getDoc(ref);
+
+if(!snap.exists()){
+
+await setDoc(
+
+ref,
+
+{
+
+username:"User",
+
+availableBalance:2,
+
+withdrawableBalance:0,
+
+referralCommission:0,
+
+usedReferral:"",
+
+joinedUsers:0,
+
+cart:[]
+
+}
 
 );
 
+snap=
+await getDoc(ref);
+
+}
+
 let d=
-s.data();
+snap.data();
 
 u.innerHTML=
-d.username ??
+d.username
+||
 "User";
 
 a.innerHTML=
-d.availableBalance ??
-2;
+Number(
+d.availableBalance
+??2
+);
 
 w.innerHTML=
-d.withdrawableBalance ??
-0;
+Number(
+d.withdrawableBalance
+??0
+);
 
 rc.innerHTML=
-d.referralCommission ??
-0;
+Number(
+d.referralCommission
+??0
+);
 
 refcode.innerHTML=
-d.username;
+d.username
+||
+"User";
 
 const q=
 
@@ -524,11 +542,7 @@ refs.size;
 
 await updateDoc(
 
-doc(
-db,
-"users",
-user.uid
-),
+ref,
 
 {
 
@@ -549,7 +563,7 @@ async()=>{
 await signOut(auth);
 
 location=
-"index.html";
+"auth.html";
 
 };
 
