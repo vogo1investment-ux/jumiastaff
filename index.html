@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JUMIASTAFF</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+
+content="width=device-width,initial-scale=1">
+
+<title>
+
+JUMIASTAFF
+
+</title>
 
 <style>
 
@@ -16,8 +25,8 @@ font-family:Arial;
 }
 
 body{
-background:#f5f5f5;
-overflow-x:hidden;
+background:#f3f3f3;
+padding-bottom:100px;
 }
 
 /* TOP */
@@ -26,13 +35,17 @@ overflow-x:hidden;
 
 background:white;
 
-padding:15px;
+padding:20px;
 
 display:flex;
 
 justify-content:space-between;
 
 align-items:center;
+
+border-radius:0 0 20px 20px;
+
+box-shadow:0 5px 10px rgba(0,0,0,.1);
 
 position:sticky;
 
@@ -44,105 +57,27 @@ z-index:100;
 
 .logo{
 
-font-size:40px;
-
-font-weight:bold;
-
-}
-
-.star{
-color:#ff9900;
-}
-
-/* SEARCH */
-
-.search{
-
-margin:15px;
-
-background:#eee;
-
-padding:15px;
-
-border-radius:20px;
-
 display:flex;
 
 gap:10px;
 
 align-items:center;
 
-}
-
-.search input{
-
-border:none;
-
-background:none;
-
-width:100%;
-
-font-size:18px;
-
-outline:none;
-
-}
-
-/* CALL */
-
-.call{
-
-background:#ff5a00;
-
-color:white;
-
-text-align:center;
-
-padding:12px;
-
-font-size:20px;
+font-size:22px;
 
 font-weight:bold;
 
 }
 
-/* SLIDER */
+.star{
 
-.slider{
+width:45px;
 
-margin:15px;
+height:45px;
 
-overflow:hidden;
+background:#ff9900;
 
-border-radius:15px;
-
-height:220px;
-
-}
-
-.slideTrack{
-
-display:flex;
-
-width:400%;
-
-animation:slide 15s infinite;
-
-}
-
-.slide{
-
-min-width:100%;
-
-height:220px;
-
-padding:30px;
-
-color:white;
-
-font-weight:bold;
-
-font-size:50px;
+border-radius:50%;
 
 display:flex;
 
@@ -150,20 +85,21 @@ justify-content:center;
 
 align-items:center;
 
+font-size:22px;
+
+color:white;
+
 }
 
-.s1{background:#0033cc;}
-.s2{background:#ff9900;}
-.s3{background:#0099ff;}
-.s4{background:#cc0033;}
+/* ICONS */
 
-@keyframes slide{
+.icons{
 
-0%{transform:translateX(0);}
-25%{transform:translateX(-100%);}
-50%{transform:translateX(-200%);}
-75%{transform:translateX(-300%);}
-100%{transform:translateX(0);}
+display:flex;
+
+gap:20px;
+
+font-size:28px;
 
 }
 
@@ -171,25 +107,25 @@ align-items:center;
 
 .menu{
 
-display:flex;
+display:grid;
 
-overflow:auto;
+grid-template-columns:
 
-gap:10px;
+repeat(4,1fr);
 
-padding:15px;
+padding:20px;
+
+gap:15px;
 
 }
 
-.card{
-
-min-width:120px;
+.box{
 
 background:white;
 
-padding:10px;
+padding:15px;
 
-border-radius:12px;
+border-radius:20px;
 
 text-align:center;
 
@@ -197,15 +133,11 @@ animation:float 3s infinite;
 
 }
 
-.card img{
+.icon{
 
-width:100%;
+font-size:35px;
 
-height:80px;
-
-object-fit:cover;
-
-border-radius:10px;
+color:#ff9900;
 
 }
 
@@ -215,34 +147,10 @@ border-radius:10px;
 
 transform:
 
-translateY(-5px);
+translateY(-6px);
 
 }
 
-}
-
-/* FLASH */
-
-.flash{
-
-background:#c70039;
-
-padding:15px;
-
-color:white;
-
-display:flex;
-
-justify-content:space-between;
-
-font-size:24px;
-
-font-weight:bold;
-
-}
-
-.timer{
-font-size:18px;
 }
 
 /* PRODUCTS */
@@ -254,29 +162,29 @@ display:grid;
 grid-template-columns:
 
 repeat(
-auto-fit,
-minmax(170px,1fr)
+2,
+1fr
 );
 
-gap:10px;
+gap:15px;
 
 padding:15px;
 
 }
 
-.product{
+.card{
 
 background:white;
 
-padding:10px;
-
 border-radius:12px;
+
+overflow:hidden;
 
 transition:.3s;
 
 }
 
-.product:hover{
+.card:hover{
 
 transform:
 
@@ -284,61 +192,55 @@ scale(1.03);
 
 }
 
-.product img{
+.card img{
 
 width:100%;
 
-height:150px;
+height:220px;
 
 object-fit:cover;
 
-border-radius:10px;
+}
+
+.info{
+
+padding:15px;
 
 }
 
-.price{
+.name{
 
-font-size:35px;
+font-size:18px;
 
-margin-top:10px;
-
-}
-
-.stock{
-
-margin-top:10px;
-
-height:10px;
-
-background:#ddd;
-
-border-radius:20px;
+height:55px;
 
 overflow:hidden;
 
 }
 
-.fill{
+.price{
 
-height:100%;
+margin-top:15px;
 
-width:70%;
+font-size:22px;
 
-background:#ff9900;
+font-weight:bold;
 
-animation:move 2s infinite;
-
-}
-
-@keyframes move{
-
-50%{
-
-width:90%;
+color:#ff5500;
 
 }
 
+.rate{
+
+color:#00aa44;
+
+margin-top:8px;
+
+font-size:14px;
+
 }
+
+/* NAV */
 
 .bottom{
 
@@ -358,7 +260,21 @@ justify-content:space-around;
 
 padding:15px;
 
-box-shadow:0 0 10px rgba(0,0,0,.2);
+box-shadow:0 -5px 10px rgba(0,0,0,.1);
+
+}
+
+.nav{
+
+text-align:center;
+
+font-size:15px;
+
+}
+
+.active{
+
+color:red;
 
 }
 
@@ -370,59 +286,23 @@ box-shadow:0 0 10px rgba(0,0,0,.2);
 
 <div class="top">
 
-☰
-
 <div class="logo">
 
-JUMIA<span class="star">⭐</span>
+<div class="star">
+
+⭐
 
 </div>
 
-👤 🛒
+JUMIASTAFF
 
 </div>
 
-<div class="search">
+<div class="icons">
 
-🔍
+🔔
 
-<input placeholder="Search products, brands and categories">
-
-</div>
-
-<div class="call">
-
-CALL TO ORDER: 02018883300
-
-</div>
-
-<div class="slider">
-
-<div class="slideTrack">
-
-<div class="slide s1">
-
-BEAUTY MONDAY 40% OFF
-
-</div>
-
-<div class="slide s2">
-
-JUMIA FORCE JOIN NOW
-
-</div>
-
-<div class="slide s3">
-
-AWOOF DEALS
-
-</div>
-
-<div class="slide s4">
-
-FLASH SALES
-
-</div>
+🌍
 
 </div>
 
@@ -430,67 +310,51 @@ FLASH SALES
 
 <div class="menu">
 
-<div class="card">
+<div class="box">
 
-📦
+<div class="icon">
 
-<br>
-
-Awoof Deals
+💎
 
 </div>
 
-<div class="card">
-
-🔥
-
-<br>
-
-80% OFF
+Merchant
 
 </div>
 
-<div class="card">
+<div class="box">
 
-🎧
+<div class="icon">
 
-<br>
-
-Banger Deals
+🖥
 
 </div>
 
-<div class="card">
-
-💰
-
-<br>
-
-Earn While Shop
+Server
 
 </div>
 
-<div class="card">
+<div class="box">
 
-⚡
+<div class="icon">
 
-<br>
-
-Flash Sale
+❓
 
 </div>
 
+Help
+
 </div>
 
-<div class="flash">
+<div class="box">
 
-FLASH SALES
+<div class="icon">
 
-<div class="timer"
+⭐
 
-id="timer">
+</div>
 
-08:17:45
+About
 
 </div>
 
@@ -498,81 +362,175 @@ id="timer">
 
 <div class="products">
 
-<div class="product">
+<div class="card">
 
-<img src="https://picsum.photos/200?1">
+<img src="https://picsum.photos/400?1">
 
-Power Bank
+<div class="info">
+
+<div class="name">
+
+Samsung 75 Inch Smart TV 8K
+
+</div>
 
 <div class="price">
 
-₦7,650
+$694.34
 
 </div>
 
-<div class="stock">
+<div class="rate">
 
-<div class="fill"></div>
+NGN:
+₦920,000
 
 </div>
 
 </div>
 
-<div class="product">
+</div>
 
-<img src="https://picsum.photos/200?2">
+<div class="card">
 
-20000mAh
+<img src="https://picsum.photos/400?2">
+
+<div class="info">
+
+<div class="name">
+
+Portable EcoFlow Power Station
+
+</div>
 
 <div class="price">
 
-₦7,994
+$747.16
 
 </div>
 
-<div class="stock">
+<div class="rate">
 
-<div class="fill"></div>
+NGN:
+₦989,998
 
 </div>
 
 </div>
 
-<div class="product">
+</div>
 
-<img src="https://picsum.photos/200?3">
+<div class="card">
 
-Smart TV
+<img src="https://picsum.photos/400?3">
+
+<div class="info">
+
+<div class="name">
+
+Haier Thermocool Freezer
+
+</div>
 
 <div class="price">
 
-₦109,900
+$377.36
 
 </div>
 
-<div class="stock">
+<div class="rate">
 
-<div class="fill"></div>
+NGN:
+₦500,000
 
 </div>
 
 </div>
 
-<div class="product">
+</div>
 
-<img src="https://picsum.photos/200?4">
+<div class="card">
 
-Headset
+<img src="https://picsum.photos/400?4">
+
+<div class="info">
+
+<div class="name">
+
+Apple MacBook Air M4
+
+</div>
 
 <div class="price">
 
-₦20,500
+$2909.15
 
 </div>
 
-<div class="stock">
+<div class="rate">
 
-<div class="fill"></div>
+NGN:
+₦3,854,620
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/400?5">
+
+<div class="info">
+
+<div class="name">
+
+Gaming Laptop RTX Series
+
+</div>
+
+<div class="price">
+
+$981.13
+
+</div>
+
+<div class="rate">
+
+NGN:
+₦1,300,000
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/400?6">
+
+<div class="info">
+
+<div class="name">
+
+Designer Smart Watch
+
+</div>
+
+<div class="price">
+
+$226.42
+
+</div>
+
+<div class="rate">
+
+NGN:
+₦300,000
+
+</div>
 
 </div>
 
@@ -582,44 +540,61 @@ Headset
 
 <div class="bottom">
 
+<div class="nav active">
+
 🏠
 
-🔍
+<br>
+
+Home
+
+</div>
+
+<div class="nav">
+
+⬜
+
+<br>
+
+Orders
+
+</div>
+
+<div class="nav">
 
 🛒
 
+<br>
+
+Cart
+
+</div>
+
+<div class="nav">
+
 👤
+
+<br>
+
+Mine
+
+</div>
 
 </div>
 
 <script>
 
-let sec=45;
+/* RATE */
 
-setInterval(()=>{
+let rate=1325;
 
-sec--;
+console.log(
 
-document.getElementById(
-"timer"
-).innerHTML=
+"USD RATE",
 
-"08:17:"+
+rate
 
-String(sec)
-
-.padStart(
-2,
-"0"
 );
-
-if(sec<0){
-
-sec=59;
-
-}
-
-},1000);
 
 </script>
 
