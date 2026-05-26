@@ -8,16 +8,20 @@ content="width=device-width,initial-scale=1">
 
 <title>
 
-Deposit
+Buy Product
 
 </title>
 
 <style>
 
 body{
+
 background:#f3f3f3;
+
 font-family:Arial;
+
 padding:20px;
+
 }
 
 .box{
@@ -28,29 +32,19 @@ padding:25px;
 
 border-radius:20px;
 
-margin-bottom:20px;
+margin-top:20px;
 
 }
 
 .title{
 
-font-size:26px;
+font-size:25px;
 
 font-weight:bold;
-
-color:#ff8800;
 
 margin-bottom:15px;
 
-}
-
-.big{
-
-font-size:22px;
-
-font-weight:bold;
-
-margin-top:10px;
+color:#ff8800;
 
 }
 
@@ -60,7 +54,7 @@ width:100%;
 
 padding:15px;
 
-margin-top:10px;
+margin-top:15px;
 
 border-radius:12px;
 
@@ -74,27 +68,27 @@ width:100%;
 
 padding:15px;
 
-margin-top:15px;
+margin-top:20px;
+
+border:none;
 
 background:#ff8800;
 
 color:white;
 
-border:none;
+font-size:18px;
 
 border-radius:12px;
 
-font-size:18px;
-
 }
 
-.msg{
+.big{
+
+font-size:22px;
 
 font-weight:bold;
 
 margin-top:15px;
-
-color:green;
 
 }
 
@@ -108,84 +102,45 @@ color:green;
 
 <div class="title">
 
-🇺🇸 UNITED STATES DEPOSIT
+BUY PRODUCT
 
 </div>
 
 <div class="big">
 
-Litecoin Wallet
+Available Balance Only
 
 </div>
 
 <div class="big">
 
-MKXw4UeQaU42x2FLLBiM9GYiHVCwC1QcoB
+Use only your available balance to buy products.
 
 </div>
 
 <input
-id="wallet"
+id="pid"
 
-placeholder="Wallet Address Used">
+placeholder="Enter Product ID">
+
+<input
+id="pass"
+
+type="password"
+
+placeholder="Enter Password">
 
 <button
-onclick="usaDeposit()">
+onclick="submitBuy()">
 
-Submit Deposit
-
-</button>
-
-</div>
-
-<div class="box">
-
-<div class="title">
-
-🇳🇬 NGN DEPOSIT
-
-</div>
-
-<div class="big">
-
-Wema Bank
-
-</div>
-
-<div class="big">
-
-7353384026
-
-</div>
-
-<div class="big">
-
-VOGO
-
-</div>
-
-<input
-id="bank"
-
-placeholder="Bank Used">
-
-<input
-id="holder"
-
-placeholder="Account Holder Name">
-
-<button
-onclick="ngnDeposit()">
-
-Submit Deposit
+Submit Purchase
 
 </button>
-
-</div>
 
 <div
-class="msg"
 id="msg">
+
+</div>
 
 </div>
 
@@ -228,21 +183,27 @@ from
 const firebaseConfig={
 
 apiKey:
+
 "AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
 authDomain:
+
 "jumiastaff-83757.firebaseapp.com",
 
 projectId:
+
 "jumiastaff-83757",
 
 storageBucket:
+
 "jumiastaff-83757.firebasestorage.app",
 
 messagingSenderId:
+
 "1018307795636",
 
 appId:
+
 "1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
 
 };
@@ -259,7 +220,7 @@ const auth=
 
 getAuth(app);
 
-window.usaDeposit=
+window.submitBuy=
 async()=>{
 
 if(!auth.currentUser){
@@ -276,7 +237,7 @@ await addDoc(
 
 collection(
 db,
-"deposits"
+"buyRequests"
 ),
 
 {
@@ -285,13 +246,9 @@ uid:
 
 auth.currentUser.uid,
 
-method:
+productID:
 
-"Litecoin",
-
-wallet:
-
-wallet.value,
+pid.value,
 
 status:
 
@@ -307,69 +264,11 @@ Date.now()
 
 msg.innerHTML=
 
-"Deposit submitted - Pending approval";
+"<b style='color:orange'>Pending Approval</b>";
 
-wallet.value="";
+pid.value="";
 
-};
-
-window.ngnDeposit=
-async()=>{
-
-if(!auth.currentUser){
-
-alert(
-"Login first"
-);
-
-return;
-
-}
-
-await addDoc(
-
-collection(
-db,
-"deposits"
-),
-
-{
-
-uid:
-
-auth.currentUser.uid,
-
-method:
-
-"NGN",
-
-bank:
-
-bank.value,
-
-holder:
-
-holder.value,
-
-status:
-
-"pending",
-
-time:
-
-Date.now()
-
-}
-
-);
-
-msg.innerHTML=
-
-"Deposit submitted - Pending approval";
-
-bank.value="";
-
-holder.value="";
+pass.value="";
 
 };
 

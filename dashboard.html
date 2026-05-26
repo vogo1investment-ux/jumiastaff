@@ -101,7 +101,6 @@ margin-top:10px;
 display:grid;
 
 grid-template-columns:
-
 repeat(2,1fr);
 
 gap:12px;
@@ -146,60 +145,6 @@ border-radius:20px;
 
 }
 
-.popup{
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-right:0;
-
-bottom:0;
-
-background:
-
-rgba(0,0,0,.6);
-
-display:none;
-
-justify-content:center;
-
-align-items:center;
-
-}
-
-.box{
-
-background:white;
-
-padding:25px;
-
-width:90%;
-
-border-radius:20px;
-
-}
-
-button{
-
-padding:12px;
-
-border:none;
-
-background:#ff8800;
-
-color:white;
-
-border-radius:10px;
-
-margin-top:10px;
-
-width:100%;
-
-}
-
 </style>
 
 </head>
@@ -220,6 +165,7 @@ Welcome
 
 <div
 class="user"
+
 id="u">
 
 User
@@ -292,7 +238,7 @@ TASK REQUIRED
 
 <br><br>
 
-Buy a product from market before your $2 signup bonus becomes withdrawalble.
+Buy a product before bonus becomes withdrawalble.
 
 </div>
 
@@ -318,7 +264,7 @@ Users Under You:
 
 <br><br>
 
-Each person you invite that invests gives you 10% commission.
+10% commission for invited investors.
 
 </div>
 
@@ -326,6 +272,7 @@ Each person you invite that invests gives you 10% commission.
 
 <div
 class="btn"
+
 onclick="location='market.html'">
 
 🛒
@@ -338,6 +285,20 @@ Market
 
 <div
 class="btn"
+
+onclick="location='buy.html'">
+
+🛍
+
+<br>
+
+Buy Product
+
+</div>
+
+<div
+class="btn"
+
 onclick="location='deposit.html'">
 
 💳
@@ -350,6 +311,7 @@ Deposit
 
 <div
 class="btn"
+
 onclick="location='withdraw.html'">
 
 💸
@@ -362,6 +324,7 @@ Withdraw
 
 <div
 class="btn"
+
 onclick="location='depositHistory.html'">
 
 📄
@@ -374,6 +337,7 @@ Deposit History
 
 <div
 class="btn"
+
 onclick="location='withdrawHistory.html'">
 
 📑
@@ -386,49 +350,25 @@ Withdraw History
 
 <div
 class="btn"
-onclick="openRef()">
+
+onclick="location='cart.html'">
+
+🛒
+
+<br>
+
+Cart
+
+</div>
+
+<div
+class="btn">
 
 👥
 
 <br>
 
 Referral
-
-</div>
-
-</div>
-
-<div
-class="popup"
-
-id="pop">
-
-<div class="box">
-
-Referral Code:
-
-<br><br>
-
-<b id="refx">
-
-</b>
-
-<br><br>
-
-People Joined:
-
-<span id="joined">
-
-0
-
-</span>
-
-<button
-onclick="closeRef()">
-
-Close
-
-</button>
 
 </div>
 
@@ -476,7 +416,9 @@ from
 
 const firebaseConfig={
 
-apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+apiKey:
+
+"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
 authDomain:
 
@@ -506,7 +448,7 @@ async(user)=>{
 if(!user){
 
 location=
-"auth.html";
+"index.html";
 
 return;
 
@@ -524,7 +466,8 @@ user.uid
 
 );
 
-let d=s.data();
+let d=
+s.data();
 
 u.innerHTML=
 d.username;
@@ -541,13 +484,7 @@ d.referralCommission||0;
 refcode.innerHTML=
 d.username;
 
-refx.innerHTML=
-d.username;
-
 refusers.innerHTML=
-d.refUsers||0;
-
-joined.innerHTML=
 d.refUsers||0;
 
 }
@@ -561,20 +498,6 @@ await signOut(auth);
 
 location=
 "index.html";
-
-};
-
-window.openRef=()=>{
-
-pop.style.display=
-"flex";
-
-};
-
-window.closeRef=()=>{
-
-pop.style.display=
-"none";
 
 };
 
