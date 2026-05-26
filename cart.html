@@ -8,7 +8,7 @@ content="width=device-width,initial-scale=1">
 
 <title>
 
-Cart
+My Cart
 
 </title>
 
@@ -21,16 +21,6 @@ background:#f3f3f3;
 font-family:Arial;
 
 padding:20px;
-
-}
-
-.title{
-
-font-size:30px;
-
-font-weight:bold;
-
-margin-bottom:20px;
 
 }
 
@@ -74,7 +64,7 @@ font-size:20px;
 
 font-weight:bold;
 
-margin-top:15px;
+margin-top:10px;
 
 color:#ff8800;
 
@@ -88,31 +78,13 @@ padding:15px;
 
 margin-top:15px;
 
-border:none;
-
 background:#ff8800;
+
+border:none;
 
 color:white;
 
-border-radius:12px;
-
-font-size:18px;
-
-}
-
-.empty{
-
-background:white;
-
-padding:30px;
-
-border-radius:20px;
-
-text-align:center;
-
-font-size:20px;
-
-font-weight:bold;
+border-radius:10px;
 
 }
 
@@ -122,19 +94,13 @@ font-weight:bold;
 
 <body>
 
-<div class="title">
+<h1>
 
 My Cart
 
-</div>
+</h1>
 
 <div id="list">
-
-<div class="empty">
-
-No Products Yet
-
-</div>
 
 </div>
 
@@ -178,24 +144,19 @@ from
 
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-const firebaseConfig={
+const app=
+
+initializeApp({
 
 apiKey:
 
 "AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-authDomain:
-
-"jumiastaff-83757.firebaseapp.com",
-
 projectId:
 
 "jumiastaff-83757"
 
-};
-
-const app=
-initializeApp(firebaseConfig);
+});
 
 const db=
 getFirestore(app);
@@ -203,18 +164,88 @@ getFirestore(app);
 const auth=
 getAuth(app);
 
+const auto={
+
+"samsungtv.jpg":{
+
+name:
+
+"Samsung Smart TV",
+
+id:
+
+"TV1001"
+
+},
+
+"ecoflow.jpg":{
+
+name:
+
+"EcoFlow Power Station",
+
+id:
+
+"ECO2026"
+
+},
+
+"HaierThermocoolChestFreezer.jpg":{
+
+name:
+
+"Haier Freezer",
+
+id:
+
+"HF001"
+
+},
+
+"AppleMacBookAirM4.jpg":{
+
+name:
+
+"Apple MacBook M4",
+
+id:
+
+"MAC004"
+
+},
+
+"RTXGamingLaptop.jpg":{
+
+name:
+
+"RTX Gaming Laptop",
+
+id:
+
+"RTX2026"
+
+},
+
+"dsw.jpg":{
+
+name:
+
+"Designer Smart Watch",
+
+id:
+
+"DSW001"
+
+}
+
+};
+
 setTimeout(
 load,
 1000
 );
 
 async function load(){
-
-if(!auth.currentUser){
-
-return;
-
-}
 
 let q=
 
@@ -241,25 +272,17 @@ let s=
 
 await getDocs(q);
 
-list.innerHTML="";
-
-if(s.empty){
-
-list.innerHTML=
-
-`<div class='empty'>
-
-No Products Yet
-
-</div>`;
-
-}
-
 s.forEach(
 d=>{
 
 let x=
 d.data();
+
+let p=
+
+auto[
+x.image
+];
 
 list.innerHTML+=`
 
@@ -269,24 +292,17 @@ list.innerHTML+=`
 
 <div class="name">
 
-${x.productName}
+${p.name}
 
 </div>
 
 <div class="id">
 
-Product ID:
-
-${x.productID}
+${p.id}
 
 </div>
 
-<button
-onclick="copyID(
-
-'${x.productID}'
-
-)">
+<button>
 
 Copy Product ID
 
@@ -299,19 +315,6 @@ Copy Product ID
 });
 
 }
-
-window.copyID=
-(id)=>{
-
-navigator.clipboard.writeText(
-id
-);
-
-alert(
-"Product ID Copied"
-);
-
-};
 
 </script>
 
