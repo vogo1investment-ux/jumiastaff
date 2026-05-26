@@ -3,6 +3,8 @@
 
 <head>
 
+<meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
@@ -16,6 +18,8 @@ My Cart
 
 body{
 
+margin:0;
+
 background:#f3f3f3;
 
 font-family:Arial;
@@ -24,19 +28,45 @@ padding:20px;
 
 }
 
+.top{
+
+background:white;
+
+padding:18px;
+
+border-radius:20px;
+
+font-size:24px;
+
+font-weight:bold;
+
+box-shadow:
+0 5px 10px rgba(
+0,0,0,.1
+);
+
+margin-bottom:20px;
+
+}
+
 .card{
 
 background:white;
 
-padding:20px;
+padding:15px;
 
 border-radius:20px;
 
-margin-top:20px;
+margin-bottom:20px;
+
+box-shadow:
+0 5px 10px rgba(
+0,0,0,.1
+);
 
 }
 
-img{
+.card img{
 
 width:100%;
 
@@ -50,7 +80,7 @@ border-radius:15px;
 
 .name{
 
-font-size:24px;
+font-size:22px;
 
 font-weight:bold;
 
@@ -60,23 +90,35 @@ margin-top:15px;
 
 .id{
 
-font-size:20px;
+margin-top:10px;
+
+font-size:18px;
 
 font-weight:bold;
-
-margin-top:10px;
 
 color:#ff8800;
 
 }
 
-button{
+.empty{
+
+text-align:center;
+
+font-size:22px;
+
+margin-top:100px;
+
+font-weight:bold;
+
+}
+
+.copy{
+
+margin-top:15px;
 
 width:100%;
 
-padding:15px;
-
-margin-top:15px;
+padding:14px;
 
 background:#ff8800;
 
@@ -84,7 +126,9 @@ border:none;
 
 color:white;
 
-border-radius:10px;
+border-radius:12px;
+
+font-size:18px;
 
 }
 
@@ -94,13 +138,19 @@ border-radius:10px;
 
 <body>
 
-<h1>
+<div class="top">
 
-My Cart
+🛒 MY CART
 
-</h1>
+</div>
 
 <div id="list">
+
+<div class="empty">
+
+No Product Yet
+
+</div>
 
 </div>
 
@@ -136,7 +186,9 @@ from
 
 import {
 
-getAuth
+getAuth,
+
+onAuthStateChanged
 
 }
 
@@ -144,108 +196,95 @@ from
 
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-const app=
-
-initializeApp({
+const firebaseConfig={
 
 apiKey:
-
 "AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-projectId:
+authDomain:
+"jumiastaff-83757.firebaseapp.com",
 
+projectId:
 "jumiastaff-83757"
 
-});
+};
+
+const app=
+initializeApp(
+firebaseConfig
+);
 
 const db=
-getFirestore(app);
+getFirestore(
+app
+);
 
 const auth=
-getAuth(app);
+getAuth(
+app
+);
 
-const auto={
+const products={
 
 "samsungtv.jpg":{
 
 name:
-
-"Samsung Smart TV",
-
-id:
-
-"TV1001"
+"Samsung Smart TV"
 
 },
 
 "ecoflow.jpg":{
 
 name:
-
-"EcoFlow Power Station",
-
-id:
-
-"ECO2026"
+"EcoFlow Power Station"
 
 },
 
 "HaierThermocoolChestFreezer.jpg":{
 
 name:
-
-"Haier Freezer",
-
-id:
-
-"HF001"
+"Haier Thermocool Freezer"
 
 },
 
 "AppleMacBookAirM4.jpg":{
 
 name:
-
-"Apple MacBook M4",
-
-id:
-
-"MAC004"
+"Apple MacBook Air"
 
 },
 
 "RTXGamingLaptop.jpg":{
 
 name:
-
-"RTX Gaming Laptop",
-
-id:
-
-"RTX2026"
+"RTX Gaming Laptop"
 
 },
 
 "dsw.jpg":{
 
 name:
-
-"Designer Smart Watch",
-
-id:
-
-"DSW001"
+"Designer Smart Watch"
 
 }
 
 };
 
-setTimeout(
-load,
-1000
-);
+onAuthStateChanged(
 
-async function load(){
+auth,
+
+async user=>{
+
+if(!user){
+
+location.href=
+
+"index.html";
+
+return;
+
+}
 
 let q=
 
@@ -253,56 +292,101 @@ query(
 
 collection(
 db,
-"cart"
+"buyRequests"
 ),
 
 where(
-
 "uid",
-
 "==",
+user.uid
+),
 
-auth.currentUser.uid
-
+where(
+"status",
+"==",
+"Approved"
 )
 
 );
 
-let s=
+let snap=
 
-await getDocs(q);
+await getDocs(
+q
+);
 
-s.forEach(
-d=>{
+list.innerHTML="";
 
-let x=
-d.data();
+if(
 
-let p=
+snap.empty
 
-auto[
-x.image
-];
+){
+
+list.innerHTML=
+
+`
+
+<div class="empty">
+
+No Product Yet
+
+</div>
+
+`;
+
+return;
+
+}
+
+snap.forEach(doc=>{
+
+let d=
+doc.data();
+
+let img=
+
+d.productID;
+
+let pname=
+
+products[img]?
+
+products[img].name
+
+:
+
+img;
 
 list.innerHTML+=`
 
 <div class="card">
 
-<img src="${x.image}">
+<img src="${img}">
 
 <div class="name">
 
-${p.name}
+${pname}
 
 </div>
 
 <div class="id">
 
-${p.id}
+Product ID:
+
+${img}
 
 </div>
 
-<button>
+<button
+
+class="copy"
+
+onclick=
+
+"copyID('${img}')"
+
+>
 
 Copy Product ID
 
@@ -315,6 +399,24 @@ Copy Product ID
 });
 
 }
+
+);
+
+window.copyID=
+
+function(x){
+
+navigator.clipboard.writeText(
+x
+);
+
+alert(
+
+"Copied: "+x
+
+);
+
+};
 
 </script>
 
