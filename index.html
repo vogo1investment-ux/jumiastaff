@@ -1,275 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-
-<meta charset="UTF-8">
 
 <meta name="viewport"
 
 content="width=device-width,initial-scale=1">
 
-<title>
-
-JUMIASTAFF
-
-</title>
-
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial;
-}
-
 body{
-background:#f3f3f3;
-padding-bottom:100px;
-}
 
-/* TOP */
+background:#f5f5f5;
 
-.top{
+font-family:Arial;
 
-background:white;
-
-padding:20px;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-border-radius:0 0 20px 20px;
-
-box-shadow:0 5px 10px rgba(0,0,0,.1);
-
-position:sticky;
-
-top:0;
-
-z-index:100;
-
-}
-
-.logo{
-
-display:flex;
-
-gap:10px;
-
-align-items:center;
-
-font-size:22px;
-
-font-weight:bold;
-
-}
-
-.star{
-
-width:45px;
-
-height:45px;
-
-background:#ff9900;
-
-border-radius:50%;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:22px;
-
-color:white;
-
-}
-
-.icons{
-
-display:flex;
-
-gap:20px;
-
-font-size:28px;
-
-}
-
-/* MENU */
-
-.menu{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(4,1fr);
-
-padding:20px;
-
-gap:15px;
+padding:30px;
 
 }
 
 .box{
 
-background:white;
-
-padding:15px;
-
-border-radius:20px;
-
-text-align:center;
-
-animation:float 3s infinite;
+margin-top:140px;
 
 }
 
-.icon{
-
-font-size:35px;
-
-color:#ff9900;
-
-}
-
-@keyframes float{
-
-50%{
-
-transform:
-
-translateY(-6px);
-
-}
-
-}
-
-/* PRODUCTS */
-
-.products{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(2,1fr);
-
-gap:15px;
-
-padding:15px;
-
-}
-
-.card{
-
-background:white;
-
-border-radius:12px;
-
-overflow:hidden;
-
-transition:.3s;
-
-}
-
-.card:hover{
-
-transform:scale(1.03);
-
-}
-
-.card img{
+input{
 
 width:100%;
 
-height:220px;
-
-object-fit:cover;
-
-}
-
-.info{
-
-padding:15px;
-
-}
-
-.name{
-
-font-size:18px;
-
-height:55px;
-
-overflow:hidden;
-
-}
-
-.price{
+padding:18px;
 
 margin-top:15px;
 
-font-size:22px;
+border-radius:40px;
 
-font-weight:bold;
-
-color:#ff5500;
+border:2px solid #eee;
 
 }
 
-.rate{
+button{
 
-color:#00aa44;
+width:100%;
 
-margin-top:8px;
+padding:18px;
 
-font-size:14px;
+margin-top:20px;
 
-}
+border:none;
 
-/* NAV */
+border-radius:40px;
 
-.bottom{
+background:
 
-position:fixed;
+linear-gradient(
+90deg,
+#ff7755,
+red
+);
 
-bottom:0;
+color:white;
 
-left:0;
-
-right:0;
-
-background:white;
-
-display:flex;
-
-justify-content:space-around;
-
-padding:15px;
-
-box-shadow:0 -5px 10px rgba(0,0,0,.1);
+font-size:20px;
 
 }
 
-.nav{
+p{
 
 text-align:center;
 
-font-size:15px;
-
-cursor:pointer;
+margin-top:30px;
 
 }
 
-.active{
+a{
 
-color:red;
+color:black;
 
 }
 
@@ -279,355 +85,91 @@ color:red;
 
 <body>
 
-<div class="top">
-
-<div class="logo">
-
-<div class="star">
-
-⭐
-
-</div>
-
-JUMIASTAFF
-
-</div>
-
-<div class="icons">
-
-🔔
-
-🌍
-
-</div>
-
-</div>
-
-<div class="menu">
-
 <div class="box">
 
-<div class="icon">
+<input
 
-💎
+id="email"
 
-</div>
+placeholder=
 
-Merchant
+"Email">
 
-</div>
+<input
 
-<div class="box">
+id="password"
 
-<div class="icon">
+type="password"
 
-🖥
+placeholder=
 
-</div>
+"Password">
 
-Server
+<button
 
-</div>
+onclick="login()">
 
-<div class="box">
+Login
 
-<div class="icon">
+</button>
 
-❓
+<p>
 
-</div>
+No Account?
 
-Help
+<a href=
 
-</div>
+"signup.html">
 
-<div class="box">
+Register Now
 
-<div class="icon">
+</a>
 
-⭐
-
-</div>
-
-About
+</p>
 
 </div>
 
-</div>
+<script type="module">
 
-<div class="products">
+import {
 
-<div class="card">
-
-<img src="samsungtv.jpg">
-
-<div class="info">
-
-<div class="name">
-
-Samsung 75 Inch Smart TV 8K
-
-</div>
-
-<div class="price">
-
-$694.34
-
-</div>
-
-<div class="rate">
-
-NGN:
-₦920,000
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="ecoflow.jpg">
-
-<div class="info">
-
-<div class="name">
-
-Portable EcoFlow Power Station
-
-</div>
-
-<div class="price">
-
-$747.16
-
-</div>
-
-<div class="rate">
-
-NGN:
-₦989,998
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="HaierThermocoolChestFreezer.jpg">
-
-<div class="info">
-
-<div class="name">
-
-Haier Thermocool Freezer
-
-</div>
-
-<div class="price">
-
-$377.36
-
-</div>
-
-<div class="rate">
-
-NGN:
-₦500,000
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="AppleMacBookAirM4.jpg">
-
-<div class="info">
-
-<div class="name">
-
-Apple MacBook Air M4
-
-</div>
-
-<div class="price">
-
-$2909.15
-
-</div>
-
-<div class="rate">
-
-NGN:
-₦3,854,620
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="RTXGamingLaptop.jpg">
-
-<div class="info">
-
-<div class="name">
-
-Gaming Laptop RTX Series
-
-</div>
-
-<div class="price">
-
-$981.13
-
-</div>
-
-<div class="rate">
-
-NGN:
-₦1,300,000
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="dsw.jpg">
-
-<div class="info">
-
-<div class="name">
-
-Designer Smart Watch
-
-</div>
-
-<div class="price">
-
-$226.42
-
-</div>
-
-<div class="rate">
-
-NGN:
-₦300,000
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="bottom">
-
-<div class="nav active"
-
-onclick="goHome()">
-
-🏠
-
-<br>
-
-Home
-
-</div>
-
-<div class="nav"
-
-onclick="goOrders()">
-
-⬜
-
-<br>
-
-Orders
-
-</div>
-
-<div class="nav"
-
-onclick="goCart()">
-
-🛒
-
-<br>
-
-Cart
-
-</div>
-
-<div class="nav"
-
-onclick="goMine()">
-
-👤
-
-<br>
-
-Mine
-
-</div>
-
-</div>
-
-<script>
-
-let rate=1325;
-
-function goHome(){
-
-location=
-
-"index.html";
+auth
 
 }
 
-function goOrders(){
+from "./firebase.js";
 
-location=
+import {
 
-"orders.html";
-
-}
-
-function goCart(){
-
-location=
-
-"cart.html";
+signInWithEmailAndPassword
 
 }
 
-function goMine(){
+from
 
-location=
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-"mine.html";
+window.login=
 
-}
+async()=>{
 
-console.log(
+await
 
-"USD RATE",
+signInWithEmailAndPassword(
 
-rate
+auth,
+
+email.value,
+
+password.value
 
 );
+
+location=
+
+"home.html";
+
+}
 
 </script>
 
