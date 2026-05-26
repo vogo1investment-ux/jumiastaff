@@ -3,26 +3,31 @@
 
 <head>
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
 <style>
 
 body{
-font-family:Arial;
 background:#f3f3f3;
+font-family:Arial;
 padding:20px;
 }
 
-.item{
+.card{
 
 background:white;
 
-padding:20px;
+padding:25px;
+
+border-radius:20px;
 
 margin-top:15px;
 
-border-radius:15px;
+}
+
+.big{
+
+font-size:22px;
+
+font-weight:bold;
 
 }
 
@@ -57,130 +62,77 @@ Withdrawal History
 <script type="module">
 
 import {
-
 initializeApp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-
 getFirestore,
-
 collection,
-
-query,
-
-where,
-
 getDocs
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-import {
-
-getAuth
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 const app=
 initializeApp({
 
-apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+apiKey:
+"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-projectId:"jumiastaff-83757",
-
-authDomain:
-
-"jumiastaff-83757.firebaseapp.com"
+projectId:
+"jumiastaff-83757"
 
 });
 
 const db=
 getFirestore(app);
 
-const auth=
-getAuth(app);
-
-setTimeout(
-load,
-1000
-);
-
-async function load(){
-
-let q=
-
-query(
-
+const s=
+await getDocs(
 collection(
 db,
 "withdrawals"
-),
-
-where(
-
-"uid",
-
-"==",
-
-auth.currentUser.uid
-
 )
-
 );
-
-let s=
-
-await getDocs(q);
 
 s.forEach(
 d=>{
 
 let x=
-
 d.data();
 
 list.innerHTML+=`
 
-<div class="item">
+<div class="card">
 
-Method:
+<div class="big">
+
 ${x.method}
+
+</div>
 
 <br>
 
 Amount:
+
 $${x.amount}
 
-<br>
+<br><br>
 
-Status:
-
-<span class="${x.status}">
+<div class="big ${x.status}">
 
 ${x.status}
 
-</span>
+</div>
 
 </div>
 
 `;
 
-});
-
 }
+);
 
 </script>
 

@@ -3,26 +3,33 @@
 
 <head>
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
 <style>
 
 body{
-font-family:Arial;
 background:#f3f3f3;
+font-family:Arial;
 padding:20px;
 }
 
-.item{
+.card{
 
 background:white;
 
-padding:20px;
+padding:25px;
+
+border-radius:20px;
 
 margin-top:15px;
 
-border-radius:15px;
+}
+
+.status{
+
+font-size:24px;
+
+font-weight:bold;
+
+margin-top:15px;
 
 }
 
@@ -57,40 +64,26 @@ Deposit History
 <script type="module">
 
 import {
-
 initializeApp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-
 getFirestore,
-
 collection,
-
-query,
-
 getDocs
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const app=
 initializeApp({
 
 apiKey:
-
 "AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
 projectId:
-
 "jumiastaff-83757"
 
 });
@@ -98,17 +91,12 @@ projectId:
 const db=
 getFirestore(app);
 
-async function load(){
-
-let s=
-
+const s=
 await getDocs(
-
 collection(
 db,
 "deposits"
 )
-
 );
 
 s.forEach(
@@ -119,30 +107,30 @@ d.data();
 
 list.innerHTML+=`
 
-<div class="item">
+<div class="card">
+
+<b>
 
 Method:
+
+</b>
+
 ${x.method}
 
-<br>
+<br><br>
 
-Status:
-
-<span class="${x.status}">
+<div class="status ${x.status}">
 
 ${x.status}
 
-</span>
+</div>
 
 </div>
 
 `;
 
-});
-
 }
-
-load();
+);
 
 </script>
 

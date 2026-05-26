@@ -1,165 +1,166 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<style>
+
+body{
+background:#f3f3f3;
+font-family:Arial;
+padding:20px;
+}
+
+.box{
+
+background:white;
+
+padding:25px;
+
+border-radius:20px;
+
+margin-bottom:20px;
+
+}
+
+.title{
+
+font-size:24px;
+
+font-weight:bold;
+
+color:#ff8800;
+
+margin-bottom:15px;
+
+}
+
+.big{
+
+font-size:22px;
+
+font-weight:bold;
+
+margin-top:10px;
+
+}
+
+input{
+
+width:100%;
+
+padding:15px;
+
+margin-top:10px;
+
+border-radius:10px;
+
+border:1px solid #ddd;
+
+}
+
+button{
+
+width:100%;
+
+padding:15px;
+
+margin-top:15px;
+
+background:#ff8800;
+
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+}
+
+</style>
+
+</head>
+
 <body>
 
-<h2>
+<div class="box">
 
-USA Deposit
+<div class="title">
 
-</h2>
+🇺🇸 UNITED STATES DEPOSIT
 
-Litecoin Wallet:
+</div>
 
-<br>
+<div class="big">
+
+Litecoin Wallet
+
+</div>
+
+<div class="big">
 
 MKXw4UeQaU42x2FLLBiM9GYiHVCwC1QcoB
 
+</div>
+
 <input
 id="wallet"
-placeholder="Wallet used">
+placeholder="Wallet Address Used">
 
 <button
 onclick="usa()">
 
-Submit
+Submit Deposit
 
 </button>
 
-<hr>
+</div>
 
-<h2>
+<div class="box">
 
-NGN Deposit
+<div class="title">
 
-</h2>
+🇳🇬 NGN DEPOSIT
+
+</div>
+
+<div class="big">
 
 Wema Bank
 
-<br>
+</div>
+
+<div class="big">
 
 7353384026
 
-<br>
+</div>
+
+<div class="big">
 
 VOGO
 
-<input
-id="bank">
+</div>
 
 <input
-id="holder">
+id="bank"
+placeholder="Bank Used">
+
+<input
+id="holder"
+placeholder="Account Holder Name">
 
 <button
 onclick="ngn()">
 
-Submit
+Submit Deposit
 
 </button>
 
-<script type="module">
-
-import {
-
-initializeApp
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-
-import {
-
-getFirestore,
-
-collection,
-
-addDoc
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-const app=
-initializeApp({
-
-apiKey:"AIzaSyBp",
-
-projectId:"jumiastaff-83757"
-
-});
-
-const db=
-getFirestore(app);
-
-window.usa=
-async()=>{
-
-await addDoc(
-
-collection(
-db,
-"deposits"
-),
-
-{
-
-method:
-
-"Litecoin",
-
-wallet:
-
-wallet.value,
-
-status:
-
-"pending"
-
-}
-
-);
-
-};
-
-window.ngn=
-async()=>{
-
-await addDoc(
-
-collection(
-db,
-"deposits"
-),
-
-{
-
-method:
-
-"NGN",
-
-bank:
-
-bank.value,
-
-holder:
-
-holder.value,
-
-status:
-
-"pending"
-
-}
-
-);
-
-};
-
-</script>
+</div>
 
 </body>
 
