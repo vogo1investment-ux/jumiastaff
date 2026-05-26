@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<style>
+
+.orange{
+
+background:#ff9500;
+
+padding:25px;
+
+color:white;
+
+}
+
+.balance{
+
+background:white;
+
+padding:20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="orange">
+
+Welcome,
+
+<span id="user">
+
+</span>
+
+<br>
+
+<span id="mail">
+
+</span>
+
+</div>
+
+<div class="balance">
+
+Withdrawalble balance:
+
+$<span id="w">
+
+0
+
+</span>
+
+<br><br>
+
+Available balance:
+
+$<span id="a">
+
+2
+
+</span>
+
+</div>
+
+<script type="module">
+
+import {auth,db}
+
+from "./firebase.js";
+
+import {
+
+doc,
+getDoc
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+auth.onAuthStateChanged(
+async(u)=>{
+
+let snap=
+await getDoc(
+
+doc(
+db,
+"users",
+u.uid
+)
+
+);
+
+let d=
+snap.data();
+
+user.innerHTML=
+d.username;
+
+mail.innerHTML=
+d.email;
+
+a.innerHTML=
+d.availableBalance;
+
+w.innerHTML=
+d.withdrawBalance;
+
+});
+
+</script>
+
+</body>
+
+</html>
