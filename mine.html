@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport"
+
+content="width=device-width,initial-scale=1">
+
+<title>
+
+Mine
+
+</title>
+
+<style>
+
+body{
+
+margin:0;
+
+font-family:Arial;
+
+background:#f3f3f3;
+
+}
+
+.top{
+
+background:#ff9900;
+
+padding:25px;
+
+color:white;
+
+}
+
+.card{
+
+background:white;
+
+margin:15px;
+
+padding:20px;
+
+border-radius:12px;
+
+font-size:20px;
+
+}
+
+.row{
+
+background:white;
+
+padding:22px;
+
+margin-top:2px;
+
+font-size:22px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+<h2>
+
+Welcome,
+
+<span id="user">
+
+User
+
+</span>
+
+</h2>
+
+<p id="mail">
+
+email
+
+</p>
+
+</div>
+
+<div class="card">
+
+Withdrawalble balance
+
+$<span id="w">
+
+0
+
+</span>
+
+<br><br>
+
+Available balance
+
+$<span id="a">
+
+2
+
+</span>
+
+</div>
+
+<div class="row">
+
+📦 Orders
+
+</div>
+
+<div class="row">
+
+💬 Inbox
+
+</div>
+
+<div class="row">
+
+❤️ Wishlist
+
+</div>
+
+<div class="row">
+
+⚙ Account Settings
+
+</div>
+
+<script type="module">
+
+import {
+
+auth,
+
+db
+
+}
+
+from "./firebase.js";
+
+import {
+
+doc,
+
+getDoc
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+auth.onAuthStateChanged(
+
+async(u)=>{
+
+if(!u)return;
+
+let s=
+
+await getDoc(
+
+doc(
+
+db,
+
+"users",
+
+u.uid
+
+)
+
+);
+
+let d=s.data();
+
+user.innerHTML=
+
+d.username;
+
+mail.innerHTML=
+
+d.email;
+
+a.innerHTML=
+
+d.availableBalance;
+
+w.innerHTML=
+
+d.withdrawBalance;
+
+}
+
+);
+
+</script>
+
+</body>
+
+</html>
