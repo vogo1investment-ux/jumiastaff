@@ -91,8 +91,6 @@ color:white;
 
 }
 
-/* ICONS */
-
 .icons{
 
 display:flex;
@@ -161,10 +159,7 @@ display:grid;
 
 grid-template-columns:
 
-repeat(
-2,
-1fr
-);
+repeat(2,1fr);
 
 gap:15px;
 
@@ -186,9 +181,7 @@ transition:.3s;
 
 .card:hover{
 
-transform:
-
-scale(1.03);
+transform:scale(1.03);
 
 }
 
@@ -269,6 +262,8 @@ box-shadow:0 -5px 10px rgba(0,0,0,.1);
 text-align:center;
 
 font-size:15px;
+
+cursor:pointer;
 
 }
 
@@ -540,7 +535,9 @@ NGN:
 
 <div class="bottom">
 
-<div class="nav active">
+<div class="nav active"
+
+onclick="goHome()">
 
 🏠
 
@@ -550,7 +547,9 @@ Home
 
 </div>
 
-<div class="nav">
+<div class="nav"
+
+onclick="goOrders()">
 
 ⬜
 
@@ -560,7 +559,9 @@ Orders
 
 </div>
 
-<div class="nav">
+<div class="nav"
+
+onclick="goCart()">
 
 🛒
 
@@ -570,7 +571,9 @@ Cart
 
 </div>
 
-<div class="nav">
+<div class="nav"
+
+onclick="goMine()">
 
 👤
 
@@ -584,9 +587,39 @@ Mine
 
 <script>
 
-/* RATE */
-
 let rate=1325;
+
+function goHome(){
+
+location=
+
+"index.html";
+
+}
+
+function goOrders(){
+
+location=
+
+"orders.html";
+
+}
+
+function goCart(){
+
+location=
+
+"cart.html";
+
+}
+
+function goMine(){
+
+location=
+
+"mine.html";
+
+}
 
 console.log(
 
