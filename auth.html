@@ -147,13 +147,13 @@ Genuine products are guaranteed at low prices
 
 <div class="box">
 
-📞
+📧
 
 <input
-id="loginPhone"
+id="loginEmail"
 
 placeholder=
-"Please Enter Mobile Phone Number">
+"Please Enter Email">
 
 </div>
 
@@ -167,7 +167,7 @@ id="loginPass"
 type="password"
 
 placeholder=
-"Password Length 6~30">
+"Password">
 
 </div>
 
@@ -200,13 +200,25 @@ Register Now
 
 <div class="box">
 
-📞
+👤
 
 <input
-id="phone"
+id="username"
 
 placeholder=
-"Please Enter Mobile Phone Number">
+"Username">
+
+</div>
+
+<div class="box">
+
+📧
+
+<input
+id="email"
+
+placeholder=
+"Email Address">
 
 </div>
 
@@ -220,7 +232,7 @@ id="pass"
 type="password"
 
 placeholder=
-"Password Length 6~30">
+"Password">
 
 </div>
 
@@ -234,7 +246,7 @@ id="confirm"
 type="password"
 
 placeholder=
-"Please Enter Confirm Password">
+"Confirm Password">
 
 </div>
 
@@ -246,7 +258,7 @@ placeholder=
 id="referral"
 
 placeholder=
-"Please Enter Invitation Code">
+"Invitation Code">
 
 </div>
 
@@ -280,7 +292,6 @@ Log In Now
 import{
 initializeApp
 }
-
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
@@ -293,7 +304,6 @@ createUserWithEmailAndPassword,
 signInWithEmailAndPassword
 
 }
-
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
@@ -306,20 +316,16 @@ doc,
 setDoc
 
 }
-
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig={
 
-apiKey:
-"YOUR_API",
+apiKey:"YOURKEY",
 
-authDomain:
-"YOUR_DOMAIN",
+authDomain:"YOURDOMAIN",
 
-projectId:
-"YOUR_PROJECT"
+projectId:"YOURPROJECT"
 
 };
 
@@ -356,38 +362,28 @@ window.registerUser=
 async()=>{
 
 if(
-
-pass.value
-
+pass.value.trim()
 !=
-
-confirm.value
-
+confirm.value.trim()
 ){
 
 alert(
-"Password mismatch"
+"Passwords do not match"
 );
 
 return;
 
 }
 
-let email=
-
-phone.value+
-
-"@jumiastaff.com";
+try{
 
 let user=
 
-await
-
-createUserWithEmailAndPassword(
+await createUserWithEmailAndPassword(
 
 auth,
 
-email,
+email.value,
 
 pass.value
 
@@ -404,7 +400,10 @@ user.user.uid
 {
 
 username:
-phone.value,
+username.value,
+
+email:
+email.value,
 
 usedReferral:
 referral.value,
@@ -421,27 +420,35 @@ joinedUsers:0
 
 );
 
+alert(
+"Signup Successful"
+);
+
 location=
 "dashboard.html";
+
+}
+
+catch(e){
+
+alert(
+e.message
+);
+
+}
 
 }
 
 window.loginUser=
 async()=>{
 
-let email=
+try{
 
-loginPhone.value+
-
-"@jumiastaff.com";
-
-await
-
-signInWithEmailAndPassword(
+await signInWithEmailAndPassword(
 
 auth,
 
-email,
+loginEmail.value,
 
 loginPass.value
 
@@ -449,6 +456,16 @@ loginPass.value
 
 location=
 "dashboard.html";
+
+}
+
+catch(e){
+
+alert(
+e.message
+);
+
+}
 
 }
 
