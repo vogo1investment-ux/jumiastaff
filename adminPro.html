@@ -64,15 +64,10 @@ background:white;
 }
 
 .msg{
-
 padding:10px;
-
 margin-top:8px;
-
 background:#eee;
-
 border-radius:10px;
-
 }
 
 </style>
@@ -118,58 +113,34 @@ SEND MESSAGE
 <script type="module">
 
 import {
-
 initializeApp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-
 getFirestore,
-
 collection,
-
 getDocs,
-
 doc,
-
 updateDoc,
-
 query,
-
 where,
-
 onSnapshot,
-
-addDoc,
-
-orderBy
-
+addDoc
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const app=
 
 initializeApp({
 
-apiKey:
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+authDomain:"jumiastaff-83757.firebaseapp.com",
 
-authDomain:
-
-"jumiastaff-83757.firebaseapp.com",
-
-projectId:
-
-"jumiastaff-83757"
+projectId:"jumiastaff-83757"
 
 });
 
@@ -215,23 +186,41 @@ USERNAME
 
 value="${d.username||""}">
 
-AVAILABLE
+AVAILABLE BALANCE
 
 <input id="a${u.id}"
 
 value="${d.availableBalance||0}">
 
-WITHDRAWABLE
+WITHDRAWABLE BALANCE
 
 <input id="w${u.id}"
 
 value="${d.withdrawableBalance||0}">
 
-REFERRAL
+REFERRAL COMMISSION
 
 <input id="r${u.id}"
 
 value="${d.referralCommission||0}">
+
+USED REFERRAL
+
+<input id="ur${u.id}"
+
+value="${d.usedReferral||""}">
+
+JOINED USERS
+
+<input id="j${u.id}"
+
+value="${d.joinedUsers||0}">
+
+CART
+
+<input id="c${u.id}"
+
+value="${(d.cart||[]).join(',')}">
 
 <button onclick="saveUser('${u.id}')">
 
@@ -307,7 +296,35 @@ document.getElementById(
 
 ).value
 
-)
+),
+
+usedReferral:
+
+document.getElementById(
+
+"ur"+id
+
+).value,
+
+joinedUsers:
+
+Number(
+
+document.getElementById(
+
+"j"+id
+
+).value
+
+),
+
+cart:
+
+document.getElementById(
+
+"c"+id
+
+).value.split(",")
 
 }
 
@@ -322,16 +339,6 @@ alert(
 };
 
 chatUser.oninput=()=>{
-
-loadChat(
-
-chatUser.value
-
-);
-
-};
-
-function loadChat(uid){
 
 const q=
 
@@ -351,7 +358,7 @@ where(
 
 "==",
 
-uid
+chatUser.value
 
 )
 
@@ -393,25 +400,15 @@ ${d.message}
 
 );
 
-chatBox.scrollTop=
-
-chatBox.scrollHeight;
-
 }
 
 );
 
-}
+};
 
 sendAdmin.onclick=
 
 async()=>{
-
-if(
-
-adminMsg.value==""
-
-)return;
 
 await addDoc(
 
