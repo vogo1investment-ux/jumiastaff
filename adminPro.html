@@ -56,10 +56,23 @@ font-weight:bold;
 }
 
 #chatBox{
-height:300px;
+height:350px;
 overflow:auto;
 border:1px solid black;
 padding:10px;
+background:white;
+}
+
+.msg{
+
+padding:10px;
+
+margin-top:8px;
+
+background:#eee;
+
+border-radius:10px;
+
 }
 
 </style>
@@ -80,20 +93,23 @@ ADMIN PANEL
 
 <div class="card">
 
-USER UID
+CHAT USER UID
 
-<input id="chatUser">
+<input
+id="chatUser"
+placeholder="Paste User UID">
 
 <div id="chatBox">
 
 </div>
 
 <input
-id="adminMsg">
+id="adminMsg"
+placeholder="Reply">
 
 <button id="sendAdmin">
 
-SEND
+SEND MESSAGE
 
 </button>
 
@@ -102,34 +118,58 @@ SEND
 <script type="module">
 
 import {
+
 initializeApp
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
+
 getFirestore,
+
 collection,
+
 getDocs,
+
 doc,
+
 updateDoc,
+
 query,
+
 where,
+
 onSnapshot,
-addDoc
+
+addDoc,
+
+orderBy
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const app=
 
 initializeApp({
 
-apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+apiKey:
 
-authDomain:"jumiastaff-83757.firebaseapp.com",
+"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-projectId:"jumiastaff-83757"
+authDomain:
+
+"jumiastaff-83757.firebaseapp.com",
+
+projectId:
+
+"jumiastaff-83757"
 
 });
 
@@ -161,39 +201,37 @@ users.innerHTML+=`
 
 <div class="card">
 
-<b>
+USER ID
 
-USER ID:
+<br>
 
 ${u.id}
-
-</b>
 
 <br><br>
 
 USERNAME
 
-<input id="u${u.id}" value="${d.username||""}">
+<input id="u${u.id}"
+
+value="${d.username||""}">
 
 AVAILABLE
 
-<input id="a${u.id}" value="${d.availableBalance||0}">
+<input id="a${u.id}"
+
+value="${d.availableBalance||0}">
 
 WITHDRAWABLE
 
-<input id="w${u.id}" value="${d.withdrawableBalance||0}">
+<input id="w${u.id}"
+
+value="${d.withdrawableBalance||0}">
 
 REFERRAL
 
-<input id="r${u.id}" value="${d.referralCommission||0}">
+<input id="r${u.id}"
 
-USED REF
-
-<input id="ur${u.id}" value="${d.usedReferral||""}">
-
-CART
-
-<input id="c${u.id}" value="${(d.cart||[]).join(",")}">
+value="${d.referralCommission||0}">
 
 <button onclick="saveUser('${u.id}')">
 
@@ -208,6 +246,208 @@ SAVE
 }
 
 );
+
+window.saveUser=
+
+async(id)=>{
+
+await updateDoc(
+
+doc(
+
+db,
+
+"users",
+
+id
+
+),
+
+{
+
+username:
+
+document.getElementById(
+
+"u"+id
+
+).value,
+
+availableBalance:
+
+Number(
+
+document.getElementById(
+
+"a"+id
+
+).value
+
+),
+
+withdrawableBalance:
+
+Number(
+
+document.getElementById(
+
+"w"+id
+
+).value
+
+),
+
+referralCommission:
+
+Number(
+
+document.getElementById(
+
+"r"+id
+
+).value
+
+)
+
+}
+
+);
+
+alert(
+
+"UPDATED"
+
+);
+
+};
+
+chatUser.oninput=()=>{
+
+loadChat(
+
+chatUser.value
+
+);
+
+};
+
+function loadChat(uid){
+
+const q=
+
+query(
+
+collection(
+
+db,
+
+"chatMessages"
+
+),
+
+where(
+
+"userId",
+
+"==",
+
+uid
+
+)
+
+);
+
+onSnapshot(
+
+q,
+
+snap=>{
+
+chatBox.innerHTML="";
+
+snap.forEach(
+
+x=>{
+
+let d=x.data();
+
+chatBox.innerHTML+=`
+
+<div class="msg">
+
+<b>
+
+${d.sender}
+
+</b>
+
+<br><br>
+
+${d.message}
+
+</div>
+
+`;
+
+}
+
+);
+
+chatBox.scrollTop=
+
+chatBox.scrollHeight;
+
+}
+
+);
+
+}
+
+sendAdmin.onclick=
+
+async()=>{
+
+if(
+
+adminMsg.value==""
+
+)return;
+
+await addDoc(
+
+collection(
+
+db,
+
+"chatMessages"
+
+),
+
+{
+
+userId:
+
+chatUser.value,
+
+sender:
+
+"ADMIN",
+
+message:
+
+adminMsg.value,
+
+time:
+
+Date.now()
+
+}
+
+);
+
+adminMsg.value="";
+
+};
 
 </script>
 
