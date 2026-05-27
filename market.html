@@ -15,141 +15,51 @@ Market
 <style>
 
 body{
-
 background:#f3f3f3;
-
 font-family:Arial;
-
-padding:20px;
-
+padding:15px;
 }
 
 .card{
-
 background:white;
-
-padding:20px;
-
+margin-bottom:20px;
+padding:15px;
 border-radius:20px;
-
 }
 
 img{
-
 width:100%;
-
-height:250px;
-
+height:220px;
 object-fit:cover;
-
-border-radius:15px;
-
+border-radius:20px;
 }
 
 .name{
-
-font-size:24px;
-
 font-weight:bold;
-
-margin-top:15px;
-
+font-size:22px;
+margin-top:10px;
 }
 
 .price{
-
-font-size:22px;
-
 font-weight:bold;
-
+font-size:20px;
 margin-top:10px;
+}
 
-color:#ff8800;
-
+.desc{
+font-weight:bold;
+margin-top:10px;
 }
 
 button{
-
 width:100%;
-
 padding:15px;
-
-margin-top:15px;
-
-background:#ff8800;
-
-color:white;
-
 border:none;
-
-border-radius:12px;
-
-font-size:18px;
-
-}
-
-.popup{
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-right:0;
-
-bottom:0;
-
-background:rgba(
-0,0,0,.7
-);
-
-display:none;
-
-justify-content:center;
-
-align-items:center;
-
-padding:20px;
-
-}
-
-.box{
-
-background:white;
-
-padding:25px;
-
-border-radius:20px;
-
-text-align:center;
-
-width:100%;
-
-max-width:400px;
-
-}
-
-.msg{
-
-font-size:22px;
-
+border-radius:15px;
+background:#ff6600;
+color:white;
+margin-top:15px;
 font-weight:bold;
-
-margin-bottom:20px;
-
-}
-
-.whatsapp{
-
-background:#25D366;
-
-}
-
-.close{
-
-background:red;
-
 }
 
 </style>
@@ -158,101 +68,203 @@ background:red;
 
 <body>
 
+<div id="market"></div>
+
+<script>
+
+const phone=
+
+"234XXXXXXXXXX";
+
+const products=[
+
+{
+
+id:"CM801",
+
+name:"Gaming Laptop",
+
+price:"$9.50 | ₦15,000",
+
+img:"gamingLaptop.jpg",
+
+desc:"High performance gaming laptop for work gaming and streaming"
+
+},
+
+{
+
+id:"IP15",
+
+name:"iPhone 15 Pro Max",
+
+price:"$12.70 | ₦20,000",
+
+img:"iphone15.jpg",
+
+desc:"Premium smartphone with advanced camera"
+
+},
+
+{
+
+id:"PS900",
+
+name:"PlayStation 5",
+
+price:"$11.43 | ₦18,000",
+
+img:"ps5console.jpg",
+
+desc:"Next generation gaming console"
+
+},
+
+{
+
+id:"TV001",
+
+name:"Samsung Smart TV",
+
+price:"$15.24 | ₦24,000",
+
+img:"smarttv.jpg",
+
+desc:"Smart television with streaming support"
+
+},
+
+{
+
+id:"FR200",
+
+name:"Haier Freezer",
+
+price:"$13.97 | ₦22,000",
+
+img:"freezer.jpg",
+
+desc:"Large freezer with cooling technology"
+
+},
+
+{
+
+id:"MB700",
+
+name:"MacBook Pro",
+
+price:"$19.05 | ₦30,000",
+
+img:"macbookpro.jpg",
+
+desc:"Professional laptop for editing"
+
+},
+
+{
+
+id:"AP500",
+
+name:"AirPods Max",
+
+price:"$7.62 | ₦12,000",
+
+img:"airpodsmax.jpg",
+
+desc:"Wireless premium headphones"
+
+},
+
+{
+
+id:"CC300",
+
+name:"Canon Camera",
+
+price:"$10.16 | ₦16,000",
+
+img:"canoncamera.jpg",
+
+desc:"Professional photography camera"
+
+},
+
+{
+
+id:"DR100",
+
+name:"Drone Pro",
+
+price:"$14.61 | ₦23,000",
+
+img:"dronepro.jpg",
+
+desc:"Flying drone with camera"
+
+},
+
+{
+
+id:"GN900",
+
+name:"Generator Set",
+
+price:"$17.78 | ₦28,000",
+
+img:"generator.jpg",
+
+desc:"Power backup generator"
+
+}
+
+];
+
+market.innerHTML=
+
+products.map(
+
+p=>`
+
 <div class="card">
 
-<img src="samsungtv.jpg">
+<img src="${p.img}">
 
 <div class="name">
 
-Samsung Smart TV
+${p.name}
 
 </div>
 
 <div class="price">
 
-₦15,000
-
-<br>
-
-$11.32
+${p.price}
 
 </div>
 
-<button
-onclick="openBuy()">
+<div class="desc">
 
-Buy Product
+${p.desc}
+
+</div>
+
+<button onclick="buy('${p.id}')">
+
+BUY PRODUCT
 
 </button>
 
 </div>
 
-<div
-class="popup"
+`
 
-id="pop">
+).join("");
 
-<div class="box">
-
-<div class="msg">
-
-Message this WhatsApp number to receive Product ID before buying
-
-</div>
-
-<div>
-
-+234XXXXXXXXXX
-
-</div>
-
-<button
-
-class="whatsapp"
-
-onclick="goWhatsapp()">
-
-Open WhatsApp
-
-</button>
-
-<button
-
-class="close"
-
-onclick="closeBuy()">
-
-Close
-
-</button>
-
-</div>
-
-</div>
-
-<script>
-
-function openBuy(){
-
-pop.style.display=
-
-"flex";
-
-}
-
-function closeBuy(){
-
-pop.style.display=
-
-"none";
-
-}
-
-function goWhatsapp(){
+function buy(id){
 
 window.open(
 
-"https://wa.me/234XXXXXXXXXX"
+`https://wa.me/${phone}?text=Hello%20I%20want%20to%20buy%20product%20ID%20${id}`
 
 );
 
