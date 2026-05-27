@@ -48,6 +48,34 @@ font-weight:bold;
 
 font-size:16px;
 
+padding-right:5px;
+
+}
+
+.chat{
+
+padding:12px;
+
+margin-top:10px;
+
+border-radius:15px;
+
+background:#eee;
+
+word-break:break-word;
+
+}
+
+.me{
+
+background:#ffecd9;
+
+}
+
+.admin{
+
+background:#d9ffe3;
+
 }
 
 input{
@@ -59,6 +87,12 @@ padding:15px;
 margin-top:10px;
 
 font-weight:bold;
+
+border:none;
+
+border-radius:12px;
+
+background:#f3f3f3;
 
 }
 
@@ -78,11 +112,25 @@ border:none;
 
 font-weight:bold;
 
+border-radius:12px;
+
 }
 
-b{
+.top{
 
-font-size:18px;
+background:#ff6600;
+
+padding:20px;
+
+color:white;
+
+border-radius:20px;
+
+margin-bottom:15px;
+
+font-size:20px;
+
+text-align:center;
 
 }
 
@@ -92,11 +140,13 @@ font-size:18px;
 
 <body>
 
+<div class="top">
+
+CUSTOMER CHAT
+
+</div>
+
 <div class="box">
-
-CHAT
-
-<br><br>
 
 <div id="msgs">
 
@@ -104,7 +154,7 @@ CHAT
 
 <input
 id="msg"
-placeholder="Message">
+placeholder="Type Message">
 
 <button id="send">
 
@@ -150,7 +200,9 @@ query,
 
 where,
 
-onSnapshot
+onSnapshot,
+
+orderBy
 
 }
 
@@ -178,13 +230,42 @@ const db=
 
 getFirestore(app);
 
+/* GET SELLER */
+
+const params=
+
+new URLSearchParams(
+
+location.search
+
+);
+
+const seller=
+
+params.get(
+
+"seller"
+
+)||"GENERAL";
+
+/* USER */
+
 onAuthStateChanged(
 
 auth,
 
 user=>{
 
-if(!user)return;
+if(!user){
+
+location=
+"auth.html";
+
+return;
+
+}
+
+/* PRIVATE CHAT */
 
 const q=
 
@@ -206,6 +287,22 @@ where(
 
 user.uid
 
+),
+
+where(
+
+"seller",
+
+"==",
+
+seller
+
+),
+
+orderBy(
+
+"time"
+
 )
 
 );
@@ -226,17 +323,19 @@ let d=x.data();
 
 msgs.innerHTML+=`
 
+<div class="chat ${d.sender=="USER"?"me":"admin"}">
+
 <b>
 
 ${d.sender}
 
 </b>
 
-:
+<br><br>
 
 ${d.message}
 
-<br><br>
+</div>
 
 `;
 
@@ -244,13 +343,25 @@ ${d.message}
 
 );
 
+msgs.scrollTop=
+
+msgs.scrollHeight;
+
 }
 
 );
 
+/* SEND */
+
 send.onclick=
 
 async()=>{
+
+if(
+
+msg.value.trim()==""
+
+)return;
 
 await addDoc(
 
@@ -265,6 +376,8 @@ db,
 {
 
 userId:user.uid,
+
+seller:seller,
 
 sender:"USER",
 
