@@ -1,466 +1,218 @@
-<!DOCTYPE html>  <html lang="en">  <head>  <meta charset="UTF-8">  <meta name="viewport"  
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
 content="width=device-width,initial-scale=1">
 
-<title>  JUMIASTAFF
+<title>
 
-</title>  <style>  
-  
-*{  
-margin:0;  
-padding:0;  
-box-sizing:border-box;  
-font-family:Arial;  
-}  
-  
-body{  
-background:#f3f3f3;  
-padding-bottom:100px;  
-}  
-  
-/* TOP */  
-  
-.top{  
-  
-background:white;  
-  
-padding:20px;  
-  
-display:flex;  
-  
-justify-content:space-between;  
-  
-align-items:center;  
-  
-border-radius:0 0 20px 20px;  
-  
-box-shadow:0 5px 10px rgba(0,0,0,.1);  
-  
-position:sticky;  
-  
-top:0;  
-  
-z-index:100;  
-  
-}  
-  
-.logo{  
-  
-display:flex;  
-  
-gap:10px;  
-  
-align-items:center;  
-  
-font-size:22px;  
-  
-font-weight:bold;  
-  
-}  
-  
-.star{  
-  
-width:45px;  
-  
-height:45px;  
-  
-background:#ff9900;  
-  
-border-radius:50%;  
-  
-display:flex;  
-  
-justify-content:center;  
-  
-align-items:center;  
-  
-font-size:22px;  
-  
-color:white;  
-  
-}  
-  
-.icons{  
-  
-display:flex;  
-  
-gap:20px;  
-  
-font-size:28px;  
-  
-}  
-  
-/* MENU */  
-  
-.menu{  
-  
-display:grid;  
-  
-grid-template-columns:  
-  
-repeat(4,1fr);  
-  
-padding:20px;  
-  
-gap:15px;  
-  
-}  
-  
-.box{  
-  
-background:white;  
-  
-padding:15px;  
-  
-border-radius:20px;  
-  
-text-align:center;  
-  
-animation:float 3s infinite;  
-  
-}  
-  
-.icon{  
-  
-font-size:35px;  
-  
-color:#ff9900;  
-  
-}  
-  
-@keyframes float{  
-  
-50%{  
-  
-transform:  
-translateY(-6px);  
-  
-}  
-  
-}  
-  
-/* PRODUCTS */  
-  
-.products{  
-  
-display:grid;  
-  
-grid-template-columns:  
-  
-repeat(2,1fr);  
-  
-gap:15px;  
-  
-padding:15px;  
-  
-}  
-  
-.card{  
-  
-background:white;  
-  
-border-radius:12px;  
-  
-overflow:hidden;  
-  
-transition:.3s;  
-  
-}  
-  
-.card:hover{  
-  
-transform:scale(1.03);  
-  
-}  
-  
-.card img{  
-  
-width:100%;  
-  
-height:220px;  
-  
-object-fit:cover;  
-  
-}  
-  
-.info{  
-  
-padding:15px;  
-  
-}  
-  
-.name{  
-  
-font-size:18px;  
-  
-height:55px;  
-  
-overflow:hidden;  
-  
-}  
-  
-.price{  
-  
-margin-top:15px;  
-  
-font-size:22px;  
-  
-font-weight:bold;  
-  
-color:#ff5500;  
-  
-}  
-  
-.rate{  
-  
-color:#00aa44;  
-  
-margin-top:8px;  
-  
-font-size:14px;  
-  
-}  
-  
-/* NAV */  
-  
-.bottom{  
-  
-position:fixed;  
-  
-bottom:0;  
-  
-left:0;  
-  
-right:0;  
-  
-background:white;  
-  
-display:flex;  
-  
-justify-content:space-around;  
-  
-padding:15px;  
-  
-box-shadow:0 -5px 10px rgba(0,0,0,.1);  
-  
-}  
-  
-.nav{  
-  
-text-align:center;  
-  
-font-size:15px;  
-  
-cursor:pointer;  
-  
-}  
-  
-.active{  
-  
-color:red;  
-  
-}  
-  
-</style>  </head>  <body>  <div class="top">  <div class="logo">  <div class="star">  ⭐
+JUMIASTAFF
 
-</div>  JUMIASTAFF
+</title>
 
-</div>  <div class="icons">  🔔
+<style>
 
-🌍
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
 
-</div>  </div>  <div class="menu">  <div class="box">  <div class="icon">  💎
+body{
+background:#f3f3f3;
+padding-bottom:100px;
+}
 
-</div>  Merchant
+.top{
+background:white;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-radius:0 0 20px 20px;
+box-shadow:0 5px 10px rgba(0,0,0,.1);
+position:sticky;
+top:0;
+z-index:100;
+}
 
-</div>  <div class="box">  <div class="icon">  🖥
+.logo{
+display:flex;
+gap:10px;
+align-items:center;
+font-size:22px;
+font-weight:bold;
+}
 
-</div>  Server
+.star{
+width:45px;
+height:45px;
+background:#ff9900;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:22px;
+color:white;
+}
 
-</div>  <div class="box">  <div class="icon">  ❓
+.icons{
+display:flex;
+gap:20px;
+font-size:28px;
+}
 
-</div>  Help
+.menu{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:20px;
+gap:15px;
+}
 
-</div>  <div class="box">  <div class="icon">  ⭐
+.box{
+background:white;
+padding:15px;
+border-radius:20px;
+text-align:center;
+}
 
-</div>  About
+.products{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+padding:15px;
+}
 
-</div>  </div>  <div class="products">  <div class="card">  <img src="samsungtv.jpg">  <div class="info">  <div class="name">  Samsung 75 Inch Smart TV 8K
+.card{
+background:white;
+border-radius:12px;
+overflow:hidden;
+}
 
-</div>  <div class="price">  $694.34
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
 
-</div>  <div class="rate">  NGN:
-₦920,000
+.bottom{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+display:flex;
+justify-content:space-around;
+padding:15px;
+}
 
-</div>  </div>  </div>  <div class="card">  <img src="ecoflow.jpg">  <div class="info">  <div class="name">  Portable EcoFlow Power Station
+#advertPopup{
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,.8);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
 
-</div>  <div class="price">  $747.16
+.advertBox{
+background:white;
+padding:15px;
+border-radius:20px;
+width:90%;
+max-width:420px;
+position:relative;
+}
 
-</div>  <div class="rate">  NGN:
-₦989,998
+.advertBox video{
+width:100%;
+border-radius:15px;
+}
 
-</div>  </div>  </div>  <div class="card">  <img src="HaierThermocoolChestFreezer.jpg">  <div class="info">  <div class="name">  Haier Thermocool Freezer
+#closeAdvert{
+display:none;
+position:absolute;
+top:10px;
+right:10px;
+border:none;
+background:red;
+color:white;
+padding:8px;
+border-radius:50%;
+}
 
-</div>  <div class="price">  $377.36
+</style>
 
-</div>  <div class="rate">  NGN:
-₦500,000
+</head>
 
-</div>  </div>  </div>  <div class="card">  <img src="AppleMacBookAirM4.jpg">  <div class="info">  <div class="name">  Apple MacBook Air M4
+<body>
 
-</div>  <div class="price">  $2909.15
+<!-- KEEP YOUR OLD BODY CONTENT HERE -->
 
-</div>  <div class="rate">  NGN:
-₦3,854,620
+<script src="advert.js"></script>
 
-</div>  </div>  </div>  <div class="card">  <img src="RTXGamingLaptop.jpg">  <div class="info">  <div class="name">  Gaming Laptop RTX Series
+<script type="module">
 
-</div>  <div class="price">  $981.13
+import {
 
-</div>  <div class="rate">  NGN:
-₦1,300,000
+initializeApp
 
-</div>  </div>  </div>  <div class="card">  <img src="dsw.jpg">  <div class="info">  <div class="name">  Designer Smart Watch
+}
 
-</div>  <div class="price">  $226.42
+from
 
-</div>  <div class="rate">  NGN:
-₦300,000
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
-</div>  </div>  </div>  </div>  <div class="bottom">  <div class="nav active"  
-onclick="goHome()">  🏠
+import {
 
-<br>  Home
+getAuth,
 
-</div>  <div class="nav"  
-onclick="goOrders()">  ⬜
+onAuthStateChanged
 
-<br>  Orders
+}
 
-</div>  <div class="nav"  
-onclick="goCart()">  🛒
+from
 
-<br>  Cart
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-</div>  <div class="nav"  
-onclick="goMine()">  👤
+const firebaseConfig={
 
-<br>  Mine
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-</div>  </div>  <script type="module">  
-  
-import {  
-  
-initializeApp  
-  
-}  
-  
-from  
-  
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";  
-  
-import {  
-  
-getAuth,  
-  
-onAuthStateChanged  
-  
-}  
-  
-from  
-  
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";  
-  
-const firebaseConfig={  
-  
-apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",  
-  
-authDomain:  
-  
-"jumiastaff-83757.firebaseapp.com",  
-  
-projectId:  
-  
-"jumiastaff-83757",  
-  
-storageBucket:  
-  
-"jumiastaff-83757.firebasestorage.app",  
-  
-messagingSenderId:  
-  
-"1018307795636",  
-  
-appId:  
-  
-"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"  
-  
-};  
-  
-const app=  
-  
-initializeApp(firebaseConfig);  
-  
-const auth=  
-  
-getAuth(app);  
-  
-window.goHome=()=>{  
-  
-location=  
-"index.html";  
-  
-};  
-  
-window.goOrders=()=>{  
-  
-location=  
-"orders.html";  
-  
-};  
-  
-window.goCart=()=>{  
-  
-location=  
-"cart.html";  
-  
-};  
-  
-window.goMine=()=>{  
-  
-onAuthStateChanged(  
-  
-auth,  
-  
-(user)=>{  
-  
-if(user){  
-  
-location=  
-"mine.html";  
-  
-}  
-  
-else{  
-  
-location=  
-"auth.html";  
-  
-}  
-  
-}  
-  
-);  
-  
-};  
-  
-let rate=1325;  
-  
-console.log(  
-  
-"USD RATE",  
-  
-rate  
-  
-);  
-  
-</script>  </body>  </html>
+authDomain:
+"jumiastaff-83757.firebaseapp.com",
+
+projectId:
+"jumiastaff-83757",
+
+storageBucket:
+"jumiastaff-83757.firebasestorage.app",
+
+messagingSenderId:
+"1018307795636",
+
+appId:
+"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
+
+};
+
+initializeApp(
+
+firebaseConfig
+
+);
+
+</script>
+
+</body>
+
+</html>

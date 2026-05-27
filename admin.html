@@ -8,143 +8,46 @@ content="width=device-width,initial-scale=1">
 
 <title>
 
-JUMIASTAFF ADMIN
+ADMIN PANEL
 
 </title>
 
 <style>
 
 body{
-margin:0;
+background:#f3f3f3;
 font-family:Arial;
-background:#eef2f7;
-}
-
-.side{
-
-position:fixed;
-
-left:0;
-
-top:0;
-
-bottom:0;
-
-width:240px;
-
-background:#111827;
-
-color:white;
-
-padding:20px;
-
-}
-
-.menu{
-
 padding:15px;
-
-margin-top:10px;
-
-background:#1f2937;
-
-border-radius:12px;
-
 }
 
-.main{
-
-margin-left:260px;
-
+.top{
+background:#ff6600;
+color:white;
 padding:20px;
-
-}
-
-.stats{
-
-display:grid;
-
-grid-template-columns:
-repeat(3,1fr);
-
-gap:15px;
-
-}
-
-.circle{
-
-background:white;
-
-padding:25px;
-
 border-radius:20px;
-
-text-align:center;
-
-box-shadow:0 4px 12px rgba(0,0,0,.1);
-
-}
-
-.num{
-
-font-size:35px;
-
-font-weight:bold;
-
-color:#ff6600;
-
+margin-bottom:20px;
 }
 
 .card{
-
 background:white;
-
 padding:20px;
-
-margin-top:15px;
-
 border-radius:20px;
-
-box-shadow:0 4px 12px rgba(0,0,0,.08);
-
+margin-bottom:15px;
 }
 
 input{
-
 width:100%;
-
-padding:14px;
-
+padding:12px;
 margin-top:8px;
-
-border-radius:12px;
-
-border:1px solid #ddd;
-
+margin-bottom:8px;
 }
 
 button{
-
-padding:12px;
-
-border:none;
-
-border-radius:12px;
-
-background:#ff6600;
-
-color:white;
-
-margin-top:10px;
-
 width:100%;
-
-}
-
-.delete{
-
-background:red;
-
+padding:12px;
+background:#ff6600;
+border:none;
+color:white;
 }
 
 </style>
@@ -153,143 +56,198 @@ background:red;
 
 <body>
 
-<div class="side">
+<div class="top">
 
-<h2>
-
-☰ ADMIN
-
-</h2>
-
-<div class="menu">
-
-📊 Dashboard
+ADMIN PANEL
 
 </div>
 
-<div class="menu">
-
-👥 Users
+<div id="users">
 
 </div>
 
-<div class="menu">
+<script type="module">
 
-💳 Deposits
+import {
 
-</div>
+initializeApp
 
-<div class="menu">
+}
 
-💸 Withdraws
+from
 
-</div>
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
-<div class="menu">
+import {
 
-🛒 Products
+getFirestore,
 
-</div>
+collection,
 
-</div>
+getDocs,
 
-<div class="main">
+doc,
 
-<div class="stats">
+updateDoc
 
-<div class="circle">
+}
 
-Users
+from
 
-<div
-class="num"
-id="usersCount">
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-0
+const firebaseConfig={
 
-</div>
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-</div>
+authDomain:
+"jumiastaff-83757.firebaseapp.com",
 
-<div class="circle">
+projectId:
+"jumiastaff-83757"
 
-Online
+};
 
-<div
-class="num"
-id="onlineCount">
+const app=
 
-0
+initializeApp(
 
-</div>
+firebaseConfig
 
-</div>
+);
 
-<div class="circle">
+const db=
 
-Active
+getFirestore(
 
-<div
-class="num"
-id="activeCount">
+app
 
-0
+);
 
-</div>
+let s=
 
-</div>
+await getDocs(
 
-</div>
+collection(
+
+db,
+
+"users"
+
+)
+
+);
+
+s.forEach(
+
+x=>{
+
+let d=x.data();
+
+users.innerHTML+=`
 
 <div class="card">
 
-<h3>
+<b>
 
-USER CONTROL
+${d.username}
 
-</h3>
+</b>
 
 <input
-placeholder="Search Username">
+id="a${x.id}"
+value="${d.availableBalance||0}">
+
+<input
+id="w${x.id}"
+value="${d.withdrawableBalance||0}">
+
+<input
+id="r${x.id}"
+value="${d.referralCommission||0}">
+
+<button
+onclick="saveUser('${x.id}')">
+
+SAVE
+
+</button>
 
 </div>
 
-<div
-id="users">
+`;
 
-</div>
+}
 
-<div class="card">
+);
 
-<h3>
+window.saveUser=
 
-DEPOSITS
+async(id)=>{
 
-</h3>
+await updateDoc(
 
-<div
-id="deposits">
+doc(
 
-</div>
+db,
 
-</div>
+"users",
 
-<div class="card">
+id
 
-<h3>
+),
 
-WITHDRAWALS
+{
 
-</h3>
+availableBalance:
 
-<div
-id="withdraws">
+Number(
 
-</div>
+document.getElementById(
 
-</div>
+"a"+id
 
-</div>
+).value
+
+),
+
+withdrawableBalance:
+
+Number(
+
+document.getElementById(
+
+"w"+id
+
+).value
+
+),
+
+referralCommission:
+
+Number(
+
+document.getElementById(
+
+"r"+id
+
+).value
+
+)
+
+}
+
+);
+
+alert(
+
+"Updated"
+
+);
+
+};
+
+</script>
 
 </body>
 
