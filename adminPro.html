@@ -72,11 +72,38 @@ background:#eee;
 border-radius:10px;
 }
 
+#adminPanel{
+display:none;
+}
+
 </style>
 
 </head>
 
 <body>
+
+<div id="loginBox" class="card">
+
+ADMIN LOGIN
+
+<input
+id="adminEmail"
+placeholder="Admin Email">
+
+<input
+id="adminPassword"
+type="password"
+placeholder="Admin Password">
+
+<button id="loginBtn">
+
+LOGIN
+
+</button>
+
+</div>
+
+<div id="adminPanel">
 
 <div class="top">
 
@@ -149,6 +176,8 @@ SEND MESSAGE
 
 </div>
 
+</div>
+
 <script type="module">
 
 import {
@@ -156,6 +185,14 @@ initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+getAuth,
+signInWithEmailAndPassword,
+onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 import {
 getFirestore,
@@ -186,8 +223,70 @@ projectId:"jumiastaff-83757"
 });
 
 const db=
-
 getFirestore(app);
+
+const auth=
+getAuth(app);
+
+/* LOGIN */
+
+loginBtn.onclick=
+
+async()=>{
+
+try{
+
+await signInWithEmailAndPassword(
+
+auth,
+
+adminEmail.value,
+
+adminPassword.value
+
+);
+
+}
+
+catch(e){
+
+alert(
+"LOGIN FAILED"
+);
+
+}
+
+};
+
+onAuthStateChanged(
+
+auth,
+
+async(user)=>{
+
+if(!user){
+
+return;
+
+}
+
+if(
+user.email!="admin@gmail.com"
+){
+
+alert(
+"NOT ADMIN"
+);
+
+return;
+
+}
+
+loginBox.style.display=
+"none";
+
+adminPanel.style.display=
+"block";
 
 /* USERS */
 
@@ -201,6 +300,8 @@ db,
 )
 
 );
+
+users.innerHTML="";
 
 snap.forEach(
 
@@ -269,6 +370,10 @@ SAVE
 
 );
 
+});
+
+/* SAVE USER */
+
 window.saveUser=
 
 async(id)=>{
@@ -330,11 +435,13 @@ document.getElementById(
 
 );
 
-alert("UPDATED");
+alert(
+"UPDATED"
+);
 
 };
 
-/* OLD CHAT */
+/* CHAT */
 
 chatUser.oninput=()=>{
 
@@ -577,7 +684,7 @@ APPROVE
 
 );
 
-/* APPROVE SALE + REMOVE FROM PANEL */
+/* APPROVE SALE */
 
 window.approveSale=
 
@@ -611,8 +718,6 @@ return;
 
 let sale=
 saleSnap.data();
-
-/* REMOVE PRODUCT FROM USER CART */
 
 const userRef=
 
@@ -656,8 +761,6 @@ cart:cart
 );
 
 }
-
-/* DELETE SALE FROM ADMIN PANEL */
 
 await deleteDoc(
 saleRef
