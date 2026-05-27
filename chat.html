@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CHAT</title>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
 
 <style>
 
@@ -16,28 +18,27 @@ padding:20px;
 background:white;
 padding:20px;
 border-radius:20px;
-margin-bottom:15px;
 }
 
 #msgs{
 height:400px;
 overflow:auto;
+margin-bottom:15px;
 }
 
 input{
 width:100%;
 padding:15px;
 margin-top:10px;
-font-weight:bold;
 }
 
 button{
 width:100%;
 padding:15px;
-margin-top:10px;
 background:#ff6600;
 color:white;
 border:none;
+margin-top:10px;
 font-weight:bold;
 }
 
@@ -53,9 +54,9 @@ font-weight:bold;
 
 <div id="msgs"></div>
 
-<input id="msg" placeholder="MESSAGE">
+<input id="msg" placeholder="Message">
 
-<button onclick="sendMsg()">
+<button id="sendBtn">
 
 SEND
 
@@ -63,5 +64,95 @@ SEND
 
 </div>
 
+<script type="module">
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+onSnapshot
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+
+authDomain:"jumiastaff-83757.firebaseapp.com",
+
+projectId:"jumiastaff-83757"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const db=getFirestore(app);
+
+const ref=collection(db,"chatMessages");
+
+onSnapshot(ref,s=>{
+
+msgs.innerHTML="";
+
+s.forEach(x=>{
+
+let d=x.data();
+
+msgs.innerHTML+=`
+
+<b>${d.sender}</b>
+
+:
+
+${d.message}
+
+<br><br>
+
+`;
+
+});
+
+});
+
+document.getElementById(
+
+"sendBtn"
+
+).onclick=
+
+async()=>{
+
+if(msg.value=="")return;
+
+await addDoc(
+
+ref,
+
+{
+
+sender:"USER",
+
+message:msg.value,
+
+time:Date.now()
+
+}
+
+);
+
+msg.value="";
+
+};
+
+</script>
+
 </body>
+
 </html>

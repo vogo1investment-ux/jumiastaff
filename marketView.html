@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<style>
+
+body{
+font-family:Arial;
+background:#f3f3f3;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:20px;
+}
+
+input{
+width:100%;
+padding:15px;
+margin-top:10px;
+}
+
+button{
+width:100%;
+padding:15px;
+margin-top:10px;
+background:#ff6600;
+border:none;
+color:white;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<b id="pid"></b>
+
+<br><br>
+
+AVAILABLE BALANCE:
+
+$
+
+<span id="bal">
+
+0
+
+</span>
+
+<input
+id="amt"
+placeholder="Amount">
+
+<input
+id="pass"
+type="password"
+placeholder="Password">
+
+<button id="buyBtn">
+
+BUY PRODUCT
+
+</button>
+
+<div id="out"></div>
+
+</div>
+
+<script type="module">
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+updateDoc,
+arrayUnion
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+
+authDomain:"jumiastaff-83757.firebaseapp.com",
+
+projectId:"jumiastaff-83757"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+const id=
+
+new URLSearchParams(
+
+location.search
+
+).get("id");
+
+pid.innerHTML=
+
+"PRODUCT ID: "+id;
+
+onAuthStateChanged(
+
+auth,
+
+async(user)=>{
+
+let ref=
+
+doc(
+
+db,
+
+"users",
+
+user.uid
+
+);
+
+let s=
+
+await getDoc(ref);
+
+let d=s.data();
+
+bal.innerHTML=
+
+d.availableBalance||0;
+
+buyBtn.onclick=
+
+async()=>{
+
+let amount=
+
+Number(
+
+amt.value
+
+);
+
+if(
+
+amount>
+
+d.availableBalance
+
+){
+
+alert(
+
+"No balance"
+
+);
+
+return;
+
+}
+
+let newBal=
+
+d.availableBalance-
+
+amount;
+
+await updateDoc(
+
+ref,
+
+{
+
+availableBalance:newBal,
+
+cart:
+
+arrayUnion(id)
+
+}
+
+);
+
+out.innerHTML=
+
+`
+
+<b>
+
+SUCCESS
+
+</b>
+
+<br>
+
+PRODUCT ID:
+
+${id}
+
+`;
+
+bal.innerHTML=
+
+newBal;
+
+};
+
+}
+
+);
+
+</script>
+
+</body>
+
+</html>
