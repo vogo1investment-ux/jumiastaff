@@ -1,11 +1,110 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+
+CHAT
+
+</title>
+
+<style>
+
+body{
+
+background:#f3f3f3;
+
+font-family:Arial;
+
+padding:20px;
+
+font-weight:bold;
+
+}
+
+.box{
+
+background:white;
+
+padding:20px;
+
+border-radius:20px;
+
+font-weight:bold;
+
+}
+
+#msgs{
+
+height:400px;
+
+overflow:auto;
+
+font-weight:bold;
+
+font-size:16px;
+
+}
+
+input{
+
+width:100%;
+
+padding:15px;
+
+margin-top:10px;
+
+font-weight:bold;
+
+}
+
+button{
+
+width:100%;
+
+padding:15px;
+
+margin-top:10px;
+
+background:#ff6600;
+
+color:white;
+
+border:none;
+
+font-weight:bold;
+
+}
+
+b{
+
+font-size:18px;
+
+}
+
+</style>
+
+</head>
+
 <body>
 
-<div id="msgs"></div>
+<div class="box">
 
-<input id="msg">
+CHAT
+
+<br><br>
+
+<div id="msgs">
+
+</div>
+
+<input
+id="msg"
+placeholder="Message">
 
 <button id="send">
 
@@ -13,30 +112,50 @@ SEND
 
 </button>
 
+</div>
+
 <script type="module">
 
 import {
+
 initializeApp
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
+
 getAuth,
+
 onAuthStateChanged
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 import {
+
 getFirestore,
+
 collection,
+
 addDoc,
+
 query,
+
 where,
+
 onSnapshot
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const app=
@@ -51,15 +170,21 @@ projectId:"jumiastaff-83757"
 
 });
 
-const auth=getAuth(app);
+const auth=
 
-const db=getFirestore(app);
+getAuth(app);
+
+const db=
+
+getFirestore(app);
 
 onAuthStateChanged(
 
 auth,
 
 user=>{
+
+if(!user)return;
 
 const q=
 
@@ -111,7 +236,7 @@ ${d.sender}
 
 ${d.message}
 
-<br>
+<br><br>
 
 `;
 
