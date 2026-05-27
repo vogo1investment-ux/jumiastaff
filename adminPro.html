@@ -53,6 +53,7 @@ color:white;
 border:none;
 margin-top:10px;
 font-weight:bold;
+cursor:pointer;
 }
 
 #chatBox,
@@ -166,7 +167,8 @@ query,
 where,
 onSnapshot,
 addDoc,
-getDoc
+getDoc,
+deleteDoc
 }
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
@@ -575,6 +577,8 @@ APPROVE
 
 );
 
+/* APPROVE SALE + REMOVE FROM PANEL */
+
 window.approveSale=
 
 async(id)=>{
@@ -608,18 +612,7 @@ return;
 let sale=
 saleSnap.data();
 
-await updateDoc(
-
-saleRef,
-
-{
-
-status:
-"approved"
-
-}
-
-);
+/* REMOVE PRODUCT FROM USER CART */
 
 const userRef=
 
@@ -664,8 +657,14 @@ cart:cart
 
 }
 
+/* DELETE SALE FROM ADMIN PANEL */
+
+await deleteDoc(
+saleRef
+);
+
 alert(
-"APPROVED + PRODUCT REMOVED"
+"APPROVED + REMOVED"
 );
 
 }
