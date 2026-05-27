@@ -16,9 +16,9 @@ Buy Product
 
 body{
 
-background:#f3f3f3;
-
 font-family:Arial;
+
+background:#f3f3f3;
 
 padding:20px;
 
@@ -28,23 +28,11 @@ padding:20px;
 
 background:white;
 
-padding:25px;
+padding:20px;
 
 border-radius:20px;
 
 margin-top:20px;
-
-}
-
-.title{
-
-font-size:25px;
-
-font-weight:bold;
-
-margin-bottom:15px;
-
-color:#ff8800;
 
 }
 
@@ -54,11 +42,11 @@ width:100%;
 
 padding:15px;
 
+border-radius:15px;
+
+border:1px solid #ccc;
+
 margin-top:15px;
-
-border-radius:12px;
-
-border:1px solid #ddd;
 
 }
 
@@ -66,29 +54,19 @@ button{
 
 width:100%;
 
-padding:15px;
+padding:18px;
 
 margin-top:20px;
 
 border:none;
 
-background:#ff8800;
+border-radius:15px;
+
+background:#ff6600;
 
 color:white;
 
 font-size:18px;
-
-border-radius:12px;
-
-}
-
-.big{
-
-font-size:22px;
-
-font-weight:bold;
-
-margin-top:15px;
 
 }
 
@@ -100,47 +78,41 @@ margin-top:15px;
 
 <div class="box">
 
-<div class="title">
+<h2>
 
-BUY PRODUCT
+Buy Product
 
-</div>
+</h2>
 
-<div class="big">
+<br>
 
-Available Balance Only
-
-</div>
-
-<div class="big">
-
-Use only your available balance to buy products.
-
-</div>
+Product ID
 
 <input
-id="pid"
+
+id="productid"
 
 placeholder="Enter Product ID">
 
+<br>
+
+Password
+
 <input
-id="pass"
+
+id="password"
 
 type="password"
 
-placeholder="Enter Password">
+placeholder="Password">
 
 <button
+
 onclick="submitBuy()">
 
-Submit Purchase
+Submit
 
 </button>
-
-<div
-id="msg">
-
-</div>
 
 </div>
 
@@ -158,21 +130,9 @@ from
 
 import {
 
-getFirestore,
+getAuth,
 
-collection,
-
-addDoc
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-import {
-
-getAuth
+onAuthStateChanged
 
 }
 
@@ -180,31 +140,32 @@ from
 
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
+import {
+
+getFirestore,
+
+doc,
+
+updateDoc,
+
+arrayUnion
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
 const firebaseConfig={
 
 apiKey:
-
 "AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
 authDomain:
-
 "jumiastaff-83757.firebaseapp.com",
 
 projectId:
-
-"jumiastaff-83757",
-
-storageBucket:
-
-"jumiastaff-83757.firebasestorage.app",
-
-messagingSenderId:
-
-"1018307795636",
-
-appId:
-
-"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
+"jumiastaff-83757"
 
 };
 
@@ -212,63 +173,80 @@ const app=
 
 initializeApp(firebaseConfig);
 
-const db=
-
-getFirestore(app);
-
 const auth=
 
 getAuth(app);
 
+const db=
+
+getFirestore(app);
+
+let currentUser=null;
+
+onAuthStateChanged(
+
+auth,
+
+u=>{
+
+currentUser=u;
+
+}
+
+);
+
 window.submitBuy=
+
 async()=>{
 
-if(!auth.currentUser){
+if(!currentUser){
 
 alert(
-"Login first"
+"Login First"
 );
 
 return;
 
 }
 
-await addDoc(
+let id=
 
-collection(
+productid.value;
+
+await updateDoc(
+
+doc(
 db,
-"buyRequests"
+"users",
+currentUser.uid
 ),
 
 {
 
-uid:
+cart:
 
-auth.currentUser.uid,
+arrayUnion(
 
-productID:
+{
 
-pid.value,
+productId:id,
 
-status:
+name:id
 
-"pending",
+}
 
-time:
-
-Date.now()
+)
 
 }
 
 );
 
-msg.innerHTML=
+alert(
+"Product Added To Cart"
+);
 
-"<b style='color:orange'>Pending Approval</b>";
-
-pid.value="";
-
-pass.value="";
+location=
+"cart.html";
 
 };
 

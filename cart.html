@@ -1,176 +1,199 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Cart</title>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+
+Cart
+
+</title>
 
 <style>
-body{
-margin:0;
-background:#f3f3f3;
-font-family:Arial;
-padding:15px;
-}
 
-.title{
-font-size:28px;
-font-weight:bold;
-margin-bottom:20px;
+body{
+
+background:#f3f3f3;
+
+padding:20px;
+
+font-family:Arial;
+
 }
 
 .card{
+
 background:white;
-border-radius:15px;
-overflow:hidden;
-margin-bottom:20px;
-box-shadow:0 5px 10px rgba(0,0,0,.1);
-}
 
-.card img{
-width:100%;
-height:220px;
-object-fit:cover;
-}
-
-.info{
 padding:15px;
+
+border-radius:20px;
+
+margin-bottom:20px;
+
 }
 
-.name{
-font-size:20px;
-font-weight:bold;
-}
+img{
 
-.pid{
-margin-top:10px;
-font-size:16px;
-color:red;
-font-weight:bold;
-}
-
-.copy{
-margin-top:15px;
-background:#ff9900;
-border:none;
 width:100%;
-padding:12px;
-color:white;
-font-size:18px;
-border-radius:10px;
+
+border-radius:20px;
+
+height:230px;
+
+object-fit:cover;
+
 }
 
-.empty{
-text-align:center;
-margin-top:100px;
-font-size:20px;
-font-weight:bold;
-}
 </style>
+
 </head>
 
 <body>
 
-<div class="title">
-🛒 My Cart
-</div>
+<h2>
 
-<div id="cart"></div>
+My Products
+
+</h2>
+
+<div id="cart">
+
+</div>
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import products from "./products.js";
 
 import {
-getFirestore,
-collection,
-getDocs
+
+initializeApp
+
 }
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getAuth,
+
+onAuthStateChanged
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+
+getFirestore,
+
+doc,
+
+getDoc
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig={
-apiKey:"YOURKEY",
-authDomain:"YOURDOMAIN",
-projectId:"jumiastaff-83757"
+
+apiKey:
+"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+
+authDomain:
+"jumiastaff-83757.firebaseapp.com",
+
+projectId:
+"jumiastaff-83757"
+
 };
 
-const app=initializeApp(firebaseConfig);
+const app=
 
-const db=getFirestore(app);
+initializeApp(firebaseConfig);
 
-async function loadCart(){
+const auth=
 
-let box=document.getElementById("cart");
+getAuth(app);
 
-box.innerHTML="";
+const db=
 
-const snap=await getDocs(
-collection(
+getFirestore(app);
+
+onAuthStateChanged(
+
+auth,
+
+async(user)=>{
+
+if(!user)return;
+
+let snap=
+
+await getDoc(
+
+doc(
 db,
-"cart"
+"users",
+user.uid
 )
+
 );
 
-if(snap.empty){
+let d=
+snap.data();
 
-box.innerHTML=
-"<div class='empty'>No Products Yet</div>";
+cart.innerHTML="";
 
-return;
+(
 
-}
+d.cart||[]
 
-snap.forEach(doc=>{
+)
 
-let d=doc.data();
+.forEach(
 
-box.innerHTML+=`
+x=>{
+
+let p=
+
+products[
+x.productId
+];
+
+if(!p)return;
+
+cart.innerHTML+=`
 
 <div class="card">
 
-<img src="${d.image}">
-
-<div class="info">
-
-<div class="name">
-
-${d.name}
-
-</div>
-
-<div class="pid">
-
-Product ID:
-${d.productID}
-
-</div>
-
-<button class="copy"
-onclick="
-navigator.clipboard.writeText(
-'${d.productID}'
-);
-alert('Copied');
-">
-
-Copy Product ID
-
-</button>
-
-</div>
+<img src="${
+p.img
+}">
 
 </div>
 
 `;
 
-});
+}
+
+);
 
 }
 
-loadCart();
+);
 
 </script>
 
 </body>
+
 </html>
