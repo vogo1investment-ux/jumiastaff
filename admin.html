@@ -15,18 +15,14 @@ JUMIASTAFF ADMIN
 <style>
 
 body{
-
 background:#f3f3f3;
-
 font-family:Arial;
-
-padding:20px;
-
+padding:15px;
 }
 
 .login,
 .panel,
-.usercard{
+.card{
 
 background:white;
 
@@ -34,19 +30,27 @@ padding:20px;
 
 border-radius:20px;
 
-margin-bottom:20px;
+margin-bottom:15px;
 
+box-shadow:0 3px 10px rgba(0,0,0,.1);
+
+}
+
+h2{
+margin-bottom:15px;
 }
 
 input{
 
 width:100%;
 
-padding:15px;
+padding:14px;
 
-margin-top:10px;
+margin-top:8px;
 
-border-radius:15px;
+margin-bottom:8px;
+
+border-radius:12px;
 
 border:1px solid #ddd;
 
@@ -54,21 +58,49 @@ border:1px solid #ddd;
 
 button{
 
-width:100%;
-
-padding:15px;
-
-margin-top:10px;
+padding:12px;
 
 border:none;
+
+border-radius:12px;
 
 background:#ff6600;
 
 color:white;
 
-border-radius:15px;
+font-weight:bold;
+
+margin-top:10px;
+
+width:100%;
+
+}
+
+.row{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:10px;
+
+}
+
+.title{
+
+font-size:20px;
 
 font-weight:bold;
+
+margin-bottom:10px;
+
+}
+
+.small{
+
+font-size:13px;
+
+color:gray;
 
 }
 
@@ -78,18 +110,19 @@ font-weight:bold;
 
 <body>
 
-<div id="loginBox"
+<div
+id="loginBox"
 class="login">
 
 <h2>
 
-ADMIN PANEL LOGIN
+ADMIN LOGIN
 
 </h2>
 
 <input
 id="email"
-placeholder="Admin Email">
+placeholder="Email">
 
 <input
 id="password"
@@ -109,15 +142,29 @@ LOGIN
 id="panel"
 style="display:none">
 
-<h2>
+<div class="title">
 
-JUMIASTAFF ADMIN
-
-</h2>
-
-<div id="users">
+JUMIASTAFF ADMIN PANEL
 
 </div>
+
+<div id="users"></div>
+
+<div class="title">
+
+DEPOSITS
+
+</div>
+
+<div id="deposits"></div>
+
+<div class="title">
+
+WITHDRAWALS
+
+</div>
+
+<div id="withdraws"></div>
 
 </div>
 
@@ -174,16 +221,7 @@ authDomain:
 "jumiastaff-83757.firebaseapp.com",
 
 projectId:
-"jumiastaff-83757",
-
-storageBucket:
-"jumiastaff-83757.firebasestorage.app",
-
-messagingSenderId:
-"1018307795636",
-
-appId:
-"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
+"jumiastaff-83757"
 
 };
 
@@ -198,8 +236,6 @@ getFirestore(app);
 
 window.adminLogin=
 async()=>{
-
-try{
 
 await signOut(auth);
 
@@ -223,13 +259,7 @@ x.user.email
 
 ){
 
-alert(
-
-"ADMIN ONLY"
-
-);
-
-await signOut(auth);
+alert("ADMIN ONLY");
 
 return;
 
@@ -241,23 +271,23 @@ loginBox.style.display=
 panel.style.display=
 "block";
 
-loadUsers();
-
-}
-
-catch(e){
-
-alert(
-e.message
-);
-
-}
+loadAll();
 
 };
 
+async function loadAll(){
+
+loadUsers();
+
+loadDeposits();
+
+loadWithdraws();
+
+}
+
 async function loadUsers(){
 
-const s=
+let s=
 
 await getDocs(
 
@@ -272,43 +302,69 @@ users.innerHTML="";
 
 s.forEach(
 
-d=>{
+u=>{
 
-let x=
-d.data();
+let d=
+u.data();
 
 users.innerHTML+=`
 
-<div class="usercard">
+<div class="card">
 
 <b>
 
-${x.username||"User"}
+${d.username||"User"}
 
 </b>
 
-<br><br>
+<div class="small">
 
-Available Balance
+UID:
+${u.id}
 
-<input
-id="a${d.id}"
-value="${x.availableBalance||0}">
+</div>
 
-Withdrawable Balance
+<div class="row">
 
-<input
-id="w${d.id}"
-value="${x.withdrawableBalance||0}">
+<div>
 
-Referral Commission
+Available
 
 <input
-id="r${d.id}"
-value="${x.referralCommission||0}">
+id="a${u.id}"
+value="${d.availableBalance||0}">
+
+</div>
+
+<div>
+
+Withdrawable
+
+<input
+id="w${u.id}"
+value="${d.withdrawableBalance||0}">
+
+</div>
+
+</div>
+
+Referral
+
+<input
+id="r${u.id}"
+value="${d.referralCommission||0}">
+
+Cart
+
+<input
+value="${
+(d.cart||[])
+.join(",")
+
+}">
 
 <button
-onclick="saveUser('${d.id}')">
+onclick="saveUser('${u.id}')">
 
 SAVE USER
 
@@ -377,13 +433,133 @@ document.getElementById(
 
 );
 
-alert(
+alert("Saved");
 
-"UPDATED"
+};
+
+async function loadDeposits(){
+
+try{
+
+let s=
+
+await getDocs(
+
+collection(
+db,
+"deposits"
+)
 
 );
 
-};
+deposits.innerHTML="";
+
+s.forEach(
+
+x=>{
+
+let d=
+x.data();
+
+deposits.innerHTML+=`
+
+<div class="card">
+
+<b>
+
+${d.username}
+
+</b>
+
+<br>
+
+Amount:
+${d.amount}
+
+<br>
+
+Status:
+${d.status}
+
+</div>
+
+`;
+
+}
+
+);
+
+}catch(e){
+
+deposits.innerHTML=
+
+"No deposits yet";
+
+}
+
+}
+
+async function loadWithdraws(){
+
+try{
+
+let s=
+
+await getDocs(
+
+collection(
+db,
+"withdraws"
+)
+
+);
+
+withdraws.innerHTML="";
+
+s.forEach(
+
+x=>{
+
+let d=
+x.data();
+
+withdraws.innerHTML+=`
+
+<div class="card">
+
+<b>
+
+${d.username}
+
+</b>
+
+<br>
+
+Amount:
+${d.amount}
+
+<br>
+
+Status:
+${d.status}
+
+</div>
+
+`;
+
+}
+
+);
+
+}catch(e){
+
+withdraws.innerHTML=
+
+"No withdrawals yet";
+
+}
+
+}
 
 </script>
 
