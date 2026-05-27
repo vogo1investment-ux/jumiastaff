@@ -57,7 +57,8 @@ cursor:pointer;
 }
 
 #chatBox,
-#supportBox{
+#supportBox,
+#sellChatBox{
 height:300px;
 overflow:auto;
 border:1px solid black;
@@ -70,6 +71,14 @@ padding:10px;
 margin-top:8px;
 background:#eee;
 border-radius:10px;
+}
+
+.sellmsg{
+padding:12px;
+margin-top:10px;
+background:#fff3e0;
+border-radius:12px;
+font-weight:bold;
 }
 
 #adminPanel{
@@ -133,6 +142,18 @@ id="sendSupport">
 SEND CUSTOMER REPLY
 
 </button>
+
+</div>
+
+<div class="card">
+
+SELLING MARKET MESSAGES
+
+<div id="sellChatBox">
+
+Loading...
+
+</div>
 
 </div>
 
@@ -612,6 +633,70 @@ Date.now()
 supportReply.value="";
 
 };
+
+/* SELLING MARKET MESSAGES */
+
+onSnapshot(
+
+collection(
+db,
+"sellingMarketMessages"
+),
+
+snap=>{
+
+sellChatBox.innerHTML="";
+
+snap.forEach(
+
+x=>{
+
+let d=x.data();
+
+sellChatBox.innerHTML+=`
+
+<div class="sellmsg">
+
+SELLER:
+
+<br><br>
+
+${d.seller||""}
+
+<br><br>
+
+USER UID:
+
+<br><br>
+
+${d.userId||""}
+
+<br><br>
+
+MESSAGE:
+
+<br><br>
+
+${d.message||""}
+
+<br><br>
+
+TIME:
+
+<br><br>
+
+${new Date(d.time).toLocaleString()}
+
+</div>
+
+`;
+
+}
+
+);
+
+}
+);
 
 /* PENDING SALES */
 
