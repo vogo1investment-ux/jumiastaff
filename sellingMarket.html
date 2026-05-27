@@ -6,6 +6,12 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
+<title>
+
+SELLING MARKET
+
+</title>
+
 <style>
 
 body{
@@ -20,6 +26,7 @@ padding:20px;
 border-radius:20px;
 margin-bottom:15px;
 font-weight:bold;
+font-size:18px;
 }
 
 button{
@@ -30,6 +37,8 @@ color:white;
 border:none;
 margin-top:10px;
 font-weight:bold;
+font-size:16px;
+border-radius:12px;
 }
 
 </style>
@@ -52,7 +61,7 @@ FREEZER
 
 LAPTOP
 
-<button onclick="location='chat.html'">
+<button onclick="openChat('JOHN ELECTRONICS')">
 
 SELL TO ME
 
@@ -64,7 +73,17 @@ SELL TO ME
 
 MIKE STORE
 
-<button onclick="location='chat.html'">
+<br><br>
+
+BUYING:
+
+PHONES
+
+TV
+
+WATCHES
+
+<button onclick="openChat('MIKE STORE')">
 
 SELL TO ME
 
@@ -76,7 +95,17 @@ SELL TO ME
 
 USA TRADER
 
-<button onclick="location='chat.html'">
+<br><br>
+
+BUYING:
+
+MACBOOK
+
+IPHONE
+
+AIRPODS
+
+<button onclick="openChat('USA TRADER')">
 
 SELL TO ME
 
@@ -88,7 +117,17 @@ SELL TO ME
 
 GLOBAL TECH
 
-<button onclick="location='chat.html'">
+<br><br>
+
+BUYING:
+
+DRONES
+
+CAMERAS
+
+LAPTOPS
+
+<button onclick="openChat('GLOBAL TECH')">
 
 SELL TO ME
 
@@ -100,7 +139,17 @@ SELL TO ME
 
 SMART HUB
 
-<button onclick="location='chat.html'">
+<br><br>
+
+BUYING:
+
+SMART TV
+
+SPEAKERS
+
+HEADSETS
+
+<button onclick="openChat('SMART HUB')">
 
 SELL TO ME
 
@@ -112,7 +161,17 @@ SELL TO ME
 
 CANADA GADGETS
 
-<button onclick="location='chat.html'">
+<br><br>
+
+BUYING:
+
+IPHONES
+
+FREEZERS
+
+GENERATORS
+
+<button onclick="openChat('CANADA GADGETS')">
 
 SELL TO ME
 
@@ -124,7 +183,17 @@ SELL TO ME
 
 PRO MART
 
-<button onclick="location='chat.html'">
+<br><br>
+
+BUYING:
+
+PLAYSTATION
+
+XBOX
+
+GAMING PC
+
+<button onclick="openChat('PRO MART')">
 
 SELL TO ME
 
@@ -136,7 +205,17 @@ SELL TO ME
 
 ELITE SHOP
 
-<button onclick="location='chat.html'">
+<br><br>
+
+BUYING:
+
+LAPTOP
+
+AIRPODS
+
+TV
+
+<button onclick="openChat('ELITE SHOP')">
 
 SELL TO ME
 
@@ -148,7 +227,17 @@ SELL TO ME
 
 MEGA ELECTRONICS
 
-<button onclick="location='chat.html'">
+<br><br>
+
+BUYING:
+
+CAMERAS
+
+WATCHES
+
+PHONES
+
+<button onclick="openChat('MEGA ELECTRONICS')">
 
 SELL TO ME
 
@@ -160,13 +249,37 @@ SELL TO ME
 
 WORLD MARKET
 
-<button onclick="location='chat.html'">
+<br><br>
+
+BUYING:
+
+ALL ELECTRONICS
+
+<button onclick="openChat('WORLD MARKET')">
 
 SELL TO ME
 
 </button>
 
 </div>
+
+<script>
+
+function openChat(name){
+
+localStorage.setItem(
+
+"selectedSeller",
+
+name
+
+);
+
+location="chat.html";
+
+}
+
+</script>
 
 </body>
 
