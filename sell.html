@@ -20,10 +20,12 @@ font-family:Arial;
 padding:20px;
 }
 
-.box{
+.card{
 background:white;
 padding:20px;
 border-radius:20px;
+margin-bottom:15px;
+font-weight:bold;
 }
 
 input{
@@ -34,9 +36,9 @@ padding:15px;
 
 margin-top:10px;
 
-border-radius:15px;
+margin-bottom:10px;
 
-border:1px solid #ddd;
+font-weight:bold;
 
 }
 
@@ -46,17 +48,13 @@ width:100%;
 
 padding:15px;
 
-margin-top:20px;
-
 background:#ff6600;
-
-border:none;
 
 color:white;
 
-font-weight:bold;
+border:none;
 
-border-radius:15px;
+font-weight:bold;
 
 }
 
@@ -66,17 +64,25 @@ border-radius:15px;
 
 <body>
 
-<div class="box">
-
-<h2>
+<div class="card">
 
 SELL PRODUCT
 
-</h2>
+<br><br>
+
+PRODUCT ID
 
 <input
-id="buyer"
-placeholder="Buyer Username">
+id="productId"
+placeholder="Enter Product ID">
+
+SELL TO USER
+
+<input
+id="sellUser"
+placeholder="Username">
+
+PASSWORD
 
 <input
 id="pass"
@@ -84,7 +90,7 @@ type="password"
 placeholder="Password">
 
 <button
-onclick="sellProduct()">
+id="sellBtn">
 
 SELL PRODUCT
 
@@ -95,48 +101,34 @@ SELL PRODUCT
 <script type="module">
 
 import {
-
 initializeApp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-
 getAuth,
-
-onAuthStateChanged
-
+onAuthStateChanged,
+reauthenticateWithCredential,
+EmailAuthProvider
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 import {
-
 getFirestore,
-
 collection,
-
 addDoc,
-
 doc,
-
 getDoc,
-
 updateDoc
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-const firebaseConfig={
+const app=
+
+initializeApp({
 
 apiKey:
 "AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
@@ -147,26 +139,17 @@ authDomain:
 projectId:
 "jumiastaff-83757"
 
-};
-
-const app=
-initializeApp(firebaseConfig);
+});
 
 const auth=
+
 getAuth(app);
 
 const db=
+
 getFirestore(app);
 
-let currentUser;
-
-let sellCode=
-
-localStorage.getItem(
-
-"sellProductId"
-
-);
+let currentUser=null;
 
 onAuthStateChanged(
 
@@ -174,92 +157,172 @@ auth,
 
 u=>{
 
+if(!u){
+
+location=
+"auth.html";
+
+return;
+
+}
+
 currentUser=u;
 
 }
 
 );
 
-window.sellProduct=
+sellBtn.onclick=
+
 async()=>{
 
-await addDoc(
+if(!currentUser){
 
-collection(
-db,
-"sellRequests"
-),
-
-{
-
-uid:
-currentUser.uid,
-
-buyer:
-buyer.value,
-
-productId:
-sellCode,
-
-status:
-"Pending"
+return;
 
 }
 
-);
+let p=
+
+productId.value;
 
 let s=
 
-await getDoc(
+sellUser.value;
 
-doc(
-db,
-"users",
-currentUser.uid
-)
+let pw=
+
+pass.value;
+
+if(
+
+!p||
+
+!s||
+
+!pw
+
+){
+
+alert(
+
+"Fill all fields"
 
 );
 
+return;
+
+}
+
+try{
+
+const credential=
+
+EmailAuthProvider.credential(
+
+currentUser.email,
+
+pw
+
+);
+
+await reauthenticateWithCredential(
+
+currentUser,
+
+credential
+
+);
+
+const ref=
+
+doc(
+
+db,
+
+"users",
+
+currentUser.uid
+
+);
+
+const snap=
+
+await getDoc(ref);
+
 let d=
-s.data();
 
-let newCart=
+snap.data();
 
-(
-d.cart||[]
-)
+let cart=
 
-.filter(
+d.cart||[];
 
-x=>
+cart=
 
-x.productId!=sellCode
+cart.filter(
+
+x=>x!=p
 
 );
 
 await updateDoc(
 
-doc(
+ref,
+
+{
+
+cart:cart
+
+}
+
+);
+
+await addDoc(
+
+collection(
 db,
-"users",
-currentUser.uid
+"pendingSales"
 ),
 
 {
 
-cart:
-newCart
+userId:
+currentUser.uid,
+
+productId:p,
+
+sellUser:s,
+
+status:"pending",
+
+time:
+Date.now()
 
 }
 
 );
 
 alert(
-"PRODUCT SOLD"
+
+"PRODUCT SENT FOR APPROVAL"
+
 );
 
 location=
 "cart.html";
+
+}
+
+catch{
+
+alert(
+
+"Wrong password"
+
+);
+
+}
 
 };
 

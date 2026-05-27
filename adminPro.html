@@ -55,8 +55,9 @@ margin-top:10px;
 font-weight:bold;
 }
 
-#chatBox{
-height:350px;
+#chatBox,
+#supportBox{
+height:300px;
 overflow:auto;
 border:1px solid black;
 padding:10px;
@@ -79,6 +80,43 @@ border-radius:10px;
 <div class="top">
 
 ADMIN PANEL
+
+</div>
+
+<div class="card">
+
+CUSTOMER SERVICE
+
+<div id="supportBox">
+
+</div>
+
+<input
+id="supportUser"
+placeholder="User UID">
+
+<input
+id="supportReply"
+placeholder="Reply">
+
+<button
+id="sendSupport">
+
+SEND CUSTOMER REPLY
+
+</button>
+
+</div>
+
+<div class="card">
+
+PENDING PRODUCT SALES
+
+<div id="pendingSales">
+
+Loading...
+
+</div>
 
 </div>
 
@@ -148,16 +186,15 @@ const db=
 
 getFirestore(app);
 
+/* USERS */
+
 let snap=
 
 await getDocs(
 
 collection(
-
 db,
-
 "users"
-
 )
 
 );
@@ -183,43 +220,36 @@ ${u.id}
 USERNAME
 
 <input id="u${u.id}"
-
 value="${d.username||""}">
 
 AVAILABLE BALANCE
 
 <input id="a${u.id}"
-
 value="${d.availableBalance||0}">
 
 WITHDRAWABLE BALANCE
 
 <input id="w${u.id}"
-
 value="${d.withdrawableBalance||0}">
 
 REFERRAL COMMISSION
 
 <input id="r${u.id}"
-
 value="${d.referralCommission||0}">
 
 USED REFERRAL
 
 <input id="ur${u.id}"
-
 value="${d.usedReferral||""}">
 
 JOINED USERS
 
 <input id="j${u.id}"
-
 value="${d.joinedUsers||0}">
 
 CART
 
 <input id="c${u.id}"
-
 value="${(d.cart||[]).join(',')}">
 
 <button onclick="saveUser('${u.id}')">
@@ -243,100 +273,65 @@ async(id)=>{
 await updateDoc(
 
 doc(
-
 db,
-
 "users",
-
 id
-
 ),
 
 {
 
 username:
-
 document.getElementById(
-
 "u"+id
-
 ).value,
 
 availableBalance:
-
 Number(
-
 document.getElementById(
-
 "a"+id
-
 ).value
-
 ),
 
 withdrawableBalance:
-
 Number(
-
 document.getElementById(
-
 "w"+id
-
 ).value
-
 ),
 
 referralCommission:
-
 Number(
-
 document.getElementById(
-
 "r"+id
-
 ).value
-
 ),
 
 usedReferral:
-
 document.getElementById(
-
 "ur"+id
-
 ).value,
 
 joinedUsers:
-
 Number(
-
 document.getElementById(
-
 "j"+id
-
 ).value
-
 ),
 
 cart:
-
 document.getElementById(
-
 "c"+id
-
 ).value.split(",")
 
 }
 
 );
 
-alert(
-
-"UPDATED"
-
-);
+alert("UPDATED");
 
 };
+
+/* OLD CHAT */
 
 chatUser.oninput=()=>{
 
@@ -345,21 +340,14 @@ const q=
 query(
 
 collection(
-
 db,
-
 "chatMessages"
-
 ),
 
 where(
-
 "userId",
-
 "==",
-
 chatUser.value
-
 )
 
 );
@@ -382,11 +370,7 @@ chatBox.innerHTML+=`
 
 <div class="msg">
 
-<b>
-
 ${d.sender}
-
-</b>
 
 <br><br>
 
@@ -413,29 +397,22 @@ async()=>{
 await addDoc(
 
 collection(
-
 db,
-
 "chatMessages"
-
 ),
 
 {
 
 userId:
-
 chatUser.value,
 
 sender:
-
 "ADMIN",
 
 message:
-
 adminMsg.value,
 
 time:
-
 Date.now()
 
 }
@@ -443,6 +420,183 @@ Date.now()
 );
 
 adminMsg.value="";
+
+};
+
+/* CUSTOMER SERVICE */
+
+onSnapshot(
+
+collection(
+db,
+"supportMessages"
+),
+
+snap=>{
+
+supportBox.innerHTML="";
+
+snap.forEach(
+
+x=>{
+
+let d=x.data();
+
+supportBox.innerHTML+=`
+
+<div class="msg">
+
+USER:
+
+${d.userId||""}
+
+<br><br>
+
+${d.sender}
+
+<br><br>
+
+${d.message}
+
+</div>
+
+`;
+
+}
+
+);
+
+}
+
+);
+
+sendSupport.onclick=
+
+async()=>{
+
+await addDoc(
+
+collection(
+db,
+"supportMessages"
+),
+
+{
+
+userId:
+supportUser.value,
+
+sender:
+"ADMIN",
+
+message:
+supportReply.value,
+
+time:
+Date.now()
+
+}
+
+);
+
+supportReply.value="";
+
+};
+
+/* PENDING SALES */
+
+onSnapshot(
+
+collection(
+db,
+"pendingSales"
+),
+
+snap=>{
+
+pendingSales.innerHTML="";
+
+snap.forEach(
+
+x=>{
+
+let d=x.data();
+
+pendingSales.innerHTML+=`
+
+<div class="card">
+
+PRODUCT ID
+
+<br>
+
+${d.productId}
+
+<br><br>
+
+SELL TO
+
+<br>
+
+${d.sellUser}
+
+<br><br>
+
+SELLER UID
+
+<br>
+
+${d.userId}
+
+<br><br>
+
+STATUS:
+
+${d.status||"pending"}
+
+<br><br>
+
+<button onclick="approveSale('${x.id}')">
+
+APPROVE
+
+</button>
+
+</div>
+
+`;
+
+}
+
+);
+
+}
+
+);
+
+window.approveSale=
+
+async(id)=>{
+
+await updateDoc(
+
+doc(
+db,
+"pendingSales",
+id
+),
+
+{
+
+status:"approved"
+
+}
+
+);
+
+alert(
+"APPROVED"
+);
 
 };
 
