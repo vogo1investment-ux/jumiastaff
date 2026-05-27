@@ -14,25 +14,15 @@ Cart
 
 <style>
 
-body{
-
-background:#f3f3f3;
-
-padding:20px;
-
-font-family:Arial;
-
-}
-
 .card{
 
 background:white;
 
 padding:15px;
 
-border-radius:20px;
+margin:15px;
 
-margin-bottom:20px;
+border-radius:20px;
 
 }
 
@@ -40,9 +30,7 @@ img{
 
 width:100%;
 
-border-radius:20px;
-
-height:230px;
+height:220px;
 
 object-fit:cover;
 
@@ -54,19 +42,15 @@ object-fit:cover;
 
 <body>
 
-<h2>
-
-My Products
-
-</h2>
-
 <div id="cart">
 
 </div>
 
 <script type="module">
 
-import products from "./products.js";
+import products
+
+from "./products.js";
 
 import {
 
@@ -107,12 +91,15 @@ from
 const firebaseConfig={
 
 apiKey:
+
 "AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
 authDomain:
+
 "jumiastaff-83757.firebaseapp.com",
 
 projectId:
+
 "jumiastaff-83757"
 
 };
@@ -142,21 +129,26 @@ let snap=
 await getDoc(
 
 doc(
+
 db,
+
 "users",
+
 user.uid
+
 )
 
 );
 
-let d=
+let data=
+
 snap.data();
 
 cart.innerHTML="";
 
 (
 
-d.cart||[]
+data.cart||[]
 
 )
 
@@ -167,7 +159,9 @@ x=>{
 let p=
 
 products[
+
 x.productId
+
 ];
 
 if(!p)return;
@@ -176,9 +170,21 @@ cart.innerHTML+=`
 
 <div class="card">
 
-<img src="${
-p.img
-}">
+<img src="${p.img}">
+
+<h2>
+
+${p.name}
+
+</h2>
+
+<b>
+
+Code:
+
+${x.productId}
+
+</b>
 
 </div>
 

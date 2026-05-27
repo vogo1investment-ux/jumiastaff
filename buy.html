@@ -12,109 +12,21 @@ Buy Product
 
 </title>
 
-<style>
-
-body{
-
-font-family:Arial;
-
-background:#f3f3f3;
-
-padding:20px;
-
-}
-
-.box{
-
-background:white;
-
-padding:20px;
-
-border-radius:20px;
-
-margin-top:20px;
-
-}
-
-input{
-
-width:100%;
-
-padding:15px;
-
-border-radius:15px;
-
-border:1px solid #ccc;
-
-margin-top:15px;
-
-}
-
-button{
-
-width:100%;
-
-padding:18px;
-
-margin-top:20px;
-
-border:none;
-
-border-radius:15px;
-
-background:#ff6600;
-
-color:white;
-
-font-size:18px;
-
-}
-
-</style>
-
 </head>
 
 <body>
 
-<div class="box">
-
-<h2>
-
-Buy Product
-
-</h2>
-
-<br>
-
-Product ID
-
 <input
+id="pid"
+placeholder="Enter Product Code">
 
-id="productid"
+<br><br>
 
-placeholder="Enter Product ID">
+<button onclick="buy()">
 
-<br>
-
-Password
-
-<input
-
-id="password"
-
-type="password"
-
-placeholder="Password">
-
-<button
-
-onclick="submitBuy()">
-
-Submit
+BUY
 
 </button>
-
-</div>
 
 <script type="module">
 
@@ -159,12 +71,15 @@ from
 const firebaseConfig={
 
 apiKey:
+
 "AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
 authDomain:
+
 "jumiastaff-83757.firebaseapp.com",
 
 projectId:
+
 "jumiastaff-83757"
 
 };
@@ -195,57 +110,50 @@ currentUser=u;
 
 );
 
-window.submitBuy=
+window.buy=
 
 async()=>{
 
-if(!currentUser){
+let code=
 
-alert(
-"Login First"
-);
+pid.value.toUpperCase();
 
-return;
-
-}
-
-let id=
-
-productid.value;
+if(!currentUser)return;
 
 await updateDoc(
 
 doc(
+
 db,
+
 "users",
+
 currentUser.uid
+
 ),
 
 {
 
 cart:
 
-arrayUnion(
+arrayUnion({
 
-{
+productId:code
 
-productId:id,
-
-name:id
-
-}
-
-)
+})
 
 }
 
 );
 
 alert(
-"Product Added To Cart"
+
+"Product added to cart"
+
 );
 
 location=
+
 "cart.html";
 
 };
