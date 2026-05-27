@@ -6,62 +6,30 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
-<title>
-
-Selling Market
-
-</title>
-
 <style>
 
 body{
-
 background:#f3f3f3;
-
 font-family:Arial;
-
 padding:20px;
-
 }
 
 .card{
-
 background:white;
-
 padding:20px;
-
-margin-bottom:15px;
-
 border-radius:20px;
-
-}
-
-.name{
-
+margin-bottom:15px;
 font-weight:bold;
-
-font-size:20px;
-
 }
 
 button{
-
-margin-top:10px;
-
 width:100%;
-
 padding:15px;
-
-background:#25D366;
-
+background:#ff6600;
 color:white;
-
 border:none;
-
-border-radius:15px;
-
+margin-top:10px;
 font-weight:bold;
-
 }
 
 </style>
@@ -70,175 +38,135 @@ font-weight:bold;
 
 <body>
 
-<h2>
-
-SELLING MARKET
-
-</h2>
-
-<div id="users">
-
-</div>
-
-<script>
-
-const buyers=[
-
-{
-
-name:
-
-"John Electronics USA",
-
-number:
-
-"12025550101"
-
-},
-
-{
-
-name:
-
-"David Tech Store",
-
-number:
-
-"12025550102"
-
-},
-
-{
-
-name:
-
-"Emma Gadget Buyer",
-
-number:
-
-"12025550103"
-
-},
-
-{
-
-name:
-
-"Michael Devices",
-
-number:
-
-"12025550104"
-
-},
-
-{
-
-name:
-
-"Olivia Reseller",
-
-number:
-
-"12025550105"
-
-},
-
-{
-
-name:
-
-"Daniel Market",
-
-number:
-
-"12025550106"
-
-},
-
-{
-
-name:
-
-"Sophia Tech Hub",
-
-number:
-
-"12025550107"
-
-},
-
-{
-
-name:
-
-"James Global Store",
-
-number:
-
-"12025550108"
-
-},
-
-{
-
-name:
-
-"Grace Product Buyer",
-
-number:
-
-"12025550109"
-
-},
-
-{
-
-name:
-
-"Lucas Gadgets",
-
-number:
-
-"12025550110"
-
-}
-
-];
-
-users.innerHTML=
-
-buyers.map(
-
-x=>`
-
 <div class="card">
 
-<div class="name">
+JOHN ELECTRONICS
 
-${x.name}
+<br><br>
 
-</div>
+BUYING:
 
-<button
+TV
 
-onclick="window.open(
+FREEZER
 
-'https://wa.me/${x.number}'
+LAPTOP
 
-)">
+<button onclick="location='chat.html'">
 
-WHATSAPP
+SELL TO ME
 
 </button>
 
 </div>
 
-`
+<div class="card">
 
-).join("");
+MIKE STORE
 
-</script>
+<button onclick="location='chat.html'">
+
+SELL TO ME
+
+</button>
+
+</div>
+
+<div class="card">
+
+USA TRADER
+
+<button onclick="location='chat.html'">
+
+SELL TO ME
+
+</button>
+
+</div>
+
+<div class="card">
+
+GLOBAL TECH
+
+<button onclick="location='chat.html'">
+
+SELL TO ME
+
+</button>
+
+</div>
+
+<div class="card">
+
+SMART HUB
+
+<button onclick="location='chat.html'">
+
+SELL TO ME
+
+</button>
+
+</div>
+
+<div class="card">
+
+CANADA GADGETS
+
+<button onclick="location='chat.html'">
+
+SELL TO ME
+
+</button>
+
+</div>
+
+<div class="card">
+
+PRO MART
+
+<button onclick="location='chat.html'">
+
+SELL TO ME
+
+</button>
+
+</div>
+
+<div class="card">
+
+ELITE SHOP
+
+<button onclick="location='chat.html'">
+
+SELL TO ME
+
+</button>
+
+</div>
+
+<div class="card">
+
+MEGA ELECTRONICS
+
+<button onclick="location='chat.html'">
+
+SELL TO ME
+
+</button>
+
+</div>
+
+<div class="card">
+
+WORLD MARKET
+
+<button onclick="location='chat.html'">
+
+SELL TO ME
+
+</button>
+
+</div>
 
 </body>
 

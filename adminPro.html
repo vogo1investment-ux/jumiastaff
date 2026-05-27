@@ -6,54 +6,61 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
+<title>
+
+ADMIN PRO
+
+</title>
+
 <style>
 
 body{
-
-font-family:Arial;
-
 background:#f3f3f3;
-
+font-family:Arial;
 padding:20px;
+}
 
+.top{
+background:#ff6600;
+color:white;
+padding:20px;
+border-radius:20px;
+font-weight:bold;
+margin-bottom:20px;
 }
 
 .card{
-
 background:white;
-
 padding:20px;
-
-margin-bottom:15px;
-
 border-radius:20px;
-
+margin-bottom:15px;
+font-weight:bold;
 }
 
 input{
-
 width:100%;
-
 padding:12px;
-
 margin-top:8px;
-
 margin-bottom:8px;
-
+font-weight:bold;
 }
 
 button{
-
 width:100%;
-
-padding:12px;
-
+padding:15px;
 background:#ff6600;
-
-border:none;
-
 color:white;
+border:none;
+font-weight:bold;
+margin-top:10px;
+}
 
+#chatBox{
+height:300px;
+overflow:auto;
+border:1px solid black;
+padding:10px;
+margin-top:10px;
 }
 
 </style>
@@ -62,13 +69,38 @@ color:white;
 
 <body>
 
-<h2>
+<div class="top">
 
-ADMIN PRO
+ADMIN PANEL
 
-</h2>
+</div>
 
 <div id="users">
+
+</div>
+
+<div class="card">
+
+<b>
+
+ADMIN ↔ USERS CHAT
+
+</b>
+
+<div id="chatBox">
+
+</div>
+
+<input
+id="adminMsg"
+placeholder="Reply to users">
+
+<button
+onclick="sendAdmin()">
+
+SEND
+
+</button>
 
 </div>
 
@@ -94,7 +126,11 @@ getDocs,
 
 doc,
 
-updateDoc
+updateDoc,
+
+addDoc,
+
+onSnapshot
 
 }
 
@@ -104,7 +140,8 @@ from
 
 const firebaseConfig={
 
-apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+apiKey:
+"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
 authDomain:
 "jumiastaff-83757.firebaseapp.com",
@@ -130,7 +167,7 @@ app
 
 );
 
-let s=
+let snap=
 
 await getDocs(
 
@@ -144,7 +181,7 @@ db,
 
 );
 
-s.forEach(
+snap.forEach(
 
 u=>{
 
@@ -155,36 +192,69 @@ users.innerHTML+=`
 <div class="card">
 
 UID:
+
 ${u.id}
+
+<br><br>
+
+USERNAME
 
 <input
 id="u${u.id}"
 value="${d.username||""}">
 
+AVAILABLE BALANCE
+
 <input
 id="a${u.id}"
 value="${d.availableBalance||0}">
+
+WITHDRAWABLE BALANCE
 
 <input
 id="w${u.id}"
 value="${d.withdrawableBalance||0}">
 
+REFERRAL COMMISSION
+
 <input
 id="r${u.id}"
 value="${d.referralCommission||0}">
+
+USED REFERRAL
 
 <input
 id="ur${u.id}"
 value="${d.usedReferral||""}">
 
+JOINED USERS
+
 <input
 id="j${u.id}"
 value="${d.joinedUsers||0}">
+
+CART PRODUCTS
 
 <input
 id="c${u.id}"
 value="${
 (d.cart||[]).join(",")
+}">
+
+DEPOSIT
+
+<input
+id="d${u.id}"
+value="${
+d.deposit||0
+}">
+
+WITHDRAW
+
+<input
+id="wd${u.id}"
+value="${
+d.withdraw||0
 }">
 
 <button
@@ -290,7 +360,31 @@ document.getElementById(
 
 "c"+id
 
-).value.split(",")
+).value.split(","),
+
+deposit:
+
+Number(
+
+document.getElementById(
+
+"d"+id
+
+).value
+
+),
+
+withdraw:
+
+Number(
+
+document.getElementById(
+
+"wd"+id
+
+).value
+
+)
 
 }
 
@@ -298,9 +392,93 @@ document.getElementById(
 
 alert(
 
-"Updated"
+"UPDATED"
 
 );
+
+};
+
+const msgRef=
+
+collection(
+
+db,
+
+"chatMessages"
+
+);
+
+onSnapshot(
+
+msgRef,
+
+snap=>{
+
+chatBox.innerHTML="";
+
+snap.forEach(
+
+x=>{
+
+let d=x.data();
+
+chatBox.innerHTML+=`
+
+<b>
+
+${d.sender}
+
+</b>
+
+:
+
+${d.message}
+
+<br><br>
+
+`;
+
+}
+
+);
+
+}
+
+);
+
+window.sendAdmin=
+
+async()=>{
+
+if(
+
+adminMsg.value==""
+
+)return;
+
+await addDoc(
+
+msgRef,
+
+{
+
+sender:
+
+"ADMIN",
+
+message:
+
+adminMsg.value,
+
+time:
+
+Date.now()
+
+}
+
+);
+
+adminMsg.value="";
 
 };
 

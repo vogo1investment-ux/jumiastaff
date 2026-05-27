@@ -6,12 +6,6 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
-<title>
-
-Market
-
-</title>
-
 <style>
 
 body{
@@ -20,45 +14,35 @@ font-family:Arial;
 padding:15px;
 }
 
+.products{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
 .card{
 background:white;
-margin-bottom:20px;
-padding:15px;
 border-radius:20px;
+overflow:hidden;
+font-weight:bold;
 }
 
 img{
 width:100%;
 height:220px;
 object-fit:cover;
-border-radius:20px;
 }
 
-.name{
-font-weight:bold;
-font-size:22px;
-margin-top:10px;
-}
-
-.price{
-font-weight:bold;
-font-size:20px;
-margin-top:10px;
-}
-
-.desc{
-font-weight:bold;
-margin-top:10px;
+.info{
+padding:15px;
 }
 
 button{
 width:100%;
 padding:15px;
-border:none;
-border-radius:15px;
 background:#ff6600;
 color:white;
-margin-top:15px;
+border:none;
 font-weight:bold;
 }
 
@@ -68,209 +52,209 @@ font-weight:bold;
 
 <body>
 
-<div id="market"></div>
-
-<script>
-
-const phone=
-
-"234XXXXXXXXXX";
-
-const products=[
-
-{
-
-id:"CM801",
-
-name:"Gaming Laptop",
-
-price:"$9.50 | ₦15,000",
-
-img:"gamingLaptop.jpg",
-
-desc:"High performance gaming laptop for work gaming and streaming"
-
-},
-
-{
-
-id:"IP15",
-
-name:"iPhone 15 Pro Max",
-
-price:"$12.70 | ₦20,000",
-
-img:"iphone15.jpg",
-
-desc:"Premium smartphone with advanced camera"
-
-},
-
-{
-
-id:"PS900",
-
-name:"PlayStation 5",
-
-price:"$11.43 | ₦18,000",
-
-img:"ps5console.jpg",
-
-desc:"Next generation gaming console"
-
-},
-
-{
-
-id:"TV001",
-
-name:"Samsung Smart TV",
-
-price:"$15.24 | ₦24,000",
-
-img:"smarttv.jpg",
-
-desc:"Smart television with streaming support"
-
-},
-
-{
-
-id:"FR200",
-
-name:"Haier Freezer",
-
-price:"$13.97 | ₦22,000",
-
-img:"freezer.jpg",
-
-desc:"Large freezer with cooling technology"
-
-},
-
-{
-
-id:"MB700",
-
-name:"MacBook Pro",
-
-price:"$19.05 | ₦30,000",
-
-img:"macbookpro.jpg",
-
-desc:"Professional laptop for editing"
-
-},
-
-{
-
-id:"AP500",
-
-name:"AirPods Max",
-
-price:"$7.62 | ₦12,000",
-
-img:"airpodsmax.jpg",
-
-desc:"Wireless premium headphones"
-
-},
-
-{
-
-id:"CC300",
-
-name:"Canon Camera",
-
-price:"$10.16 | ₦16,000",
-
-img:"canoncamera.jpg",
-
-desc:"Professional photography camera"
-
-},
-
-{
-
-id:"DR100",
-
-name:"Drone Pro",
-
-price:"$14.61 | ₦23,000",
-
-img:"dronepro.jpg",
-
-desc:"Flying drone with camera"
-
-},
-
-{
-
-id:"GN900",
-
-name:"Generator Set",
-
-price:"$17.78 | ₦28,000",
-
-img:"generator.jpg",
-
-desc:"Power backup generator"
-
-}
-
-];
-
-market.innerHTML=
-
-products.map(
-
-p=>`
+<div class="products">
 
 <div class="card">
 
-<img src="${p.img}">
+<img src="samsungtv.jpg">
 
-<div class="name">
+<div class="info">
 
-${p.name}
+Samsung TV
 
-</div>
+$694
 
-<div class="price">
+<button onclick="location='marketView.html?id=TV001'">
 
-${p.price}
-
-</div>
-
-<div class="desc">
-
-${p.desc}
-
-</div>
-
-<button onclick="buy('${p.id}')">
-
-BUY PRODUCT
+VIEW
 
 </button>
 
 </div>
 
-`
+</div>
 
-).join("");
+<div class="card">
 
-function buy(id){
+<img src="freezer.jpg">
 
-window.open(
+<div class="info">
 
-`https://wa.me/${phone}?text=Hello%20I%20want%20to%20buy%20product%20ID%20${id}`
+Freezer
 
-);
+$377
 
-}
+<button onclick="location='marketView.html?id=FR001'">
 
-</script>
+VIEW
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="macbookpro.jpg">
+
+<div class="info">
+
+MacBook Pro
+
+$2909
+
+<button onclick="location='marketView.html?id=MB001'">
+
+VIEW
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="airpodsmax.jpg">
+
+<div class="info">
+
+Airpods Max
+
+$650
+
+<button onclick="location='marketView.html?id=AP001'">
+
+VIEW
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="canoncamera.jpg">
+
+<div class="info">
+
+Canon Camera
+
+$820
+
+<button onclick="location='marketView.html?id=CC001'">
+
+VIEW
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="dronepro.jpg">
+
+<div class="info">
+
+Drone Pro
+
+$1100
+
+<button onclick="location='marketView.html?id=DR001'">
+
+VIEW
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="generator.jpg">
+
+<div class="info">
+
+Generator
+
+$950
+
+<button onclick="location='marketView.html?id=GN001'">
+
+VIEW
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="gaminglaptop.jpg">
+
+<div class="info">
+
+Gaming Laptop
+
+$981
+
+<button onclick="location='marketView.html?id=CM801'">
+
+VIEW
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="ecoflow.jpg">
+
+<div class="info">
+
+EcoFlow
+
+$747
+
+<button onclick="location='marketView.html?id=EC001'">
+
+VIEW
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="smartwatch.jpg">
+
+<div class="info">
+
+Smart Watch
+
+$226
+
+<button onclick="location='marketView.html?id=SW001'">
+
+VIEW
+
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 
