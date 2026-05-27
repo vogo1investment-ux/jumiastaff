@@ -15,29 +15,98 @@ JUMIASTAFF ADMIN
 <style>
 
 body{
-background:#f3f3f3;
+margin:0;
 font-family:Arial;
-padding:15px;
+background:#eef2f7;
 }
 
-.login,
-.panel,
+.side{
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+bottom:0;
+
+width:240px;
+
+background:#111827;
+
+color:white;
+
+padding:20px;
+
+}
+
+.menu{
+
+padding:15px;
+
+margin-top:10px;
+
+background:#1f2937;
+
+border-radius:12px;
+
+}
+
+.main{
+
+margin-left:260px;
+
+padding:20px;
+
+}
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:15px;
+
+}
+
+.circle{
+
+background:white;
+
+padding:25px;
+
+border-radius:20px;
+
+text-align:center;
+
+box-shadow:0 4px 12px rgba(0,0,0,.1);
+
+}
+
+.num{
+
+font-size:35px;
+
+font-weight:bold;
+
+color:#ff6600;
+
+}
+
 .card{
 
 background:white;
 
 padding:20px;
 
+margin-top:15px;
+
 border-radius:20px;
 
-margin-bottom:15px;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
 
-box-shadow:0 3px 10px rgba(0,0,0,.1);
-
-}
-
-h2{
-margin-bottom:15px;
 }
 
 input{
@@ -47,8 +116,6 @@ width:100%;
 padding:14px;
 
 margin-top:8px;
-
-margin-bottom:8px;
 
 border-radius:12px;
 
@@ -68,39 +135,15 @@ background:#ff6600;
 
 color:white;
 
-font-weight:bold;
-
 margin-top:10px;
 
 width:100%;
 
 }
 
-.row{
+.delete{
 
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:10px;
-
-}
-
-.title{
-
-font-size:20px;
-
-font-weight:bold;
-
-margin-bottom:10px;
-
-}
-
-.small{
-
-font-size:13px;
-
-color:gray;
+background:red;
 
 }
 
@@ -110,458 +153,143 @@ color:gray;
 
 <body>
 
-<div
-id="loginBox"
-class="login">
+<div class="side">
 
 <h2>
 
-ADMIN LOGIN
+☰ ADMIN
 
 </h2>
 
-<input
-id="email"
-placeholder="Email">
+<div class="menu">
+
+📊 Dashboard
+
+</div>
+
+<div class="menu">
+
+👥 Users
+
+</div>
+
+<div class="menu">
+
+💳 Deposits
+
+</div>
+
+<div class="menu">
+
+💸 Withdraws
+
+</div>
+
+<div class="menu">
+
+🛒 Products
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="stats">
+
+<div class="circle">
+
+Users
+
+<div
+class="num"
+id="usersCount">
+
+0
+
+</div>
+
+</div>
+
+<div class="circle">
+
+Online
+
+<div
+class="num"
+id="onlineCount">
+
+0
+
+</div>
+
+</div>
+
+<div class="circle">
+
+Active
+
+<div
+class="num"
+id="activeCount">
+
+0
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>
+
+USER CONTROL
+
+</h3>
 
 <input
-id="password"
-type="password"
-placeholder="Password">
-
-<button
-onclick="adminLogin()">
-
-LOGIN
-
-</button>
+placeholder="Search Username">
 
 </div>
 
 <div
-id="panel"
-style="display:none">
-
-<div class="title">
-
-JUMIASTAFF ADMIN PANEL
+id="users">
 
 </div>
 
-<div id="users"></div>
+<div class="card">
 
-<div class="title">
+<h3>
 
 DEPOSITS
 
+</h3>
+
+<div
+id="deposits">
+
 </div>
 
-<div id="deposits"></div>
+</div>
 
-<div class="title">
+<div class="card">
+
+<h3>
 
 WITHDRAWALS
 
-</div>
+</h3>
 
-<div id="withdraws"></div>
-
-</div>
-
-<script type="module">
-
-import {
-
-initializeApp
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-
-import {
-
-getAuth,
-
-signInWithEmailAndPassword,
-
-signOut
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-
-import {
-
-getFirestore,
-
-collection,
-
-getDocs,
-
-doc,
-
-updateDoc
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-const firebaseConfig={
-
-apiKey:
-"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
-
-authDomain:
-"jumiastaff-83757.firebaseapp.com",
-
-projectId:
-"jumiastaff-83757"
-
-};
-
-const app=
-initializeApp(firebaseConfig);
-
-const auth=
-getAuth(app);
-
-const db=
-getFirestore(app);
-
-window.adminLogin=
-async()=>{
-
-await signOut(auth);
-
-let x=
-
-await signInWithEmailAndPassword(
-
-auth,
-
-email.value,
-
-password.value
-
-);
-
-if(
-
-x.user.email
-!==
-"admin@gmail.com"
-
-){
-
-alert("ADMIN ONLY");
-
-return;
-
-}
-
-loginBox.style.display=
-"none";
-
-panel.style.display=
-"block";
-
-loadAll();
-
-};
-
-async function loadAll(){
-
-loadUsers();
-
-loadDeposits();
-
-loadWithdraws();
-
-}
-
-async function loadUsers(){
-
-let s=
-
-await getDocs(
-
-collection(
-db,
-"users"
-)
-
-);
-
-users.innerHTML="";
-
-s.forEach(
-
-u=>{
-
-let d=
-u.data();
-
-users.innerHTML+=`
-
-<div class="card">
-
-<b>
-
-${d.username||"User"}
-
-</b>
-
-<div class="small">
-
-UID:
-${u.id}
-
-</div>
-
-<div class="row">
-
-<div>
-
-Available
-
-<input
-id="a${u.id}"
-value="${d.availableBalance||0}">
-
-</div>
-
-<div>
-
-Withdrawable
-
-<input
-id="w${u.id}"
-value="${d.withdrawableBalance||0}">
+<div
+id="withdraws">
 
 </div>
 
 </div>
 
-Referral
-
-<input
-id="r${u.id}"
-value="${d.referralCommission||0}">
-
-Cart
-
-<input
-value="${
-(d.cart||[])
-.join(",")
-
-}">
-
-<button
-onclick="saveUser('${u.id}')">
-
-SAVE USER
-
-</button>
-
 </div>
-
-`;
-
-}
-
-);
-
-}
-
-window.saveUser=
-async(id)=>{
-
-await updateDoc(
-
-doc(
-db,
-"users",
-id
-),
-
-{
-
-availableBalance:
-
-Number(
-
-document.getElementById(
-
-"a"+id
-
-).value
-
-),
-
-withdrawableBalance:
-
-Number(
-
-document.getElementById(
-
-"w"+id
-
-).value
-
-),
-
-referralCommission:
-
-Number(
-
-document.getElementById(
-
-"r"+id
-
-).value
-
-)
-
-}
-
-);
-
-alert("Saved");
-
-};
-
-async function loadDeposits(){
-
-try{
-
-let s=
-
-await getDocs(
-
-collection(
-db,
-"deposits"
-)
-
-);
-
-deposits.innerHTML="";
-
-s.forEach(
-
-x=>{
-
-let d=
-x.data();
-
-deposits.innerHTML+=`
-
-<div class="card">
-
-<b>
-
-${d.username}
-
-</b>
-
-<br>
-
-Amount:
-${d.amount}
-
-<br>
-
-Status:
-${d.status}
-
-</div>
-
-`;
-
-}
-
-);
-
-}catch(e){
-
-deposits.innerHTML=
-
-"No deposits yet";
-
-}
-
-}
-
-async function loadWithdraws(){
-
-try{
-
-let s=
-
-await getDocs(
-
-collection(
-db,
-"withdraws"
-)
-
-);
-
-withdraws.innerHTML="";
-
-s.forEach(
-
-x=>{
-
-let d=
-x.data();
-
-withdraws.innerHTML+=`
-
-<div class="card">
-
-<b>
-
-${d.username}
-
-</b>
-
-<br>
-
-Amount:
-${d.amount}
-
-<br>
-
-Status:
-${d.status}
-
-</div>
-
-`;
-
-}
-
-);
-
-}catch(e){
-
-withdraws.innerHTML=
-
-"No withdrawals yet";
-
-}
-
-}
-
-</script>
 
 </body>
 
