@@ -4,7 +4,7 @@ CM801:{
 
 img:
 
-"gamingLaptop.jpg"
+"RTXGamingLaptop.jpg"
 
 },
 
@@ -20,7 +20,7 @@ FR200:{
 
 img:
 
-"freezer.jpg"
+"HaierThermocoolChestFreezer.jpg"
 
 },
 
