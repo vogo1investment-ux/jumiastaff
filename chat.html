@@ -15,123 +15,70 @@ CHAT
 <style>
 
 body{
-
 background:#f3f3f3;
-
 font-family:Arial;
-
 padding:20px;
-
 font-weight:bold;
-
 }
 
 .box{
-
 background:white;
-
 padding:20px;
-
 border-radius:20px;
-
 font-weight:bold;
-
 }
 
 #msgs{
-
-height:400px;
-
+height:420px;
 overflow:auto;
-
 font-weight:bold;
-
 font-size:16px;
-
-padding-right:5px;
-
 }
 
 .chat{
-
 padding:12px;
-
 margin-top:10px;
-
 border-radius:15px;
-
-background:#eee;
-
 word-break:break-word;
-
 }
 
-.me{
-
-background:#ffecd9;
-
+.user{
+background:#ffe8d1;
 }
 
 .admin{
-
-background:#d9ffe3;
-
+background:#d8ffe0;
 }
 
 input{
-
 width:100%;
-
 padding:15px;
-
 margin-top:10px;
-
 font-weight:bold;
-
 border:none;
-
 border-radius:12px;
-
 background:#f3f3f3;
-
 }
 
 button{
-
 width:100%;
-
 padding:15px;
-
 margin-top:10px;
-
 background:#ff6600;
-
 color:white;
-
 border:none;
-
 font-weight:bold;
-
 border-radius:12px;
-
 }
 
 .top{
-
 background:#ff6600;
-
 padding:20px;
-
 color:white;
-
 border-radius:20px;
-
 margin-bottom:15px;
-
 font-size:20px;
-
 text-align:center;
-
 }
 
 </style>
@@ -142,7 +89,7 @@ text-align:center;
 
 <div class="top">
 
-CUSTOMER CHAT
+SELLER CHAT
 
 </div>
 
@@ -167,85 +114,62 @@ SEND
 <script type="module">
 
 import {
-
 initializeApp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-
 getAuth,
-
 onAuthStateChanged
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 import {
-
 getFirestore,
-
 collection,
-
 addDoc,
-
 query,
-
 where,
-
-onSnapshot,
-
-orderBy
-
+onSnapshot
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const app=
 
 initializeApp({
 
-apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+apiKey:
+"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-authDomain:"jumiastaff-83757.firebaseapp.com",
+authDomain:
+"jumiastaff-83757.firebaseapp.com",
 
-projectId:"jumiastaff-83757"
+projectId:
+"jumiastaff-83757"
 
 });
 
 const auth=
-
 getAuth(app);
 
 const db=
-
 getFirestore(app);
 
-/* GET SELLER */
+/* SELLER NAME */
 
 const params=
 
 new URLSearchParams(
-
 location.search
-
 );
 
 const seller=
 
 params.get(
-
 "seller"
-
 )||"GENERAL";
 
 /* USER */
@@ -265,44 +189,27 @@ return;
 
 }
 
-/* PRIVATE CHAT */
+/* LOAD MESSAGES */
 
 const q=
 
 query(
 
 collection(
-
 db,
-
 "chatMessages"
-
 ),
 
 where(
-
 "userId",
-
 "==",
-
 user.uid
-
 ),
 
 where(
-
 "seller",
-
 "==",
-
 seller
-
-),
-
-orderBy(
-
-"time"
-
 )
 
 );
@@ -319,11 +226,12 @@ snap.forEach(
 
 x=>{
 
-let d=x.data();
+let d=
+x.data();
 
 msgs.innerHTML+=`
 
-<div class="chat ${d.sender=="USER"?"me":"admin"}">
+<div class="chat ${d.sender=="USER"?"user":"admin"}">
 
 <b>
 
@@ -351,39 +259,39 @@ msgs.scrollHeight;
 
 );
 
-/* SEND */
+/* SEND MESSAGE */
 
 send.onclick=
 
 async()=>{
 
 if(
-
 msg.value.trim()==""
-
 )return;
 
 await addDoc(
 
 collection(
-
 db,
-
 "chatMessages"
-
 ),
 
 {
 
-userId:user.uid,
+userId:
+user.uid,
 
-seller:seller,
+seller:
+seller,
 
-sender:"USER",
+sender:
+"USER",
 
-message:msg.value,
+message:
+msg.value,
 
-time:Date.now()
+time:
+Date.now()
 
 }
 

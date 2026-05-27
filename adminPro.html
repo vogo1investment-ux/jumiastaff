@@ -175,15 +175,15 @@ Loading...
 
 <div class="card">
 
-CHAT USER UID
-
-<input
-id="chatUser"
-placeholder="Paste User UID">
+LIVE USER CHATS
 
 <div id="chatBox">
 
 </div>
+
+<input
+id="chatUser"
+placeholder="User UID">
 
 <input
 id="adminMsg"
@@ -278,6 +278,8 @@ alert(
 }
 
 };
+
+/* ADMIN CHECK */
 
 onAuthStateChanged(
 
@@ -462,30 +464,14 @@ alert(
 
 };
 
-/* CHAT */
+/* LIVE USER CHATS */
 
-chatUser.oninput=()=>{
-
-const q=
-
-query(
+onSnapshot(
 
 collection(
 db,
 "chatMessages"
 ),
-
-where(
-"userId",
-"==",
-chatUser.value
-)
-
-);
-
-onSnapshot(
-
-q,
 
 snap=>{
 
@@ -501,7 +487,35 @@ chatBox.innerHTML+=`
 
 <div class="msg">
 
+<b>
+
+USER UID:
+
+</b>
+
+<br>
+
+${d.userId||""}
+
+<br><br>
+
+<b>
+
+SELLER:
+
+</b>
+
+<br>
+
+${d.seller||"GENERAL"}
+
+<br><br>
+
+<b>
+
 ${d.sender}
+
+</b>
 
 <br><br>
 
@@ -515,15 +529,22 @@ ${d.message}
 
 );
 
+chatBox.scrollTop=
+chatBox.scrollHeight;
+
 }
 
 );
 
-};
+/* SEND ADMIN MESSAGE */
 
 sendAdmin.onclick=
 
 async()=>{
+
+if(
+adminMsg.value.trim()==""
+)return;
 
 await addDoc(
 
@@ -536,6 +557,9 @@ db,
 
 userId:
 chatUser.value,
+
+seller:
+"GENERAL",
 
 sender:
 "ADMIN",
