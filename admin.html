@@ -15,13 +15,13 @@ ADMIN PANEL
 <style>
 
 body{
-font-family:Arial;
 background:#f3f3f3;
+font-family:Arial;
 padding:20px;
 }
 
-.login,
-.panel{
+.box,
+.usercard{
 
 background:white;
 
@@ -53,7 +53,7 @@ width:100%;
 
 padding:15px;
 
-margin-top:15px;
+margin-top:10px;
 
 background:#ff6600;
 
@@ -67,18 +67,6 @@ font-weight:bold;
 
 }
 
-.card{
-
-background:white;
-
-padding:20px;
-
-border-radius:20px;
-
-margin-bottom:15px;
-
-}
-
 </style>
 
 </head>
@@ -86,7 +74,7 @@ margin-bottom:15px;
 <body>
 
 <div id="loginBox"
-class="login">
+class="box">
 
 <h2>
 
@@ -95,16 +83,16 @@ ADMIN LOGIN
 </h2>
 
 <input
-id="u"
-placeholder="Username">
+id="email"
+placeholder="Email">
 
 <input
-id="p"
+id="password"
 type="password"
 placeholder="Password">
 
 <button
-onclick="login()">
+onclick="adminLogin()">
 
 LOGIN
 
@@ -141,6 +129,18 @@ from
 
 import {
 
+getAuth,
+
+signInWithEmailAndPassword
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+
 getFirestore,
 
 collection,
@@ -173,21 +173,44 @@ projectId:
 const app=
 initializeApp(firebaseConfig);
 
+const auth=
+getAuth(app);
+
 const db=
 getFirestore(app);
 
-window.login=
+window.adminLogin=
 async()=>{
+
+try{
+
+await signInWithEmailAndPassword(
+
+auth,
+
+email.value,
+
+password.value
+
+);
 
 if(
 
-u.value==="admin"
+email.value!
 
-&&
-
-p.value==="$$$$$$"
+=="admin@gmail.com"
 
 ){
+
+alert(
+
+"Not admin"
+
+);
+
+return;
+
+}
 
 loginBox.style.display=
 "none";
@@ -199,10 +222,12 @@ loadUsers();
 
 }
 
-else{
+catch(e){
 
 alert(
-"Wrong login"
+
+e.message
+
 );
 
 }
@@ -233,11 +258,11 @@ x.data();
 
 users.innerHTML+=`
 
-<div class="card">
+<div class="usercard">
 
 <b>
 
-${d.username||"User"}
+${d.username}
 
 </b>
 
