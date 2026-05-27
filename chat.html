@@ -1,68 +1,17 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
-<style>
-
-body{
-font-family:Arial;
-background:#f3f3f3;
-padding:20px;
-}
-
-.box{
-background:white;
-padding:20px;
-border-radius:20px;
-}
-
-#msgs{
-height:400px;
-overflow:auto;
-margin-bottom:15px;
-}
-
-input{
-width:100%;
-padding:15px;
-margin-top:10px;
-}
-
-button{
-width:100%;
-padding:15px;
-background:#ff6600;
-color:white;
-border:none;
-margin-top:10px;
-font-weight:bold;
-}
-
-</style>
-
-</head>
-
 <body>
-
-<div class="box">
-
-<b>CHAT</b>
 
 <div id="msgs"></div>
 
-<input id="msg" placeholder="Message">
+<input id="msg">
 
-<button id="sendBtn">
+<button id="send">
 
 SEND
 
 </button>
-
-</div>
 
 <script type="module">
 
@@ -73,15 +22,26 @@ from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
+getAuth,
+onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
 getFirestore,
 collection,
 addDoc,
+query,
+where,
 onSnapshot
 }
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-const firebaseConfig={
+const app=
+
+initializeApp({
 
 apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
@@ -89,53 +49,97 @@ authDomain:"jumiastaff-83757.firebaseapp.com",
 
 projectId:"jumiastaff-83757"
 
-};
+});
 
-const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
 
 const db=getFirestore(app);
 
-const ref=collection(db,"chatMessages");
+onAuthStateChanged(
 
-onSnapshot(ref,s=>{
+auth,
+
+user=>{
+
+const q=
+
+query(
+
+collection(
+
+db,
+
+"chatMessages"
+
+),
+
+where(
+
+"userId",
+
+"==",
+
+user.uid
+
+)
+
+);
+
+onSnapshot(
+
+q,
+
+snap=>{
 
 msgs.innerHTML="";
 
-s.forEach(x=>{
+snap.forEach(
+
+x=>{
 
 let d=x.data();
 
 msgs.innerHTML+=`
 
-<b>${d.sender}</b>
+<b>
+
+${d.sender}
+
+</b>
 
 :
 
 ${d.message}
 
-<br><br>
+<br>
 
 `;
 
-});
+}
 
-});
+);
 
-document.getElementById(
+}
 
-"sendBtn"
+);
 
-).onclick=
+send.onclick=
 
 async()=>{
 
-if(msg.value=="")return;
-
 await addDoc(
 
-ref,
+collection(
+
+db,
+
+"chatMessages"
+
+),
 
 {
+
+userId:user.uid,
 
 sender:"USER",
 
@@ -150,6 +154,10 @@ time:Date.now()
 msg.value="";
 
 };
+
+}
+
+);
 
 </script>
 

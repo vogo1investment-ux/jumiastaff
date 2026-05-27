@@ -8,7 +8,7 @@ content="width=device-width,initial-scale=1">
 
 <title>
 
-ADMIN PRO
+ADMIN PANEL
 
 </title>
 
@@ -34,7 +34,6 @@ background:white;
 padding:20px;
 border-radius:20px;
 margin-bottom:15px;
-font-weight:bold;
 }
 
 input{
@@ -51,8 +50,8 @@ padding:15px;
 background:#ff6600;
 color:white;
 border:none;
-font-weight:bold;
 margin-top:10px;
+font-weight:bold;
 }
 
 #chatBox{
@@ -60,7 +59,6 @@ height:300px;
 overflow:auto;
 border:1px solid black;
 padding:10px;
-margin-top:10px;
 }
 
 </style>
@@ -81,11 +79,9 @@ ADMIN PANEL
 
 <div class="card">
 
-<b>
+USER UID
 
-ADMIN ↔ USERS CHAT
-
-</b>
+<input id="chatUser">
 
 <div id="chatBox">
 
@@ -93,10 +89,9 @@ ADMIN ↔ USERS CHAT
 
 <input
 id="adminMsg"
-placeholder="Reply to users">
+placeholder="Reply">
 
-<button
-onclick="sendAdmin()">
+<button id="sendAdmin">
 
 SEND
 
@@ -107,65 +102,40 @@ SEND
 <script type="module">
 
 import {
-
 initializeApp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
-
 getFirestore,
-
 collection,
-
 getDocs,
-
 doc,
-
 updateDoc,
-
-addDoc,
-
-onSnapshot
-
+query,
+where,
+onSnapshot,
+addDoc
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-const firebaseConfig={
-
-apiKey:
-"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
-
-authDomain:
-"jumiastaff-83757.firebaseapp.com",
-
-projectId:
-"jumiastaff-83757"
-
-};
 
 const app=
 
-initializeApp(
+initializeApp({
 
-firebaseConfig
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-);
+authDomain:"jumiastaff-83757.firebaseapp.com",
+
+projectId:"jumiastaff-83757"
+
+});
 
 const db=
 
-getFirestore(
-
-app
-
-);
+getFirestore(app);
 
 let snap=
 
@@ -191,76 +161,33 @@ users.innerHTML+=`
 
 <div class="card">
 
-UID:
-
-${u.id}
-
-<br><br>
-
 USERNAME
 
-<input
-id="u${u.id}"
-value="${d.username||""}">
+<input id="u${u.id}" value="${d.username||""}">
 
-AVAILABLE BALANCE
+AVAILABLE
 
-<input
-id="a${u.id}"
-value="${d.availableBalance||0}">
+<input id="a${u.id}" value="${d.availableBalance||0}">
 
-WITHDRAWABLE BALANCE
+WITHDRAWABLE
 
-<input
-id="w${u.id}"
-value="${d.withdrawableBalance||0}">
+<input id="w${u.id}" value="${d.withdrawableBalance||0}">
 
-REFERRAL COMMISSION
+REFERRAL
 
-<input
-id="r${u.id}"
-value="${d.referralCommission||0}">
+<input id="r${u.id}" value="${d.referralCommission||0}">
 
-USED REFERRAL
+USED REF
 
-<input
-id="ur${u.id}"
-value="${d.usedReferral||""}">
+<input id="ur${u.id}" value="${d.usedReferral||""}">
 
-JOINED USERS
+CART
 
-<input
-id="j${u.id}"
-value="${d.joinedUsers||0}">
+<input id="c${u.id}" value="${(d.cart||[]).join(",")}">
 
-CART PRODUCTS
+<button onclick="saveUser('${u.id}')">
 
-<input
-id="c${u.id}"
-value="${
-(d.cart||[]).join(",")
-}">
-
-DEPOSIT
-
-<input
-id="d${u.id}"
-value="${
-d.deposit||0
-}">
-
-WITHDRAW
-
-<input
-id="wd${u.id}"
-value="${
-d.withdraw||0
-}">
-
-<button
-onclick="saveUser('${u.id}')">
-
-SAVE USER
+SAVE
 
 </button>
 
@@ -342,49 +269,13 @@ document.getElementById(
 
 ).value,
 
-joinedUsers:
-
-Number(
-
-document.getElementById(
-
-"j"+id
-
-).value
-
-),
-
 cart:
 
 document.getElementById(
 
 "c"+id
 
-).value.split(","),
-
-deposit:
-
-Number(
-
-document.getElementById(
-
-"d"+id
-
-).value
-
-),
-
-withdraw:
-
-Number(
-
-document.getElementById(
-
-"wd"+id
-
-).value
-
-)
+).value.split(",")
 
 }
 
@@ -398,7 +289,11 @@ alert(
 
 };
 
-const msgRef=
+chatUser.onchange=()=>{
+
+const q=
+
+query(
 
 collection(
 
@@ -406,11 +301,23 @@ db,
 
 "chatMessages"
 
+),
+
+where(
+
+"userId",
+
+"==",
+
+chatUser.value
+
+)
+
 );
 
 onSnapshot(
 
-msgRef,
+q,
 
 snap=>{
 
@@ -446,21 +353,27 @@ ${d.message}
 
 );
 
-window.sendAdmin=
+};
+
+sendAdmin.onclick=
 
 async()=>{
 
-if(
-
-adminMsg.value==""
-
-)return;
-
 await addDoc(
 
-msgRef,
+collection(
+
+db,
+
+"chatMessages"
+
+),
 
 {
+
+userId:
+
+chatUser.value,
 
 sender:
 

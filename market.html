@@ -6,6 +6,12 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
 
+<title>
+
+Market
+
+</title>
+
 <style>
 
 body{
@@ -15,35 +21,71 @@ padding:15px;
 }
 
 .products{
+
 display:grid;
-grid-template-columns:repeat(2,1fr);
+
+grid-template-columns:
+
+repeat(2,1fr);
+
 gap:15px;
+
 }
 
 .card{
+
 background:white;
+
 border-radius:20px;
+
 overflow:hidden;
+
 font-weight:bold;
+
 }
 
-img{
+.card img{
+
 width:100%;
-height:220px;
+
+height:180px;
+
 object-fit:cover;
+
 }
 
 .info{
+
 padding:15px;
+
+}
+
+.price{
+
+color:#ff5500;
+
+margin-top:10px;
+
+font-size:20px;
+
 }
 
 button{
+
 width:100%;
-padding:15px;
-background:#ff6600;
-color:white;
+
+padding:12px;
+
 border:none;
+
+background:#ff6600;
+
+color:white;
+
 font-weight:bold;
+
+margin-top:10px;
+
 }
 
 </style>
@@ -60,11 +102,24 @@ font-weight:bold;
 
 <div class="info">
 
-Samsung TV
+Samsung Smart TV
 
-$694
+<div class="price">
 
-<button onclick="location='marketView.html?id=TV001'">
+$99
+
+</div>
+
+<button
+onclick="openProduct(
+
+'TV01',
+
+'Samsung Smart TV',
+
+'75 Inch 8K Smart Television'
+
+)">
 
 VIEW
 
@@ -82,9 +137,22 @@ VIEW
 
 Freezer
 
-$377
+<div class="price">
 
-<button onclick="location='marketView.html?id=FR001'">
+$45
+
+</div>
+
+<button
+onclick="openProduct(
+
+'FREEZER01',
+
+'Freezer',
+
+'Large Home Freezer'
+
+)">
 
 VIEW
 
@@ -100,11 +168,24 @@ VIEW
 
 <div class="info">
 
-MacBook Pro
+Macbook Pro
 
-$2909
+<div class="price">
 
-<button onclick="location='marketView.html?id=MB001'">
+$100
+
+</div>
+
+<button
+onclick="openProduct(
+
+'MAC01',
+
+'Macbook Pro',
+
+'Apple Laptop'
+
+)">
 
 VIEW
 
@@ -122,9 +203,22 @@ VIEW
 
 Airpods Max
 
-$650
+<div class="price">
 
-<button onclick="location='marketView.html?id=AP001'">
+$15
+
+</div>
+
+<button
+onclick="openProduct(
+
+'AIR01',
+
+'Airpods Max',
+
+'Wireless Headset'
+
+)">
 
 VIEW
 
@@ -142,9 +236,22 @@ VIEW
 
 Canon Camera
 
-$820
+<div class="price">
 
-<button onclick="location='marketView.html?id=CC001'">
+$80
+
+</div>
+
+<button
+onclick="openProduct(
+
+'CAM01',
+
+'Canon Camera',
+
+'HD Camera'
+
+)">
 
 VIEW
 
@@ -162,9 +269,22 @@ VIEW
 
 Drone Pro
 
-$1100
+<div class="price">
 
-<button onclick="location='marketView.html?id=DR001'">
+$90
+
+</div>
+
+<button
+onclick="openProduct(
+
+'DRONE01',
+
+'Drone',
+
+'Flying Camera Drone'
+
+)">
 
 VIEW
 
@@ -182,9 +302,55 @@ VIEW
 
 Generator
 
-$950
+<div class="price">
 
-<button onclick="location='marketView.html?id=GN001'">
+$70
+
+</div>
+
+<button
+onclick="openProduct(
+
+'GEN01',
+
+'Generator',
+
+'Power Generator'
+
+)">
+
+VIEW
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="watch.jpg">
+
+<div class="info">
+
+Watch
+
+<div class="price">
+
+$9
+
+</div>
+
+<button
+onclick="openProduct(
+
+'WATCH01',
+
+'Watch',
+
+'Smart Watch'
+
+)">
 
 VIEW
 
@@ -202,9 +368,22 @@ VIEW
 
 Gaming Laptop
 
-$981
+<div class="price">
 
-<button onclick="location='marketView.html?id=CM801'">
+$95
+
+</div>
+
+<button
+onclick="openProduct(
+
+'LAP01',
+
+'Gaming Laptop',
+
+'RTX Gaming Laptop'
+
+)">
 
 VIEW
 
@@ -220,11 +399,24 @@ VIEW
 
 <div class="info">
 
-EcoFlow
+Ecoflow
 
-$747
+<div class="price">
 
-<button onclick="location='marketView.html?id=EC001'">
+$50
+
+</div>
+
+<button
+onclick="openProduct(
+
+'ECO01',
+
+'Ecoflow',
+
+'Portable Power Station'
+
+)">
 
 VIEW
 
@@ -234,27 +426,33 @@ VIEW
 
 </div>
 
-<div class="card">
-
-<img src="smartwatch.jpg">
-
-<div class="info">
-
-Smart Watch
-
-$226
-
-<button onclick="location='marketView.html?id=SW001'">
-
-VIEW
-
-</button>
-
 </div>
 
-</div>
+<script>
 
-</div>
+function openProduct(
+
+id,
+
+name,
+
+desc
+
+){
+
+location=
+
+`marketView.html?
+
+id=${id}
+
+&name=${name}
+
+&desc=${desc}`;
+
+}
+
+</script>
 
 </body>
 

@@ -9,31 +9,59 @@ content="width=device-width,initial-scale=1">
 <style>
 
 body{
-font-family:Arial;
+
 background:#f3f3f3;
+
+font-family:Arial;
+
 padding:20px;
+
 }
 
 .card{
+
 background:white;
+
 padding:20px;
+
 border-radius:20px;
+
+font-weight:bold;
+
 }
 
 input{
+
 width:100%;
+
 padding:15px;
+
 margin-top:10px;
+
 }
 
 button{
+
 width:100%;
+
 padding:15px;
+
 margin-top:10px;
+
 background:#ff6600;
+
 border:none;
+
 color:white;
+
 font-weight:bold;
+
+}
+
+#out{
+
+margin-top:15px;
+
 }
 
 </style>
@@ -44,7 +72,27 @@ font-weight:bold;
 
 <div class="card">
 
-<b id="pid"></b>
+PRODUCT ID:
+
+<span id="pid">
+
+</span>
+
+<br><br>
+
+NAME:
+
+<div id="pname">
+
+</div>
+
+<br>
+
+DESCRIPTION:
+
+<div id="pdesc">
+
+</div>
 
 <br><br>
 
@@ -59,12 +107,14 @@ $
 </span>
 
 <input
-id="amt"
+id="amount"
 placeholder="Amount">
 
 <input
 id="pass"
+
 type="password"
+
 placeholder="Password">
 
 <button id="buyBtn">
@@ -73,62 +123,101 @@ BUY PRODUCT
 
 </button>
 
-<div id="out"></div>
+<div id="out">
+
+</div>
 
 </div>
 
 <script type="module">
 
 import {
+
 initializeApp
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
+
 getAuth,
+
 onAuthStateChanged
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 import {
+
 getFirestore,
+
 doc,
+
 getDoc,
+
 updateDoc,
+
 arrayUnion
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-const firebaseConfig={
+const app=
 
-apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+initializeApp({
 
-authDomain:"jumiastaff-83757.firebaseapp.com",
+apiKey:
 
-projectId:"jumiastaff-83757"
+"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-};
+authDomain:
 
-const app=initializeApp(firebaseConfig);
+"jumiastaff-83757.firebaseapp.com",
 
-const auth=getAuth(app);
+projectId:
 
-const db=getFirestore(app);
+"jumiastaff-83757"
 
-const id=
+});
+
+const auth=
+
+getAuth(app);
+
+const db=
+
+getFirestore(app);
+
+let url=
 
 new URLSearchParams(
 
 location.search
 
-).get("id");
+);
 
-pid.innerHTML=
+let id=
 
-"PRODUCT ID: "+id;
+url.get("id");
+
+pid.innerHTML=id;
+
+pname.innerHTML=
+
+url.get("name");
+
+pdesc.innerHTML=
+
+url.get("desc");
 
 onAuthStateChanged(
 
@@ -152,7 +241,9 @@ let s=
 
 await getDoc(ref);
 
-let d=s.data();
+let d=
+
+s.data();
 
 bal.innerHTML=
 
@@ -162,17 +253,17 @@ buyBtn.onclick=
 
 async()=>{
 
-let amount=
+let amt=
 
 Number(
 
-amt.value
+amount.value
 
 );
 
 if(
 
-amount>
+amt>
 
 d.availableBalance
 
@@ -180,7 +271,7 @@ d.availableBalance
 
 alert(
 
-"No balance"
+"LOW BALANCE"
 
 );
 
@@ -192,7 +283,7 @@ let newBal=
 
 d.availableBalance-
 
-amount;
+amt;
 
 await updateDoc(
 
@@ -204,33 +295,43 @@ availableBalance:newBal,
 
 cart:
 
-arrayUnion(id)
+arrayUnion({
+
+id:id,
+
+name:url.get(
+
+"name"
+
+)
+
+})
 
 }
 
 );
 
+bal.innerHTML=
+
+newBal;
+
 out.innerHTML=
 
 `
 
+PRODUCT BOUGHT
+
+<br><br>
+
+COPY ID:
+
 <b>
-
-SUCCESS
-
-</b>
-
-<br>
-
-PRODUCT ID:
 
 ${id}
 
+</b>
+
 `;
-
-bal.innerHTML=
-
-newBal;
 
 };
 
