@@ -165,7 +165,8 @@ updateDoc,
 query,
 where,
 onSnapshot,
-addDoc
+addDoc,
+getDoc
 }
 from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
@@ -578,25 +579,106 @@ window.approveSale=
 
 async(id)=>{
 
-await updateDoc(
+try{
+
+const saleRef=
 
 doc(
 db,
 "pendingSales",
 id
-),
+);
+
+const saleSnap=
+
+await getDoc(
+saleRef
+);
+
+if(!saleSnap.exists()){
+
+alert(
+"SALE NOT FOUND"
+);
+
+return;
+
+}
+
+let sale=
+saleSnap.data();
+
+await updateDoc(
+
+saleRef,
 
 {
 
-status:"approved"
+status:
+"approved"
 
 }
 
 );
 
-alert(
-"APPROVED"
+const userRef=
+
+doc(
+db,
+"users",
+sale.userId
 );
+
+const userSnap=
+
+await getDoc(
+userRef
+);
+
+if(userSnap.exists()){
+
+let userData=
+userSnap.data();
+
+let cart=
+userData.cart||[];
+
+cart=
+cart.filter(
+
+x=>x!=sale.productId
+
+);
+
+await updateDoc(
+
+userRef,
+
+{
+
+cart:cart
+
+}
+
+);
+
+}
+
+alert(
+"APPROVED + PRODUCT REMOVED"
+);
+
+}
+
+catch(e){
+
+console.log(e);
+
+alert(
+"ERROR"
+);
+
+}
 
 };
 
