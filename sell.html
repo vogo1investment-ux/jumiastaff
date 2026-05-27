@@ -8,7 +8,7 @@ content="width=device-width,initial-scale=1">
 
 <title>
 
-BUY PRODUCT
+SELL PRODUCT
 
 </title>
 
@@ -32,7 +32,7 @@ width:100%;
 
 padding:15px;
 
-margin-top:15px;
+margin-top:10px;
 
 border-radius:15px;
 
@@ -50,13 +50,13 @@ margin-top:20px;
 
 background:#ff6600;
 
-color:white;
-
 border:none;
 
-border-radius:15px;
+color:white;
 
 font-weight:bold;
+
+border-radius:15px;
 
 }
 
@@ -70,13 +70,13 @@ font-weight:bold;
 
 <h2>
 
-BUY PRODUCT
+SELL PRODUCT
 
 </h2>
 
 <input
-id="pid"
-placeholder="Enter Product Code">
+id="buyer"
+placeholder="Buyer Username">
 
 <input
 id="pass"
@@ -84,9 +84,9 @@ type="password"
 placeholder="Password">
 
 <button
-onclick="buy()">
+onclick="sellProduct()">
 
-BUY PRODUCT
+SELL PRODUCT
 
 </button>
 
@@ -120,11 +120,15 @@ import {
 
 getFirestore,
 
+collection,
+
+addDoc,
+
 doc,
 
-updateDoc,
+getDoc,
 
-arrayUnion
+updateDoc
 
 }
 
@@ -156,6 +160,14 @@ getFirestore(app);
 
 let currentUser;
 
+let sellCode=
+
+localStorage.getItem(
+
+"sellProductId"
+
+);
+
 onAuthStateChanged(
 
 auth,
@@ -168,11 +180,62 @@ currentUser=u;
 
 );
 
-window.buy=
+window.sellProduct=
 async()=>{
 
-let code=
-pid.value.toUpperCase();
+await addDoc(
+
+collection(
+db,
+"sellRequests"
+),
+
+{
+
+uid:
+currentUser.uid,
+
+buyer:
+buyer.value,
+
+productId:
+sellCode,
+
+status:
+"Pending"
+
+}
+
+);
+
+let s=
+
+await getDoc(
+
+doc(
+db,
+"users",
+currentUser.uid
+)
+
+);
+
+let d=
+s.data();
+
+let newCart=
+
+(
+d.cart||[]
+)
+
+.filter(
+
+x=>
+
+x.productId!=sellCode
+
+);
 
 await updateDoc(
 
@@ -185,19 +248,14 @@ currentUser.uid
 {
 
 cart:
-
-arrayUnion({
-
-productId:code
-
-})
+newCart
 
 }
 
 );
 
 alert(
-"PRODUCT ADDED TO CART"
+"PRODUCT SOLD"
 );
 
 location=

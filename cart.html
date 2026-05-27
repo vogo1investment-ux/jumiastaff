@@ -8,19 +8,25 @@ content="width=device-width,initial-scale=1">
 
 <title>
 
-Cart
+CART
 
 </title>
 
 <style>
 
+body{
+background:#f3f3f3;
+font-family:Arial;
+padding:20px;
+}
+
 .card{
 
 background:white;
 
-padding:15px;
+padding:20px;
 
-margin:15px;
+margin-bottom:20px;
 
 border-radius:20px;
 
@@ -34,6 +40,28 @@ height:220px;
 
 object-fit:cover;
 
+border-radius:15px;
+
+}
+
+button{
+
+width:100%;
+
+padding:15px;
+
+margin-top:15px;
+
+background:red;
+
+border:none;
+
+color:white;
+
+border-radius:15px;
+
+font-weight:bold;
+
 }
 
 </style>
@@ -41,6 +69,12 @@ object-fit:cover;
 </head>
 
 <body>
+
+<h2>
+
+MY CART
+
+</h2>
 
 <div id="cart">
 
@@ -91,30 +125,40 @@ from
 const firebaseConfig={
 
 apiKey:
-
 "AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
 authDomain:
-
 "jumiastaff-83757.firebaseapp.com",
 
 projectId:
-
 "jumiastaff-83757"
 
 };
 
 const app=
-
 initializeApp(firebaseConfig);
 
 const auth=
-
 getAuth(app);
 
 const db=
-
 getFirestore(app);
+
+window.sellNow=
+(id)=>{
+
+localStorage.setItem(
+
+"sellProductId",
+
+id
+
+);
+
+location=
+"sell.html";
+
+};
 
 onAuthStateChanged(
 
@@ -122,33 +166,26 @@ auth,
 
 async(user)=>{
 
-if(!user)return;
-
 let snap=
 
 await getDoc(
 
 doc(
-
 db,
-
 "users",
-
 user.uid
-
 )
 
 );
 
-let data=
-
+let d=
 snap.data();
 
 cart.innerHTML="";
 
 (
 
-data.cart||[]
+d.cart||[]
 
 )
 
@@ -159,9 +196,7 @@ x=>{
 let p=
 
 products[
-
 x.productId
-
 ];
 
 if(!p)return;
@@ -180,11 +215,16 @@ ${p.name}
 
 <b>
 
-Code:
-
 ${x.productId}
 
 </b>
+
+<button
+onclick="sellNow('${x.productId}')">
+
+SELL PRODUCT
+
+</button>
 
 </div>
 
