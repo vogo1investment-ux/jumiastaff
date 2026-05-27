@@ -269,8 +269,7 @@ Users Under You:
 
 <div class="grid">
 
-<div
-class="btn"
+<div class="btn"
 onclick="location='market.html'">
 
 🛒
@@ -281,8 +280,7 @@ Market
 
 </div>
 
-<div
-class="btn"
+<div class="btn"
 onclick="location='buy.html'">
 
 🛍
@@ -293,8 +291,7 @@ Buy Product
 
 </div>
 
-<div
-class="btn"
+<div class="btn"
 onclick="location='deposit.html'">
 
 💳
@@ -305,8 +302,7 @@ Deposit
 
 </div>
 
-<div
-class="btn"
+<div class="btn"
 onclick="location='withdraw.html'">
 
 💸
@@ -317,8 +313,7 @@ Withdraw
 
 </div>
 
-<div
-class="btn"
+<div class="btn"
 onclick="location='depositHistory.html'">
 
 📄
@@ -329,8 +324,7 @@ Deposit History
 
 </div>
 
-<div
-class="btn"
+<div class="btn"
 onclick="location='withdrawHistory.html'">
 
 📑
@@ -341,8 +335,7 @@ Withdraw History
 
 </div>
 
-<div
-class="btn"
+<div class="btn"
 onclick="location='cart.html'">
 
 🛒
@@ -353,14 +346,35 @@ Cart
 
 </div>
 
-<div
-class="btn">
+<div class="btn">
 
 👥
 
 <br>
 
 Referral
+
+</div>
+
+<div class="btn"
+onclick="location='sellingMarket.html'">
+
+🛍
+
+<br>
+
+Selling Market
+
+</div>
+
+<div class="btn"
+onclick="location='about.html'">
+
+ℹ️
+
+<br>
+
+About Us
 
 </div>
 
@@ -471,9 +485,7 @@ withdrawableBalance:0,
 referralCommission:0,
 
 usedReferral:"",
-
 joinedUsers:0,
-
 cart:[]
 
 }
@@ -489,32 +501,25 @@ let d=
 snap.data();
 
 u.innerHTML=
-d.username
-||
-"User";
+d.username||"User";
 
 a.innerHTML=
 Number(
-d.availableBalance
-??2
+d.availableBalance??2
 );
 
 w.innerHTML=
 Number(
-d.withdrawableBalance
-??0
+d.withdrawableBalance??0
 );
 
 rc.innerHTML=
 Number(
-d.referralCommission
-??0
+d.referralCommission??0
 );
 
 refcode.innerHTML=
-d.username
-||
-"User";
+d.username||"User";
 
 const q=
 
