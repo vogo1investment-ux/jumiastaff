@@ -8,19 +8,24 @@ content="width=device-width,initial-scale=1">
 
 <title>
 
-ADMIN PANEL
+JUMIASTAFF ADMIN
 
 </title>
 
 <style>
 
 body{
+
 background:#f3f3f3;
+
 font-family:Arial;
+
 padding:20px;
+
 }
 
-.box,
+.login,
+.panel,
 .usercard{
 
 background:white;
@@ -55,11 +60,11 @@ padding:15px;
 
 margin-top:10px;
 
+border:none;
+
 background:#ff6600;
 
 color:white;
-
-border:none;
 
 border-radius:15px;
 
@@ -74,17 +79,17 @@ font-weight:bold;
 <body>
 
 <div id="loginBox"
-class="box">
+class="login">
 
 <h2>
 
-ADMIN LOGIN
+ADMIN PANEL LOGIN
 
 </h2>
 
 <input
 id="email"
-placeholder="Email">
+placeholder="Admin Email">
 
 <input
 id="password"
@@ -100,12 +105,13 @@ LOGIN
 
 </div>
 
-<div id="panel"
+<div
+id="panel"
 style="display:none">
 
 <h2>
 
-ADMIN PANEL
+JUMIASTAFF ADMIN
 
 </h2>
 
@@ -131,7 +137,9 @@ import {
 
 getAuth,
 
-signInWithEmailAndPassword
+signInWithEmailAndPassword,
+
+signOut
 
 }
 
@@ -166,7 +174,16 @@ authDomain:
 "jumiastaff-83757.firebaseapp.com",
 
 projectId:
-"jumiastaff-83757"
+"jumiastaff-83757",
+
+storageBucket:
+"jumiastaff-83757.firebasestorage.app",
+
+messagingSenderId:
+"1018307795636",
+
+appId:
+"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
 
 };
 
@@ -184,6 +201,10 @@ async()=>{
 
 try{
 
+await signOut(auth);
+
+let x=
+
 await signInWithEmailAndPassword(
 
 auth,
@@ -196,17 +217,19 @@ password.value
 
 if(
 
-email.value!
-
-=="admin@gmail.com"
+x.user.email
+!==
+"admin@gmail.com"
 
 ){
 
 alert(
 
-"Not admin"
+"ADMIN ONLY"
 
 );
+
+await signOut(auth);
 
 return;
 
@@ -225,9 +248,7 @@ loadUsers();
 catch(e){
 
 alert(
-
 e.message
-
 );
 
 }
@@ -236,7 +257,7 @@ e.message
 
 async function loadUsers(){
 
-let s=
+const s=
 
 await getDocs(
 
@@ -251,10 +272,10 @@ users.innerHTML="";
 
 s.forEach(
 
-x=>{
+d=>{
 
-let d=
-x.data();
+let x=
+d.data();
 
 users.innerHTML+=`
 
@@ -262,7 +283,7 @@ users.innerHTML+=`
 
 <b>
 
-${d.username}
+${x.username||"User"}
 
 </b>
 
@@ -271,25 +292,25 @@ ${d.username}
 Available Balance
 
 <input
-id="a${x.id}"
-value="${d.availableBalance||0}">
+id="a${d.id}"
+value="${x.availableBalance||0}">
 
 Withdrawable Balance
 
 <input
-id="w${x.id}"
-value="${d.withdrawableBalance||0}">
+id="w${d.id}"
+value="${x.withdrawableBalance||0}">
 
 Referral Commission
 
 <input
-id="r${x.id}"
-value="${d.referralCommission||0}">
+id="r${d.id}"
+value="${x.referralCommission||0}">
 
 <button
-onclick="saveUser('${x.id}')">
+onclick="saveUser('${d.id}')">
 
-SAVE
+SAVE USER
 
 </button>
 
@@ -357,7 +378,9 @@ document.getElementById(
 );
 
 alert(
-"Updated"
+
+"UPDATED"
+
 );
 
 };
