@@ -145,6 +145,78 @@ border-radius:20px;
 
 }
 
+/* ADVERT */
+
+#adPopup{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+right:0;
+
+bottom:0;
+
+background:rgba(0,0,0,.8);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:99999;
+
+}
+
+.adBox{
+
+background:white;
+
+padding:15px;
+
+border-radius:20px;
+
+width:90%;
+
+max-width:420px;
+
+position:relative;
+
+}
+
+.adBox video{
+
+width:100%;
+
+border-radius:15px;
+
+}
+
+#closeAd{
+
+display:none;
+
+position:absolute;
+
+top:10px;
+
+right:10px;
+
+background:red;
+
+color:white;
+
+border:none;
+
+padding:8px;
+
+border-radius:50%;
+
+}
+
 </style>
 
 </head>
@@ -272,109 +344,96 @@ Users Under You:
 <div class="btn"
 onclick="location='market.html'">
 
-🛒
-
-<br>
-
-Market
+🛒<br>Market
 
 </div>
 
 <div class="btn"
 onclick="location='buy.html'">
 
-🛍
-
-<br>
-
-Buy Product
+🛍<br>Buy Product
 
 </div>
 
 <div class="btn"
 onclick="location='deposit.html'">
 
-💳
-
-<br>
-
-Deposit
+💳<br>Deposit
 
 </div>
 
 <div class="btn"
 onclick="location='withdraw.html'">
 
-💸
-
-<br>
-
-Withdraw
+💸<br>Withdraw
 
 </div>
 
 <div class="btn"
 onclick="location='depositHistory.html'">
 
-📄
-
-<br>
-
-Deposit History
+📄<br>Deposit History
 
 </div>
 
 <div class="btn"
 onclick="location='withdrawHistory.html'">
 
-📑
-
-<br>
-
-Withdraw History
+📑<br>Withdraw History
 
 </div>
 
 <div class="btn"
 onclick="location='cart.html'">
 
-🛒
-
-<br>
-
-Cart
+🛒<br>Cart
 
 </div>
 
 <div class="btn">
 
-👥
-
-<br>
-
-Referral
+👥<br>Referral
 
 </div>
 
 <div class="btn"
 onclick="location='sellingMarket.html'">
 
-🛍
-
-<br>
-
-Selling Market
+🛍<br>Selling Market
 
 </div>
 
 <div class="btn"
 onclick="location='about.html'">
 
-ℹ️
+ℹ️<br>About Us
 
-<br>
+</div>
 
-About Us
+</div>
+
+<!-- ADVERT -->
+
+<div id="adPopup">
+
+<div class="adBox">
+
+<button id="closeAd">
+
+✖
+
+</button>
+
+<video
+id="advVideo"
+controls
+autoplay>
+
+<source
+src="promo1.mp4"
+type="video/mp4">
+
+</video>
 
 </div>
 
@@ -571,6 +630,120 @@ location=
 "auth.html";
 
 };
+
+</script>
+
+<script>
+
+const adverts=[
+
+"promo1.mp4",
+
+"promo2.mp4"
+
+];
+
+let advertIndex=0;
+
+function showAdvert(){
+
+let last=
+
+localStorage.getItem(
+
+"dashboardAdvert"
+
+);
+
+if(
+
+last
+
+&&
+
+Date.now()
+
+-
+
+Number(last)
+
+<
+
+1800000
+
+){
+
+return;
+
+}
+
+adPopup.style.display=
+
+"flex";
+
+advVideo.src=
+
+adverts[advertIndex];
+
+advVideo.load();
+
+advVideo.play();
+
+advertIndex++;
+
+if(
+
+advertIndex>=adverts.length
+
+){
+
+advertIndex=0;
+
+}
+
+setTimeout(
+
+()=>{
+
+closeAd.style.display=
+
+"block";
+
+},
+
+3000
+
+);
+
+localStorage.setItem(
+
+"dashboardAdvert",
+
+Date.now()
+
+);
+
+}
+
+closeAd.onclick=
+
+()=>{
+
+adPopup.style.display=
+
+"none";
+
+advVideo.pause();
+
+};
+
+setTimeout(
+
+showAdvert,
+
+10000
+
+);
 
 </script>
 
