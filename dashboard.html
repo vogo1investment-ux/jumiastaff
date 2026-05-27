@@ -119,6 +119,8 @@ border-radius:18px;
 
 text-align:center;
 
+font-weight:bold;
+
 }
 
 .ref{
@@ -144,8 +146,6 @@ padding:20px;
 border-radius:20px;
 
 }
-
-/* ADVERT */
 
 #adPopup{
 
@@ -247,7 +247,7 @@ User
 
 <div class="card">
 
-Withdrawalble Balance
+Withdrawable Balance
 
 <div class="big">
 
@@ -309,7 +309,7 @@ TASK REQUIRED
 
 <br><br>
 
-Buy a product before bonus becomes withdrawalble.
+Buy a product before bonus becomes withdrawable.
 
 </div>
 
@@ -335,7 +335,7 @@ Users Under You:
 
 <br><br>
 
-10% commission for invited investors.
+10% commission for invited merchants.
 
 </div>
 
@@ -410,9 +410,14 @@ onclick="location='about.html'">
 
 </div>
 
+<div class="btn"
+onclick="location='support.html'">
+
+💬<br>Customer Service
+
 </div>
 
-<!-- ADVERT -->
+</div>
 
 <div id="adPopup">
 
@@ -471,34 +476,19 @@ from
 
 const firebaseConfig={
 
-apiKey:
-"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
+apiKey:"AIzaSyBp3K3gJtK2XqIm-eVI1osP-Vma3wj1lTs",
 
-authDomain:
-"jumiastaff-83757.firebaseapp.com",
+authDomain:"jumiastaff-83757.firebaseapp.com",
 
-projectId:
-"jumiastaff-83757",
-
-storageBucket:
-"jumiastaff-83757.firebasestorage.app",
-
-messagingSenderId:
-"1018307795636",
-
-appId:
-"1:1018307795636:web:6e2dc2cbf41cb88e1ad5e1"
+projectId:"jumiastaff-83757"
 
 };
 
-const app=
-initializeApp(firebaseConfig);
+const app=initializeApp(firebaseConfig);
 
-const auth=
-getAuth(app);
+const auth=getAuth(app);
 
-const db=
-getFirestore(app);
+const db=getFirestore(app);
 
 onAuthStateChanged(
 
@@ -508,126 +498,57 @@ async(user)=>{
 
 if(!user){
 
-location=
-"auth.html";
+location="auth.html";
 
 return;
 
 }
 
-const ref=
+const ref=doc(db,"users",user.uid);
 
-doc(
-db,
-"users",
-user.uid
-);
+let snap=await getDoc(ref);
 
-let snap=
+let d=snap.data();
 
-await getDoc(ref);
+u.innerHTML=d.username||"User";
 
-if(!snap.exists()){
+a.innerHTML=d.availableBalance??2;
 
-await setDoc(
+w.innerHTML=d.withdrawableBalance??0;
 
-ref,
+rc.innerHTML=d.referralCommission??0;
 
-{
+refcode.innerHTML=d.username||"User";
 
-username:"User",
+const q=query(
 
-availableBalance:2,
+collection(db,"users"),
 
-withdrawableBalance:0,
-
-referralCommission:0,
-
-usedReferral:"",
-joinedUsers:0,
-cart:[]
-
-}
+where("usedReferral","==",d.username)
 
 );
 
-snap=
-await getDoc(ref);
+const refs=await getDocs(q);
 
-}
+refusers.innerHTML=refs.size;
 
-let d=
-snap.data();
+await updateDoc(ref,{
 
-u.innerHTML=
-d.username||"User";
+joinedUsers:refs.size
 
-a.innerHTML=
-Number(
-d.availableBalance??2
-);
-
-w.innerHTML=
-Number(
-d.withdrawableBalance??0
-);
-
-rc.innerHTML=
-Number(
-d.referralCommission??0
-);
-
-refcode.innerHTML=
-d.username||"User";
-
-const q=
-
-query(
-
-collection(
-db,
-"users"
-),
-
-where(
-"usedReferral",
-"==",
-d.username
-)
-
-);
-
-const refs=
-
-await getDocs(q);
-
-refusers.innerHTML=
-refs.size;
-
-await updateDoc(
-
-ref,
-
-{
-
-joinedUsers:
-refs.size
-
-}
-
-);
+});
 
 }
 
 );
 
 window.logout=
+
 async()=>{
 
 await signOut(auth);
 
-location=
-"auth.html";
+location="auth.html";
 
 };
 
@@ -667,9 +588,7 @@ Date.now()
 
 Number(last)
 
-<
-
-1800000
+<1800000
 
 ){
 
@@ -677,9 +596,7 @@ return;
 
 }
 
-adPopup.style.display=
-
-"flex";
+adPopup.style.display="flex";
 
 advVideo.src=
 
@@ -705,9 +622,7 @@ setTimeout(
 
 ()=>{
 
-closeAd.style.display=
-
-"block";
+closeAd.style.display="block";
 
 },
 
@@ -725,13 +640,9 @@ Date.now()
 
 }
 
-closeAd.onclick=
+closeAd.onclick=()=>{
 
-()=>{
-
-adPopup.style.display=
-
-"none";
+adPopup.style.display="none";
 
 advVideo.pause();
 
